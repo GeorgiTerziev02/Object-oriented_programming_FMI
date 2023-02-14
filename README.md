@@ -1,7 +1,7 @@
 ## Материали от семинарите и практикумите по "Обектно-ориентирано програмиране"
 #### Летен семестър 2022/2023, спец. Софтуерно инженерство
 
-- [Тема 1](https://github.com/) : - 
+- [Тема 1](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001) : - 
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
