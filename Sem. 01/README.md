@@ -1,6 +1,6 @@
 #  Преговор на указатели, референции и динамична памет. Увод в ООП. Обекти. Структури и обединения
 
-<img align="right" width="500" height="600" src="https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png">
+<img align="right" width="500" height="600" src="img/memory-types.png">
 
 ###  **Преговор. Указатели, референции, динамична памет.**
 
@@ -23,9 +23,7 @@
 	  
 *	**Program Code**: памет, в която се пази нашият компилиран код
 	* Може да се достъпва с function pointer-и
-
 <br/><br/>
-
 #### **Създаване на променливи (в статичната и динамичната памет)**
  ```c++
 int main()
@@ -281,7 +279,7 @@ std::cout << sizeof(ex2) << std::endl; // 8
 std::cout << sizeof(ex3) << std::endl; // 24
 ```
 <i>Представяне на ExampleA в паметта:</i> <br />
-![Padding}](Images/padding.png)
+![Padding}](img/padding.png)
 
 ## [**Обединения**](https://en.cppreference.com/w/cpp/language/union)
 Обединенията са част от паметта, която се поделя при съхранение на две или повече променливи. <br />
@@ -334,13 +332,15 @@ int main()
 }
 ```
 
-![Union](Images/union.jpg)
+<div style="background-color: white; max-width: 300px;"> 
+    <img src="img/union.png"/>
+</div>
 
 ## **Задачи**
 
 **Задача 1:** Въвежда се цяло число **N**  и после **N** тригъгълника в равнината, определени от 3 точки ( 6 координати). <br />
 Отпечатайте тригълниците **сортирани по лицата им.**
-![Selection-sort](images/Selection-Sort.png)
+![Selection-sort](img/selection-sort.png)
 
 **Задача 2:** Резлизирайте структура Rational, която е за работа с рационални числа. <br />
 Имплементирайте функции за събиране, изваждане, умножение и деление. <br />
