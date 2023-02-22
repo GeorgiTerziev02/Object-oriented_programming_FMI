@@ -36,7 +36,7 @@
 Възможните операции са предефиниране на променливата и промяна на полетата. <br />
 
 ```c++
-Student st = { "Gosho", 10 };
+Student st = { "Kolio", 10 };
 Student *pSt = &st;
 const Student* pCSt = &st;
 Student* const cPSt = &st;
