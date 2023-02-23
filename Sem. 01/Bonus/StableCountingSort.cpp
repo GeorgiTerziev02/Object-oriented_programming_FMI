@@ -23,7 +23,10 @@ void stableCountingSort(char* arr, size_t length) {
 	// put the characters in the initial array sorted
 	// started backwards so that the sorting is stable
 	for (int i = arrLength - 1; i >= 0; i--) {
-		arr[--counter[copy[i]]] = copy[i];
+		// counter[copy[i] - 1 => where the element should be placed
+		arr[counter[copy[i]] - 1] = copy[i];
+		// the next element of this type should be placed one index behind this one
+		--counter[copy[i]];
 	}
 
 	delete[] copy;
