@@ -2,6 +2,7 @@
 #### Летен семестър 2022/2023, спец. Софтуерно инженерство
 
 - [Тема 1](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001): Преговор на указатели, референции и динамична памет. Увод в ООП. Обекти. Структури и обединения. Представяния в паметта. Работа с функции, които приемат обекти.
+- [Тема 2](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2002): -
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
