@@ -14,8 +14,8 @@ void stableCountingSort(char* arr, size_t length) {
 		counter[arr[i]]++;
 	}
 
-	// the counter with become the index where the next element
-	// of everytime should be placed
+	// the counter will become the index where the next element
+	// of every different type should be placed
 	for (size_t i = 1; i < 256; i++) {
 		counter[i] += counter[i - 1];
 	}
