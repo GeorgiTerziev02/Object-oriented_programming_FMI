@@ -1,7 +1,7 @@
 ## Github workflow
 
 0. Star the repository
-![star the repo](images/star-the-repo.png)
+![image](https://user-images.githubusercontent.com/49128895/220928942-2bf90bfe-bb8d-401d-a374-e7734da42049.png)
 
 1. Fork the repository 
     - [How to fork a repository.](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
