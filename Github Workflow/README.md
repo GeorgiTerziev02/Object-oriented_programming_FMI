@@ -3,6 +3,7 @@
 0. Star the repository
 ![image](https://user-images.githubusercontent.com/49128895/220928942-2bf90bfe-bb8d-401d-a374-e7734da42049.png)
 
+*Навсякъде, където пише justSvetoslavov, си представете, че пише GeorgiTerziev02 **:D***
 1. Fork the repository 
     - [How to fork a repository.](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 
