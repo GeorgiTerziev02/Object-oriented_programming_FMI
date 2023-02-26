@@ -333,7 +333,7 @@ int main()
 ```
 
 <div style="background-color: white; max-width: 300px;"> 
-    <img src="img/union.png"/>
+    <img src="img/union.jpg"/>
 </div>
 
 ## **Задачи**
