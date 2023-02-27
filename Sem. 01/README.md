@@ -1,30 +1,26 @@
-#  Преговор на указатели, референции и динамична памет. Увод в ООП. Обекти. Структури и обединения. Представяния в паметта. Работа с функции, които приемат обекти.
+#  **Преговор на указатели, референции и динамична памет. Увод в ООП. Обекти. Структури и обединения**
 
-<img align="right" width="500" height="600" src="img/memory-types.png">
-
-###  **Преговор. Указатели, референции, динамична памет.**
+##  **Преговор. Указатели, референции, динамична памет.**
+<img align="right" width="450" height="600" src="https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png">
 
 Паметта, която можем да използваме в **C++** има 4 основни типа:
 <br />
 
 *	**Глобална (Статична)**: в тази памет се записват статичните/глобалните променливи.
-
 *	**Стекова (stack)**: тя съдържа "локалните" променливи, т.е. онези, които са дефинирани в телата на функции и са същевременно нестатични.
 	  * Заделя се в момента на дефиниция на променливите и се освобождава в момента на изход от scope-a, в която е дефинирана;
 	  * Последно заделената памет се освобождава първа (First in Last out);
 	  * Количеството заделена памет е определена по време на компилация;
 	  * Ние нямаме контрол над управлението над паметта
- 
 *	**Динамична (heap)**: е "свободната" част от паметта, която се използва (<em>динамично</em>) в хода на програмата. 
 	* Заделя се и се освобождава по всяко време на изпълнение на програмата;
 	* Областта за динамична памет е набор от свободни блокове памет;
 	* Програмата може да заяви блок с произволна големина;
-	* Имаме контрол над управлението на паметта;
-	  
+	* Имаме контрол над управлението на паметта;	  
 *	**Program Code**: памет, в която се пази нашият компилиран код
 	* Може да се достъпва с function pointer-и
-<br/><br/>
-#### **Създаване на променливи (в статичната и динамичната памет)**
+
+### **Създаване на променливи (в статичната и динамичната памет)**
  ```c++
 int main()
 {
@@ -50,9 +46,9 @@ int main()
 }
  ```
 
-#### **Подаване на параметри във функция**
+### **Подаване на параметри във функция**
 
-##### **Подаване по копие.**
+#### **Подаване по копие.**
 
  ```c++
 #include <iostream>
@@ -69,7 +65,7 @@ int main()
 	std::cout << a << std::endl; //10
 }
  ```
-##### **Подаване по референция.**
+#### **Подаване по референция.**
 
  ```c++
  #include <iostream>
@@ -86,7 +82,7 @@ int main()
 	std::cout << a << std::endl; //11
 }
  ```
-##### **Подаване по указател.**
+#### **Подаване по указател.**
 
  ```c++
 #include <iostream>
@@ -105,14 +101,20 @@ int main()
  ```
  
 ## **Обектно-ориентирано програмиране**
+Програмна парадигма -  представлява фундаменталния стил на програмиране. <br />
+![Paradigms](images/Paradigms.png)
+Обектно-ориентирано програмиране е **програмна парадигма**, при която една програмна система се моделира като набор от обекти, които взаимодействат помежду си, за разлика от традиционното виждане, в което една програма е списък от инструкции, които компютърът изпълнява. Всеки обект е способен да получава съобщения, обработва данни и праща съобщения на други обекти.
 
-OОП е **програмна парадигма**.
-
-Принципи:
+### **Принципи:**
 - Абстракция
+  - процесът на скриване на ненужни подробности от потребителя
 - Капсулация
+  - един обект трябва да предоставя на ползващия го само пряко необходимите му средства за управление.
 - Наследяване
+  - позволява да бъдат дефинирани и създавани обекти, които са специализирани варианти на вече съществуващи обекти.
+  - класът наследник взема всички свойства и методи на класа-родител
 - Полиморфизъм
+  - представлява свойството на обектите от един и същи тип да имат един и същи интерфейс, но с различна реализация на този интерфейс.
 
 **Техническият дълг** е концепция в програмирането, която отразява допълнителната разработка, която възниква, когато се използва лесен за изпълнение код в краткосрочен план, вместо да се прилага най-доброто цялостно решение. <br/>
 
@@ -255,7 +257,7 @@ int main()
 struct Example1
 {
     bool b;         // 1 byte
-    int c;	        // 4 bytes
+    int c;	    // 4 bytes
 } ex1;
 
 struct Example2
@@ -279,7 +281,7 @@ std::cout << sizeof(ex2) << std::endl; // 8
 std::cout << sizeof(ex3) << std::endl; // 24
 ```
 <i>Представяне на ExampleA в паметта:</i> <br />
-![Padding}](img/padding.png)
+![Padding}](images/padding.png)
 
 ## [**Обединения**](https://en.cppreference.com/w/cpp/language/union)
 Обединенията са част от паметта, която се поделя при съхранение на две или повече променливи. <br />
@@ -331,16 +333,142 @@ int main()
 	std::cout << p->a << " " << p->b; //90 Z
 }
 ```
+![Union](images/union.JPG)
 
-<div style="background-color: white; max-width: 300px;"> 
-    <img src="img/union.jpg"/>
-</div>
+## Енумерации(Enums)
+Eнумерацията е отделен тип, чиято стойност е ограничена до диапазон от стойности, който може да включва няколко изрично посочени константи(енумератори). Стойностите на константите са стойности от интегрален тип, известен като основен тип на eнумерацията Eнумерацията има същия размер, представяне на стойност и изисквания за подравняване като неговия основен тип. Освен това всяка стойност на енумерацията има същото представяне като съответната стойност на основния тип. <br />
+
+```c++
+enum <name>
+{
+	<element>, //0
+	<element>, //1
+	.
+	.
+	.
+};
+
+enum IceCream1
+{
+	vanilla, //0
+	chocolate, //1
+	strawberry, //2
+	mango, //3
+	oreo //4
+};
+
+enum IceCream2 : char
+{
+	vanilla, //0
+	chocolate, //1
+	strawberry, //2
+	mango, //3
+	oreo //4
+};
+```
+
+### Unscoped enumarations (plain enums) vs Scoped enumarations (enum class | struct)
+```c++
+enum class Color { red, green, blue }; // enum class
+enum Animal { dog, cat, bird, human }; // plain enum 
+```
+
+- enum classes
+  - енумераторите са локални за enuma и техните стойности не се преобразуват имплицитно към други типове (another enum or int).
+- Plain enums
+  - енумераторите са в същия scope като enuma и техните стойности се преобразуват имплицитно към integers и други типове.
+
+```c++
+enum Color { red, green, blue };                    // plain enum 
+enum Card { red_card, green_card, yellow_card };    // another plain enum 
+enum class Animal { dog, deer, cat, bird, human };  // enum class
+enum class Mammal { kangaroo, deer, human };        // another enum class
+
+void fun() {
+    // examples of bad use of plain enums:
+    Color color = Color::red;
+    Card card = Card::green_card;
+
+    int num = color;    // no problem
+
+    if (color == Card::red_card) // no problem (bad)
+        cout << "bad" << endl;
+
+    if (card == Color::green)   // no problem (bad)
+        cout << "bad" << endl;
+
+    // examples of good use of enum classes (safe)
+    Animal a = Animal::deer;
+    Mammal m = Mammal::deer;
+
+    int num2 = a;   // error
+    if (m == a)     // error (good)
+        cout << "bad" << endl;
+
+    if (a == Mammal::deer) // error (good)
+        cout << "bad" << endl;
+}
+```
+
+Извод: enum class | struct трябва да се предпочитат, защото причиняват по-малко изненади, които потенциално биха могли да доведат до грешки.
+
+## Namespaces
+Пространствата от имена предоставят метод за предотвратяване на конфликти с имена. <br />
+Символите, декларирани вътре в namespace block, се поставят в наименуван scope, който не позволява да бъдат сбъркани със символи с идентични имена в други диапазони. <br />
+
+```c++
+namespace A
+{
+    int i;
+}
+ 
+namespace B
+{
+    int i;
+    int j;
+ 
+    namespace C
+    {
+        namespace D
+        {
+            using namespace A; // all names from A injected into global namespace
+ 
+            int j;
+            int k;
+            int a = i;         // i is B::i, because A::i is hidden by B::i
+        }
+ 
+        using namespace D; // names from D are injected into C
+                           // names from A are injected into global namespace
+ 
+        int k = 89; // OK to declare name identical to one introduced by a using
+        int l = k;  // ambiguous: C::k or D::k
+        int m = i;  // ok: B::i hides A::i
+        int n = j;  // ok: D::j hides B::j
+    }
+}
+
+namespace Q
+{
+    namespace V   	// V is a member of Q, and is fully defined within Q
+    { 			 	// namespace Q::V // C++17 alternative to the lines above
+        class C		// C is a member of V and is fully defined within V
+		{ 
+			 void m(); // C::m is only declared
+		};
+        void f(); // f is a member of V, but is only declared here
+    }
+ 
+    void V::C::m() // definition of V::C::m outside of the namespace (and the class body)
+    {}             // enclosing namespaces are the global namespace, Q, and Q::V
+}
+```
 
 ## **Задачи**
 
 **Задача 1:** Въвежда се цяло число **N**  и после **N** тригъгълника в равнината, определени от 3 точки ( 6 координати). <br />
 Отпечатайте тригълниците **сортирани по лицата им.**
-![Selection-sort](img/selection-sort.png)
+![Selection-sort](images/Selection-Sort.png)
 
 **Задача 2:** Резлизирайте структура Rational, която е за работа с рационални числа. <br />
 Имплементирайте функции за събиране, изваждане, умножение и деление. <br />
