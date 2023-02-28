@@ -75,27 +75,19 @@ void printStudent(const Student& student) {
 		", Grade: " << student.grade << std::endl;
 }
 
-bool isTakingScholarship(const Student* students, const int pos, const double minGrade) {
-	return students[pos].grade >= minGrade;
-}
-
-void studentsTakingScholarship(StudentGroup& group, const double minGrade)
-{
+void studentsTakingScholarship(StudentGroup& group, const double minGrade) {
 	int numberOfStudents = numberOfStudentsTakingScholarship(group, minGrade);
 	sortStudentsByGrade(group.groupArr, group.amountOfStudents);
-	for (int i = group.amountOfStudents - 1; i >= numberOfStudents; i--)
-	{
+	
+	for (int i = group.amountOfStudents - 1; i >= group.amountOfStudents - numberOfStudents; i--) {
 		printStudent(group.groupArr[i]);
 	}
-
 }
 
-int main()
-{
+int main() {
 	StudentGroup group;
 	std::cin >> group.amountOfStudents;
+	
 	initGroupOfStudents(group);
 	studentsTakingScholarship(group, 5);
-  
-  return 0;
 }
