@@ -129,8 +129,8 @@ int main()
 }
  ```
 
- - (ifstream или istream) [get](https://en.cppreference.com/w/cpp/io/basic_istream/get) - функция, която чете следващия character в потока. 
- - (ofstream или ostream) [put](https://en.cppreference.com/w/cpp/io/basic_ostream/put) - функция, която поставя на следваща позиция character в потока.
+ - (istream) [get](https://en.cppreference.com/w/cpp/io/basic_istream/get) - функция, която чете следващия character в потока. 
+ - (ostream) [put](https://en.cppreference.com/w/cpp/io/basic_ostream/put) - функция, която поставя на следваща позиция character в потока.
  - ifstream или istream - съдържа get указател, който реферира елемента, който ще се прочете при следващата входна операция.
  - ofstream или ostream - съдържа put указател, който реферира мястото, където ще се запише следващият елемент.
  - put и get не са [форматирани](https://www.geeksforgeeks.org/unformatted-input-output-operations-in-cpp/) за разлика от operator<< и operator>>, тоест не пропускат whitespaces и др.
