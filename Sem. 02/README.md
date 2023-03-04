@@ -135,6 +135,23 @@ int main()
  - ofstream или ostream - съдържа put указател, който реферира мястото, където ще се запише следващият елемент.
  - put и get не са [форматирани](https://www.geeksforgeeks.org/unformatted-input-output-operations-in-cpp/) за разлика от operator<< и operator>>, тоест не пропускат whitespaces и др.
 
+### Позициониране във файл
+
+ - tellg() - Връща позицития на текущия символ в **потока за четене**
+ - tellp() - Връща позицития на текущия символ в **потока за писане**
+ - seekg(offset, direction) - Премества get-указателят на позцития на **потока за четене**.
+ - seekg(streampos idx) - Премества get-указателят на позция idx на **потока за четене**.
+ - seekp(offset, direction) - Премества put-указателят на позцития на **потока за писане**.
+ - seekp(streampos idx) - Премества put-указателят на позция idx на **потока за писане**.
+
+-**offset** : целочислена стойност. Отместването от direction.
+ 
+ -**direction** : Може да заема следите стойностти:
+
+1. ios::beg - началото на файла.
+2. ios::cur - текущата позиция във файла.
+3. ios::end - края на файла.
+
 ### [Режими на работа](https://en.cppreference.com/w/cpp/io/ios_base/openmode)
 
  ```c++
