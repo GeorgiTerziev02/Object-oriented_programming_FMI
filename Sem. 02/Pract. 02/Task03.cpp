@@ -151,7 +151,6 @@ void readPlaceholders(Placeholder*& placeholders, size_t& placeholdersCount) {
 void replacePlaceholders() {
     std::ifstream in(TEMPLATE_FILE_NAME);
     std::ofstream out(RESULT_FILE_NAME);
-
     if (!in.is_open() || !out.is_open()) {
         std::cout << ERROR_MESSAGE;
         return;
@@ -159,11 +158,7 @@ void replacePlaceholders() {
 
     Placeholder* placeholders = nullptr;
     size_t placeholdersCount = 0;
-
     readPlaceholders(placeholders, placeholdersCount);
-    //for (size_t i = 0; i < placeholdersCount; i++){
-    //    std::cout << placeholderNames[i] << " " << placeholderValues[i] << std::endl;
-    //}
 
     char current;
     while (true) {
@@ -188,9 +183,9 @@ void replacePlaceholders() {
 
         out << current;
     }
+
     in.close();
     out.close();
-
     delete[] placeholders;
 }
 
