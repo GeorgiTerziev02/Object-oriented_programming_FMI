@@ -7,6 +7,11 @@ const char PLACEHOLDER_FILE_NAME[] = "placeholder.txt";
 const char TEMPLATE_FILE_NAME[] = "template.txt";
 const char RESULT_FILE_NAME[] = "result.txt";
 
+struct Placeholder {
+    char key[MAX_STRING_LENGTH];
+    char value[MAX_STRING_LENGTH];
+};
+
 void preparePlaceholders() {
     std::ofstream out(PLACEHOLDER_FILE_NAME);
     if (!out.is_open()) {
@@ -100,70 +105,47 @@ size_t getLinesCount(const char fileName[]) {
 }
 
 void getPlaceholdersFromFile(
-    char** placeholderNames,
-    char** placeholderValues,
-    std::ifstream& placeholder,
+    Placeholder* placeholders,
+    std::ifstream& in,
     const size_t placeholdersCount
 ) {
     for (size_t i = 0; i < placeholdersCount; i++) {
         // up to the ' ' to read the name
-        placeholder.getline(placeholderNames[i], MAX_STRING_LENGTH, ' ');
+        in.getline(placeholders[i].key, MAX_STRING_LENGTH, ' ');
         // up to the end of the line to read the value
-        placeholder.getline(placeholderValues[i], MAX_STRING_LENGTH, '\n');
+        in.getline(placeholders[i].value, MAX_STRING_LENGTH, '\n');
     }
 }
 
 void writeReplacementFromPlaceholder(
     const char* name,
     std::ofstream& out,
-    const char* const* placeholderNames,
-    const char* const* placeholderValues,
+    const Placeholder* placeholders,
     const size_t placeholdersCount
 ) {
     for (size_t i = 0; i < placeholdersCount; i++) {
-        if (strCmp(placeholderNames[i], name)) {
-            out << placeholderValues[i];
+        if (strCmp(placeholders[i].key, name)) {
+            out << placeholders[i].value;
         }
     }
 }
 
-void initPlaceholders(char**& placeholderNames, char**& placeholderValues, const size_t placeholdersCount) {
-    placeholderNames = new char* [placeholdersCount];
-    placeholderValues = new char* [placeholdersCount];
-
-    for (size_t i = 0; i < placeholdersCount; i++) {
-        placeholderNames[i] = new char[MAX_STRING_LENGTH];
-        placeholderValues[i] = new char[MAX_STRING_LENGTH];
-    }
-}
-
-void deletePlaceholders(char** placeholderNames, char** placeholderValues, size_t placeholdersCount) {
-    for (size_t i = 0; i < placeholdersCount; i++) {
-        delete[] placeholderNames[i];
-        delete[] placeholderValues[i];
-    }
-
-    delete[] placeholderNames;
-    delete[] placeholderValues;
-}
-
-void readPlaceholders(char**& placeholderNames, char**& placeholderValues, size_t& placeholdersCount) {
+void readPlaceholders(Placeholder*& placeholders, size_t& placeholdersCount) {
     placeholdersCount = getLinesCount(PLACEHOLDER_FILE_NAME);
-    std::ifstream placeholder(PLACEHOLDER_FILE_NAME);
-    if (!placeholder.is_open()) {
+    std::ifstream in(PLACEHOLDER_FILE_NAME);
+    if (!in.is_open()) {
         std::cout << ERROR_MESSAGE;
         return;
     }
 
-    initPlaceholders(placeholderNames, placeholderValues, placeholdersCount);
+    placeholders = new Placeholder[placeholdersCount];
     getPlaceholdersFromFile(
-        placeholderNames,
-        placeholderValues,
-        placeholder,
+        placeholders,
+        in,
         placeholdersCount
     );
 
-    placeholder.close();
+    in.close();
 }
 
 void replacePlaceholders() {
@@ -175,11 +157,10 @@ void replacePlaceholders() {
         return;
     }
 
-    char** placeholderNames = nullptr;
-    char** placeholderValues = nullptr;
+    Placeholder* placeholders = nullptr;
     size_t placeholdersCount = 0;
 
-    readPlaceholders(placeholderNames, placeholderValues, placeholdersCount);
+    readPlaceholders(placeholders, placeholdersCount);
     //for (size_t i = 0; i < placeholdersCount; i++){
     //    std::cout << placeholderNames[i] << " " << placeholderValues[i] << std::endl;
     //}
@@ -198,8 +179,7 @@ void replacePlaceholders() {
             writeReplacementFromPlaceholder(
                 name,
                 out,
-                placeholderNames,
-                placeholderValues,
+                placeholders,
                 placeholdersCount
             );
 
@@ -211,11 +191,10 @@ void replacePlaceholders() {
     in.close();
     out.close();
 
-    deletePlaceholders(placeholderNames, placeholderValues, placeholdersCount);
+    delete[] placeholders;
 }
 
-int main()
-{
+int main() {
     preparePlaceholders();
     prepareTemplate();
 
