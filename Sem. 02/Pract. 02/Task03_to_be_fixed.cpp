@@ -1,144 +1,208 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
-
 const int MAX_STRING_LENGTH = 100;
+const char ERROR_MESSAGE[] = "Error";
+const char PLACEHOLDER_FILE_NAME[] = "placeholder.txt";
+const char TEMPLATE_FILE_NAME[] = "template.txt";
+const char RESULT_FILE_NAME[] = "result.txt";
 
-void preparingFiles() {
-    ofstream placeholder("placeholder.txt");
-
-    if (!placeholder.is_open()) {
-        return;
-    }
-
-    placeholder << "title Veliki" << endl;
-    placeholder << "recipient_name Pop Armeniya" << endl;
-    placeholder << "message Iskam da se oplacha!!! " << endl;
-    placeholder << "sender_name FMI-student" << endl;
-
-    placeholder.close();
-
-    ofstream out("task03.txt");
+void preparePlaceholders() {
+    std::ofstream out(PLACEHOLDER_FILE_NAME);
     if (!out.is_open()) {
         return;
     }
-    out << "Dear, {title} {recipient_name}." << endl;
-    out << "{message}" << endl << endl;
-    out << "Sincerely," << endl;
-    out << "{sender_name}" << endl;
+
+    out << "title Veliki" << std::endl;
+    out << "recipient_name Pop Armeniya" << std::endl;
+    out << "message Iskam da se oplacha!!!" << std::endl;
+    out << "sender_name FMI-student";
 
     out.close();
 }
 
-int strLen(const char* arr) {
-    int count = 0;
+void prepareTemplate() {
+    std::ofstream out(TEMPLATE_FILE_NAME);
+    if (!out.is_open()) {
+        return;
+    }
 
+    out << "Dear, {title} {recipient_name}." << std::endl;
+    out << "{message}" << std::endl << std::endl;
+    out << "Sincerely," << std::endl;
+    out << "{sender_name}" << std::endl;
+
+    out.close();
+}
+
+size_t strLen(const char* arr) {
+    size_t count = 0;
     while (arr[count] != '\0') {
         count++;
     }
+
     return count;
 }
 
-bool strCmp(const char* arr1, const char* arr2) {
-    if (strLen(arr1) != strLen(arr2)) {
+bool strCmp(const char* str1, const char* str2) {
+    size_t str1Length = strLen(str1);
+    size_t str2Length = strLen(str2);
+    if (str1Length != str2Length) {
         return false;
     }
-    unsigned int length = strLen(arr1);
-    for (unsigned int i = 0; i < length; i++) {
-        if (arr1[i] != arr2[i]) {
+
+    for (size_t i = 0; i < str1Length; i++) {
+        if (str1[i] != str2[i]) {
             return false;
         }
     }
+
     return true;
 }
-unsigned getFileLength(ifstream& in)
-{
-    size_t currentPosition = in.tellg();
-    in.seekg(0,ios::beg);
 
-    if (!in.is_open())
-        return 0;
+size_t getCharOccurrences(std::ifstream& in, char ch) {
+    size_t initialPosition = in.tellg();
+    in.seekg(initialPosition, std::ios::beg);
 
-    unsigned int count = 0;
+    size_t occurrences = 0;
+    char current;
 
-    while (true)
-    {
-        char current = in.get();
-        if (in.eof())
+    while (true) {
+        in.get(current);
+
+        if (in.eof()) {
             break;
+        }
 
-        if (current == '\n')
-            count++;
+        if (current == ch) {
+            occurrences++;
+        }
     }
 
     in.clear();
-    in.seekg(currentPosition);
-    return count;
+    in.seekg(initialPosition, std::ios::beg);
+
+    return occurrences;
 }
-void getReplacementValuesInArray(char** type_placeholder, char** replacement, ifstream& placeholder, unsigned int len) {
 
-    for(int i=0;i<len;i++){
-        placeholder.getline(type_placeholder[i], MAX_STRING_LENGTH,' ');
-        placeholder.getline(replacement[i], MAX_STRING_LENGTH);
+size_t getLinesCount(const char fileName[]) {
+    std::ifstream in(fileName);
 
-        if (placeholder.eof()) {
-            break;
+    if (!in.is_open()) {
+        std::cout << ERROR_MESSAGE;
+        return 0;
+    }
+
+    size_t result = getCharOccurrences(in, '\n') + 1;
+    in.close();
+
+    return result;
+}
+
+void getPlaceholdersFromFile(
+    char** placeholderNames,
+    char** placeholderValues,
+    std::ifstream& placeholder,
+    const size_t placeholdersCount
+) {
+    for (size_t i = 0; i < placeholdersCount; i++) {
+        // up to the ' ' to read the name
+        placeholder.getline(placeholderNames[i], MAX_STRING_LENGTH, ' ');
+        // up to the end of the line to read the value
+        placeholder.getline(placeholderValues[i], MAX_STRING_LENGTH, '\n');
+    }
+}
+
+void writeReplacementFromPlaceholder(
+    const char* name,
+    std::ofstream& out,
+    const char* const* placeholderNames,
+    const char* const* placeholderValues,
+    const size_t placeholdersCount
+) {
+    for (size_t i = 0; i < placeholdersCount; i++) {
+        if (strCmp(placeholderNames[i], name)) {
+            out << placeholderValues[i];
         }
     }
 }
-void writeReplacementFromPlaceholder(const char* name, ofstream& out, char** type_placeholder, char** replacement, unsigned int len) {
 
-    for (int i = 0; i < len; i++) {
-        if (strCmp(type_placeholder[i], name)) {
-            out << replacement[i];
-        }
+void initPlaceholders(char**& placeholderNames, char**& placeholderValues, const size_t placeholdersCount) {
+    placeholderNames = new char* [placeholdersCount];
+    placeholderValues = new char* [placeholdersCount];
+
+    for (size_t i = 0; i < placeholdersCount; i++) {
+        placeholderNames[i] = new char[MAX_STRING_LENGTH];
+        placeholderValues[i] = new char[MAX_STRING_LENGTH];
     }
 }
 
-int replacingPlaceholder() {
-
-    ifstream in("task03.txt");
-
-    ofstream out("task03_copy.txt");
-
-    ifstream placeholder("placeholder.txt");
-
-    unsigned int len = getFileLength(placeholder)+1;
-
-    char** type_placeholder = new char*[len];
-    char** replacement = new char*[len];
-
-    for (int i = 0; i < len; i++) {
-        type_placeholder[i] = new char[MAX_STRING_LENGTH];
-        replacement[i] = new char[MAX_STRING_LENGTH];
+void deletePlaceholders(char** placeholderNames, char** placeholderValues, size_t placeholdersCount) {
+    for (size_t i = 0; i < placeholdersCount; i++) {
+        delete[] placeholderNames[i];
+        delete[] placeholderValues[i];
     }
 
-    size_t currentPosition = in.tellg();
+    delete[] placeholderNames;
+    delete[] placeholderValues;
+}
 
-    if (!in.is_open() || !out.is_open() || !placeholder.is_open()) {
-        cout << "Error";
-        return -1;
+void readPlaceholders(char**& placeholderNames, char**& placeholderValues, size_t& placeholdersCount) {
+    placeholdersCount = getLinesCount(PLACEHOLDER_FILE_NAME);
+    std::ifstream placeholder(PLACEHOLDER_FILE_NAME);
+    if (!placeholder.is_open()) {
+        std::cout << ERROR_MESSAGE;
+        return;
     }
 
-    getReplacementValuesInArray(type_placeholder, replacement, placeholder,len);
+    initPlaceholders(placeholderNames, placeholderValues, placeholdersCount);
+    getPlaceholdersFromFile(
+        placeholderNames,
+        placeholderValues,
+        placeholder,
+        placeholdersCount
+    );
 
+    placeholder.close();
+}
+
+void replacePlaceholders() {
+    std::ifstream in(TEMPLATE_FILE_NAME);
+    std::ofstream out(RESULT_FILE_NAME);
+
+    if (!in.is_open() || !out.is_open()) {
+        std::cout << ERROR_MESSAGE;
+        return;
+    }
+
+    char** placeholderNames = nullptr;
+    char** placeholderValues = nullptr;
+    size_t placeholdersCount = 0;
+
+    readPlaceholders(placeholderNames, placeholderValues, placeholdersCount);
+    //for (size_t i = 0; i < placeholdersCount; i++){
+    //    std::cout << placeholderNames[i] << " " << placeholderValues[i] << std::endl;
+    //}
+
+    char current;
     while (true) {
-        placeholder.clear();
-        placeholder.seekg(0, ios::beg);
-
-        char current = in.get();
-
+        in.get(current);
         if (in.eof()) {
             break;
         }
 
         if (current == '{') {
             char name[MAX_STRING_LENGTH];
-
             in.getline(name, MAX_STRING_LENGTH, '}');
 
-            writeReplacementFromPlaceholder(name, out,type_placeholder,replacement,len);
+            writeReplacementFromPlaceholder(
+                name,
+                out,
+                placeholderNames,
+                placeholderValues,
+                placeholdersCount
+            );
+
             continue;
         }
 
@@ -146,11 +210,14 @@ int replacingPlaceholder() {
     }
     in.close();
     out.close();
-    placeholder.close();
+
+    deletePlaceholders(placeholderNames, placeholderValues, placeholdersCount);
 }
 
-int main() {
-    preparingFiles();
+int main()
+{
+    preparePlaceholders();
+    prepareTemplate();
 
-    replacingPlaceholder();
+    replacePlaceholders();
 }
