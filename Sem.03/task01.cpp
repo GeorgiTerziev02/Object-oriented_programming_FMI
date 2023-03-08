@@ -12,8 +12,7 @@ const char* FILE_NAME = "result.dat";
 const char* ERROR_MSG = "Error!";
 const size_t SIZE = 6;
 
-struct Delivery 
-{
+struct Delivery {
 	double price;
 	char address[25];
 };
