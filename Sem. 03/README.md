@@ -72,7 +72,7 @@ int main()
 			return -1;
 		}
 
-		file.write((char*)&t, sizeof(t));
+		file.write((const char*)&t, sizeof(t));
 	}
 
 	{
