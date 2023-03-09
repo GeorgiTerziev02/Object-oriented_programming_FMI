@@ -12,35 +12,38 @@ struct Delivery {
     char address[ADDRESS_MAX_LENGTH];
 };
 
-int stringLength(const char* string) {
+int stringLength(const char* str) {
     int length = 0;
 
-    for (int i = 0; string[i] != '\0'; ++i) {
+    for (int i = 0; str[i] != '\0'; ++i) {
         length++;
     }
 
     return length;
 }
 
-int minStringLength(const char* string1, const char* string2) {
-    int minLength = 0;
+int minStringLength(const char* str1, const char* str2) {
 
-    for (int i = 0; string1[i] != '\0' || string2[i] != '\0'; ++i) {
-        minLength++;
+    if(stringLength(str1) < stringLength(str2)) {
+        return stringLength(str1);
+    } else {
+        return stringLength(str2);
     }
-
-    return minLength;
 }
 
-bool isSecondStringLarger(const char* string1, const char* string2) {
-    int minLength = minStringLength(string1, string2);
+bool isSecondStringLarger(const char* str1, const char* str2) {
+    int minLength = minStringLength(str1, str2);
 
     for (int i = 0; i < minLength; ++i) {
-        if (string1[i] == string2[i]) {
+        if (str1[i] == str2[i]) {
             continue;
         }
 
-        return string1[i] < string2[i];
+        return str1[i] < str2[i];
+    }
+
+    if(stringLength(str2) > minLength) {
+        return true;
     }
 
     return false;
@@ -52,8 +55,6 @@ size_t getFileSize(std::ifstream& in) {
     in.seekg(0, std::ios::end);
     size_t fileSize = in.tellg();
     in.seekg(currentPosition, std::ios::beg);
-
-    in.clear();
 
     return fileSize;
 }
@@ -113,7 +114,7 @@ namespace deliveryFunctions {
     }
 
     void printDeliveryArray(const Delivery* deliveryArray, const size_t arraySize) {
-        
+
         for (int i = 0; i < arraySize; ++i) {
             std::cout << deliveryArray[i].price << " " << deliveryArray[i].address << '\n';
         }
@@ -146,38 +147,54 @@ int main()
     using namespace deliveryFunctions;
 
     std::ofstream out1(UNSORTED_FILE_NAME, std::ios::binary);
-    std::ofstream out2(SORTED_FILE_NAME, std::ios::binary);
 
-    if (!out1.is_open() || !out2.is_open()) {
+    if (!out1.is_open()) {
         std::cerr << ERROR_MESSAGE;
         return 1;
     }
 
     writeDeliveryArrayToFile(out1, deliveries, n);
 
+    out1.close();
+
+    std::ofstream out2(SORTED_FILE_NAME, std::ios::binary);
+
+    if (!out2.is_open()) {
+        std::cerr << ERROR_MESSAGE;
+        return 1;
+    }
+
     writeSortedDeliveryArrayToFile(out2, deliveries, n);
 
-    out1.close();
     out2.close();
 
     std::ifstream in1(UNSORTED_FILE_NAME, std::ios::binary);
-    std::ifstream in2(SORTED_FILE_NAME, std::ios::binary);
 
-    if (!in1.is_open() || !in2.is_open()) {
+    if (!in1.is_open()) {
         std::cerr << ERROR_MESSAGE;
         return 1;
     }
 
     readDeliveryArrayFromFile(in1, deliveryArrayFromUnsortedFile, unsortedArraySize);
-    readDeliveryArrayFromFile(in2, deliveryArrayFromSortedFile, sortedArraySize);
-
     printDeliveryArray(deliveryArrayFromUnsortedFile, unsortedArraySize);
-    printDeliveryArray(deliveryArrayFromSortedFile, sortedArraySize);
-    
+
     in1.close();
+
+    std::ifstream in2(SORTED_FILE_NAME, std::ios::binary);
+
+    if (!in2.is_open()) {
+        std::cerr << ERROR_MESSAGE;
+        return 1;
+    }
+
+    readDeliveryArrayFromFile(in2, deliveryArrayFromSortedFile, sortedArraySize);
+    printDeliveryArray(deliveryArrayFromSortedFile, sortedArraySize);
+
     in2.close();
 
     delete[] deliveries;
+    delete[] deliveryArrayFromUnsortedFile;
+    delete[] deliveryArrayFromSortedFile;
 
     return 0;
 }
