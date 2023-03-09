@@ -212,4 +212,6 @@ int main(){
     }
 
     delete[] searchedOffer;
+
+    return 0;
 }
