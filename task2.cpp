@@ -2,6 +2,7 @@
 #include<fstream>
 #pragma warning (disable: 4996)
 using namespace std;
+const int MAX_SIZE = 25;
 const char fileName[] = "offers.bin";
 const char a = 'a';
 const char i = 'i';
@@ -9,7 +10,7 @@ const char s = 's';
 const char f = 'f';
 const char q = 'q';
 struct Offer {
-	char firmName[25];
+	char firmName[MAX_SIZE];
 	int coworkers;
 	int offDays;
 	long long payment;
@@ -21,7 +22,7 @@ size_t getFileSize(ifstream& f) {
 	size_t size = f.tellg();
 
 	f.seekg(currentPos);
-	return size+1;
+	return size;
 }
 
 void enterAttributes(char* firmName, int& coworkers, int& offDays, long long& payment) {
@@ -31,7 +32,7 @@ void enterAttributes(char* firmName, int& coworkers, int& offDays, long long& pa
 	cin >> coworkers;
 	cout << "How many are the days off:";
 	cin >> offDays;
-	cout << "How big is the payment";
+	cout << "How big is the payment:";
 	cin >> payment;
 	cout << "-------------------------" << endl;
 }
@@ -40,12 +41,7 @@ void createOffer(Offer& offer) {
 	char firmName[25];
 	int collegues,offDays;
 	long long payment;
-	enterAttributes(firmName, collegues, offDays, payment);
-	
-	strcpy(offer.firmName, firmName);
-	offer.coworkers = collegues;
-	offer.offDays = offDays;
-	offer.payment = payment;
+	enterAttributes(offer.firmName, offer.coworkers, offer.offDays, offer.payment);
 }
 
 void writeOneItemTofile(ofstream& out, Offer* offer) {
@@ -74,7 +70,7 @@ void readFromFile(ifstream& in, Offer* offer, int num) {
 }
 void filterOffers(const char* filePath, long long& minSalary) {
 	ifstream in(filePath, ios::binary);
-	size_t numOffers = getFileSize(in) / sizeof(Offer);
+	size_t numOffers = getFileSize(in) / sizeof(Offer)+1;
 	Offer* offers=new Offer[numOffers];
 	for (size_t i = 0; i < numOffers; i++) {
 		readOneItemFromFile(in, &offers[i]);
@@ -88,7 +84,7 @@ void filterOffers(const char* filePath, long long& minSalary) {
 
 void printAllOfferFromFile(const char* filePath) {
 	ifstream in(filePath, ios::binary);
-	size_t numOffers = getFileSize(in) / sizeof(Offer);
+	size_t numOffers = getFileSize(in) / sizeof(Offer)+1;
 	Offer* offers = new Offer[numOffers];
 	for (size_t i = 0; i < numOffers; i++) {
 		readOneItemFromFile(in, &offers[i]);

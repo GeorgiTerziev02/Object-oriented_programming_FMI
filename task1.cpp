@@ -1,66 +1,85 @@
 #include<iostream>
 #include<fstream>
 using namespace std;
+
+const int n = 2;
+const char fileName[10] = "order.dat";
+
 struct Order {
 	char address[25];
 	double price;
 };
-size_t getFileSize(ifstream& f) {
-	size_t currentPos = f.tellg();
-	f.seekg(0, ios::end);
-	size_t size = f.tellg();
 
-	f.seekg(currentPos);
+size_t getFileSize(ifstream& in) {
+	size_t currentPos = in.tellg();
+	in.seekg(0, ios::end);
+	size_t size = in.tellg();
+
+	in.seekg(currentPos);
 	return size;
 }
-void writeOneItemTofile(ofstream& out,Order* order) {
-	out.write((const char*)&order->address, sizeof(order->address));
-	out.write((const char*)&order->price, sizeof(order->price));
-}
+
 void writeToFile(ofstream& out,Order* order,int num) {
-	for (int i = 0; i < num; i++) {
-		writeOneItemTofile(out, &order[i]);
+	if (!out.is_open()) {
+		return;
 	}
+	out.write((const char*)&order, sizeof(order) * num);
 }
-void readOneItemFromFile(ifstream& in, Order* order) {
-	in.read((char*)&order->address, sizeof(order->address));
-	in.read((char*)&order->price, sizeof(order->price));
-}
+
 void readFromFile(ifstream& in,Order* order,int num) {
-	for (int i = 0; i < num; i++) {
-		readOneItemFromFile(in, &order[i]);
+	if (!in.is_open()) {
+		return;
 	}
+	in.read((char*)&order, sizeof(order) * num);
 }
+
 void swap(Order& a, Order& b) {
 	Order temp = a;
 	a = b;
 	b = temp;
 }
-void selectionSort(Order* order, size_t length) {
+
+int strCmp(const char* arr1,const  char* arr2)
+{
+	for (int i = 0; ; i++)
+	{
+		if (arr1[i] != arr2[i])
+		{
+			return arr1[i] < arr2[i] ? -1 : 1;
+		}
+
+		if (arr1[i] == '\0')
+		{
+			return 0;
+		}
+	}
+}
+
+void selectionSort(Order* orders, size_t length) {
 	for (size_t i = 0; i < length - 1; i++) {
 		size_t minIndex = i;
 		for (size_t j = i + 1; j < length; j++) {
-			if (order[minIndex].address < order[j].address) {
+			if (strCmp(orders[i].address,orders[minIndex].address)==-1) {
 				minIndex = j;
 			}
 		}
 
 		if (minIndex != i) {
-			swap(order[i], order[minIndex]);
+			swap(orders[i], orders[minIndex]);
 		}
 	}
 }
+
 int main() {
-	int n = 2;
 	Order orders[2] = { {"ac",5.25}, {"ab",10.25} };
 	
-	ofstream out("order.dat", ios::binary);
+	ofstream out(fileName, ios::binary);
 	writeToFile(out,orders,n);
 	out.close();
 	
 	Order ordersTwo[2];
 	
-	ifstream in("order.dat", ios::binary);
+	ifstream in(fileName, ios::binary);
 	if (!in.is_open()) {
 		return -1;
 	}
@@ -71,18 +90,19 @@ int main() {
 	
 	in.close();
 
-	selectionSort(ordersTwo, 2);
+	selectionSort(ordersTwo, n);
 	
-	ofstream writeSorted("order.dat", ios::binary);
+	ofstream writeSorted(fileName, ios::binary | ios::trunc);
 	writeToFile(out, ordersTwo, n);
 	writeSorted.close();
 
-	ifstream readSorted("order.dat", ios::binary);
+	ifstream readSorted(fileName, ios::binary);
 
 
 	readFromFile(in, ordersTwo, n);
+	
+	readSorted.close();
 
 	cout << ordersTwo[0].address << " " << ordersTwo[0].price << endl;
 	cout << ordersTwo[1].address << " " << ordersTwo[1].price << endl;
-	readSorted.close();
 }
