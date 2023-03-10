@@ -23,16 +23,19 @@ int stringLength(const char* str) {
 }
 
 int minStringLength(const char* str1, const char* str2) {
+    int length1 = stringLength(str1);
+    int length2 = stringLength(str2);
 
-    if(stringLength(str1) < stringLength(str2)) {
-        return stringLength(str1);
+    if(length1 < length2) {
+        return length1;
     } else {
-        return stringLength(str2);
+        return length2;
     }
 }
 
 bool isSecondStringLarger(const char* str1, const char* str2) {
     int minLength = minStringLength(str1, str2);
+    int length2 = stringLength(str2);
 
     for (int i = 0; i < minLength; ++i) {
         if (str1[i] == str2[i]) {
@@ -42,7 +45,7 @@ bool isSecondStringLarger(const char* str1, const char* str2) {
         return str1[i] < str2[i];
     }
 
-    if(stringLength(str2) > minLength) {
+    if(length2 > minLength) {
         return true;
     }
 
@@ -75,7 +78,7 @@ namespace deliveryFunctions {
         delivery2 = temp;
     }
 
-    void selectionSort(Delivery* deliveryArray, const size_t arraySize) {
+    void selectionSort(Delivery* deliveryArray, size_t arraySize) {
         for (int i = 0; i < arraySize - 1; ++i) {
             int minIndex = i;
 
@@ -93,17 +96,12 @@ namespace deliveryFunctions {
         }
     }
 
-    void initializeDelivery(Delivery& delivery, const double price, const char* address) {
+    void initializeDelivery(Delivery& delivery, double price, const char* address) {
         delivery.price = price;
         assignAddress(delivery, address);
     }
 
-    void writeDeliveryArrayToFile(std::ofstream& out, const Delivery* deliveryArray, const size_t arraySize) {
-        out.write((const char*)deliveryArray, sizeof(Delivery) * arraySize);
-    }
-
-    void writeSortedDeliveryArrayToFile(std::ofstream& out, Delivery* deliveryArray, const size_t arraySize) {
-        selectionSort(deliveryArray, arraySize);
+    void writeDeliveryArrayToFile(std::ofstream& out, const Delivery* deliveryArray, size_t arraySize) {
         out.write((const char*)deliveryArray, sizeof(Delivery) * arraySize);
     }
 
@@ -113,7 +111,7 @@ namespace deliveryFunctions {
         in.read((char*)deliveryArray, sizeof(Delivery) * arraySize);
     }
 
-    void printDeliveryArray(const Delivery* deliveryArray, const size_t arraySize) {
+    void printDeliveryArray(const Delivery* deliveryArray, size_t arraySize) {
 
         for (int i = 0; i < arraySize; ++i) {
             std::cout << deliveryArray[i].price << " " << deliveryArray[i].address << '\n';
@@ -122,8 +120,7 @@ namespace deliveryFunctions {
 
 }
 
-int main()
-{
+int main() {
     size_t n = 0;
     double price = 0;
     char* address = new char[ADDRESS_MAX_LENGTH];
@@ -164,7 +161,8 @@ int main()
         return 1;
     }
 
-    writeSortedDeliveryArrayToFile(out2, deliveries, n);
+    selectionSort(deliveries, n);
+    writeDeliveryArrayToFile(out2, deliveries, n);
 
     out2.close();
 
@@ -176,7 +174,6 @@ int main()
     }
 
     readDeliveryArrayFromFile(in1, deliveryArrayFromUnsortedFile, unsortedArraySize);
-    printDeliveryArray(deliveryArrayFromUnsortedFile, unsortedArraySize);
 
     in1.close();
 
@@ -188,11 +185,14 @@ int main()
     }
 
     readDeliveryArrayFromFile(in2, deliveryArrayFromSortedFile, sortedArraySize);
-    printDeliveryArray(deliveryArrayFromSortedFile, sortedArraySize);
 
     in2.close();
 
+    printDeliveryArray(deliveryArrayFromUnsortedFile, unsortedArraySize);
+    printDeliveryArray(deliveryArrayFromSortedFile, sortedArraySize);
+
     delete[] deliveries;
+    delete[] address;
     delete[] deliveryArrayFromUnsortedFile;
     delete[] deliveryArrayFromSortedFile;
 
