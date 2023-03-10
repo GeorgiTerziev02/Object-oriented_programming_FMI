@@ -2,6 +2,7 @@
 #include <fstream>
 
 const char* FILE_NAME = "jobOffers.bin";
+const char* PERFECT_OFFERS_FILE_NAME = "perfectJobOffers.txt";
 const char* ERROR_MESSAGE = "Error";
 
 const int MAX_NAME_LENGTH = 25;
@@ -53,27 +54,8 @@ size_t getFileSize(std::ifstream& in) {
 
 namespace jobOfferFunctions {
 
-    void assignName(JobOffer& jobOffer, const char* name) {
-        int length = stringLength(name) + 1;
-
-        for (int i = 0; i < length; ++i) {
-            jobOffer.name[i] = name[i];
-        }
-    }
-
-    void initializeJobOffer(JobOffer& jobOffer, const char* name, const int programmerCount, const int days, const long long salary) {
-        assignName(jobOffer, name);
-        jobOffer.coworkerCount = programmerCount;
-        jobOffer.vacancyDays = days;
-        jobOffer.salary = salary;
-    }
-
-    void writeJobOfferToFile(const size_t arraySize) {
+    void writeJobOfferToFile(size_t arraySize) {
         JobOffer jobOffer = {};
-        char* name = new char[MAX_NAME_LENGTH];
-        int programmerCount = 0;
-        int days = 0;
-        long long salary = 0;
 
         std::ofstream out(FILE_NAME, std::ios::out | std::ios::app);
 
@@ -83,20 +65,24 @@ namespace jobOfferFunctions {
         }
 
         for(int i = 0; i < arraySize; ++i) {
-            std::cin.getline(name, MAX_NAME_LENGTH);
-            std::cin >> programmerCount;
-            std::cin >> days;
-            std::cin >> salary;
-            std::cin.ignore();
+            std::cout << "Input job name (" << i + 1 << "):";
+            std::cin.getline(jobOffer.name, MAX_NAME_LENGTH);
 
-            initializeJobOffer(jobOffer, name, programmerCount, days, salary);
+            std::cout << "Input job coworker count (" << i + 1 << "):";
+            std::cin >> jobOffer.coworkerCount;
+
+            std::cout << "Input job vacancy days (" << i + 1 << "):";
+            std::cin >> jobOffer.vacancyDays;
+
+            std::cout << "Input job salary (" << i + 1 << "):";
+            std::cin >> jobOffer.salary;
+
+            std::cin.ignore();
 
             out.write((const char*) &jobOffer, sizeof(JobOffer));
         }
 
         out.close();
-
-        delete[] name;
     }
 
     void filterOffers(const char* filePath, long long minSalary) {
@@ -165,10 +151,12 @@ namespace jobOfferFunctions {
         for(int i = 0; i < numberOfJobOffers; ++i) {
             in.read((char*) &jobOffer, sizeof(JobOffer));
 
-            if(jobOffer.coworkerCount <= maxCoworkers) {
-                if(jobOffer.vacancyDays >= minVacancyDays && jobOffer.salary >= minSalary) {
-                    std::cout << jobOffer.name << " is a perfect offer." << std::endl;
-                }
+            if(jobOffer.coworkerCount <= maxCoworkers && jobOffer.vacancyDays >= minVacancyDays && jobOffer.salary >= minSalary) {
+                std::ofstream out(PERFECT_OFFERS_FILE_NAME);
+
+                out << jobOffer.name << " is a perfect offer." << '\n';
+
+                out.close();
             }
         }
 
@@ -190,11 +178,21 @@ int main(){
     long long minSalary = 0;
     char* searchedOffer = new char[MAX_NAME_LENGTH];
 
+    std::cout << "Input number of job offers:";
     std::cin >> n;
+
+    std::cout << "Input preferred maximum number of coworkers:";
     std::cin >> maxCoworkers;
+
+    std::cout << "Input preferred minimum vacancy days:";
     std::cin >> minVacancyDays;
+
+    std::cout << "Input preferred minimum salary:";
     std::cin >> minSalary;
+
     std::cin.ignore();
+
+    std::cout << "Input searched offer name:";
     std::cin.getline(searchedOffer, MAX_NAME_LENGTH);
 
     using namespace jobOfferFunctions;
