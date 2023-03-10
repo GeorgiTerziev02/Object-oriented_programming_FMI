@@ -305,7 +305,7 @@ struct Student {
 
 size_t getFileSize(ifstream& f) {
 	size_t currentPos = f.tellg();
-	f.seekg(0, ios::end);
+	f.seekg(0, std::ios::end);
 	size_t size = f.tellg();
 
 	f.seekg(currentPos);
@@ -393,7 +393,7 @@ int main()
 Нека имаме двоичен файл, myData.dat, който се е получил след изпълнението на следния c++ код: 
  ```c++
 int x = 25409;
-ofstream file(“myData.dat”, ios::binary);
+ofstream file(“myData.dat”, std::ios::binary);
 file.write( (const char*)&x, sizeof(x));
 ```
 
