@@ -168,12 +168,6 @@ namespace jobOfferFunctions {
         in.close();
     }
 
-    void deleteFileContent(const char* filePath) {
-        std::ofstream out(filePath, std::ios::out | std::ios::trunc);
-
-        out.close();
-    }
-
 }
 
 int main(){
