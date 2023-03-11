@@ -154,6 +154,11 @@ namespace jobOfferFunctions {
             if(jobOffer.coworkerCount <= maxCoworkers && jobOffer.vacancyDays >= minVacancyDays && jobOffer.salary >= minSalary) {
                 std::ofstream out(PERFECT_OFFERS_FILE_NAME);
 
+                if(!out.is_open()) {
+                    std::cerr << ERROR_MESSAGE;
+                    return;
+                }
+
                 out << jobOffer.name << " is a perfect offer." << '\n';
 
                 out.close();
