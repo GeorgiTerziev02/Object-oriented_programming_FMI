@@ -26,11 +26,7 @@ int minStringLength(const char* str1, const char* str2) {
     int length1 = stringLength(str1);
     int length2 = stringLength(str2);
 
-    if(length1 < length2) {
-        return length1;
-    } else {
-        return length2;
-    }
+    return length1 < length2 ? length1 : length2;
 }
 
 bool isSecondStringLarger(const char* str1, const char* str2) {
