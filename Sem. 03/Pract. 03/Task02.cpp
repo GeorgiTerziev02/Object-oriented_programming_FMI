@@ -1,214 +1,227 @@
-#include <iostream>
-#include <fstream>
+// Solution by Stoycho Kyosev
 
-const char* FILE_NAME = "jobOffers.bin";
-const char* PERFECT_OFFERS_FILE_NAME = "perfectJobOffers.txt";
-const char* ERROR_MESSAGE = "Error";
+#include<iostream>
+#include<fstream>
+#include<cstring>
 
-const int MAX_NAME_LENGTH = 25;
+// Fix problems with strcpy in visual studio
+#pragma warning (disable : 4996)
 
-struct JobOffer {
-    char name[MAX_NAME_LENGTH];
-    int coworkerCount;
-    int vacancyDays;
-    long long salary;
+const int MAX_LENGTH = 25;
+const char FILE_PATH[] = "offers-database.txt";
+
+// Clear std::cin
+void flushStream() {
+	std::cin.clear();
+	std::cin.ignore(255, '\n');
+}
+
+struct jobOffer {
+	char name[MAX_LENGTH + 1];
+	int peopleCount;
+	int restDaysCount;
+	long long salary;
 };
 
-int stringLength(const char* string) {
-    int length = 0;
+jobOffer createOffer(char name[MAX_LENGTH], int colCount, int restDays, long long salary) {
+	jobOffer toReturn;
+	strcpy(toReturn.name, name);
+	toReturn.peopleCount = colCount;
+	toReturn.restDaysCount = restDays;
+	toReturn.salary = salary;
 
-    for (int i = 0; string[i] != '\0'; ++i) {
-        length++;
-    }
-
-    return length;
+	return toReturn;
 }
 
-bool areStringsEqual(const char* str1, const char* str2) {
-    int length1 = stringLength(str1);
-    int length2 = stringLength(str2);
+// Read offer from stdin
+jobOffer readOffer() {
+	std::cout << "Enter company name [max " << MAX_LENGTH << " symbols!]: ";
+	char name[MAX_LENGTH + 1];
+	int colCount = 0;
+	int restDays = 0;
+	long long salary = 0;
 
-    if(length1 != length2) {
-        return false;
-    }
+	std::cin.getline(name, MAX_LENGTH + 1, '\n');
+	std::cout << "Add colleague count: ";
+	std::cin >> colCount;
+	std::cout << "Add rest days: ";
+	std::cin >> restDays;
+	std::cout << "Add salary: ";
+	std::cin >> salary;
 
-    for(int i = 0; i < length1; ++i) {
-
-        if(str1[i] != str2[i]) {
-            return false;
-        }
-    }
-
-    return true;
+	flushStream();
+	return createOffer(name, colCount, restDays, salary);
 }
 
-size_t getFileSize(std::ifstream& in) {
-
-    size_t currentPosition = in.tellg();
-    in.seekg(0, std::ios::end);
-    size_t fileSize = in.tellg();
-    in.seekg(currentPosition, std::ios::beg);
-
-    return fileSize;
+void saveOfferToFile(std::ofstream& outFile, const jobOffer& offer) {
+	outFile.write((const char*)&offer, sizeof(offer));
 }
 
-namespace jobOfferFunctions {
-
-    void writeJobOfferToFile(size_t arraySize) {
-        JobOffer jobOffer = {};
-
-        std::ofstream out(FILE_NAME, std::ios::out | std::ios::app);
-
-        if(!out.is_open()) {
-            std::cerr << ERROR_MESSAGE;
-            return;
-        }
-
-        for(int i = 0; i < arraySize; ++i) {
-            std::cout << "Input job name (" << i + 1 << "):";
-            std::cin.getline(jobOffer.name, MAX_NAME_LENGTH);
-
-            std::cout << "Input job coworker count (" << i + 1 << "):";
-            std::cin >> jobOffer.coworkerCount;
-
-            std::cout << "Input job vacancy days (" << i + 1 << "):";
-            std::cin >> jobOffer.vacancyDays;
-
-            std::cout << "Input job salary (" << i + 1 << "):";
-            std::cin >> jobOffer.salary;
-
-            std::cin.ignore();
-
-            out.write((const char*) &jobOffer, sizeof(JobOffer));
-        }
-
-        out.close();
+void drawLine(int length) {
+	for (int i = 0; i < length + 13; i++) {
+		std::cout << '-';
     }
-
-    void filterOffers(const char* filePath, long long minSalary) {
-        JobOffer jobOffer = {};
-
-        std::ifstream in(filePath);
-
-        if(!in.is_open()) {
-            std::cerr << ERROR_MESSAGE;
-            return;
-        }
-
-        size_t fileSize = getFileSize(in);
-        size_t numberOfJobOffers = fileSize / sizeof(JobOffer);
-
-        for(int i = 0; i < numberOfJobOffers; ++i) {
-            in.read((char*) &jobOffer, sizeof(JobOffer));
-
-            if(jobOffer.salary >= minSalary) {
-                std::cout << jobOffer.name << " meets the salary criterion." << std::endl;
-            }
-        }
-
-        in.close();
-    }
-
-    bool existOffer(const char* filePath, const char* name) {
-        JobOffer jobOffer = {};
-
-        std::ifstream in(filePath);
-
-        if(!in.is_open()) {
-            std::cerr << ERROR_MESSAGE;
-            return false;
-        }
-
-        size_t fileSize = getFileSize(in);
-        size_t numberOfJobOffers = fileSize / sizeof(JobOffer);
-
-        for(int i = 0; i < numberOfJobOffers; ++i) {
-            in.read((char*) &jobOffer, sizeof(JobOffer));
-
-            if(areStringsEqual(jobOffer.name, name)) {
-                in.close();
-                return true;
-            }
-        }
-
-        in.close();
-        return false;
-    }
-
-    void perfectOffer(const char* filePath, int maxCoworkers, int minVacancyDays, long long minSalary) {
-        JobOffer jobOffer = {};
-
-        std::ifstream in(filePath);
-
-        if(!in.is_open()) {
-            std::cerr << ERROR_MESSAGE;
-            return;
-        }
-
-        size_t fileSize = getFileSize(in);
-        size_t numberOfJobOffers = fileSize / sizeof(JobOffer);
-
-        for(int i = 0; i < numberOfJobOffers; ++i) {
-            in.read((char*) &jobOffer, sizeof(JobOffer));
-
-            if(jobOffer.coworkerCount <= maxCoworkers && jobOffer.vacancyDays >= minVacancyDays && jobOffer.salary >= minSalary) {
-                std::ofstream out(PERFECT_OFFERS_FILE_NAME);
-
-                if(!out.is_open()) {
-                    std::cerr << ERROR_MESSAGE;
-                    return;
-                }
-
-                out << jobOffer.name << " is a perfect offer." << '\n';
-
-                out.close();
-            }
-        }
-
-        in.close();
-    }
-
+	std::cout << std::endl;
 }
 
-int main(){
-    size_t n = 0;
-    int maxCoworkers = 0;
-    int minVacancyDays = 0;
-    long long minSalary = 0;
-    char* searchedOffer = new char[MAX_NAME_LENGTH];
+void printOffer(const jobOffer& j) {
+	int nameLen = strlen(j.name);
+	drawLine(nameLen);
+	std::cout << "Company name: " << j.name <<
+		"\nPeople in team: " << j.peopleCount <<
+		"\nRest days: " << j.restDaysCount <<
+		"\nSalary: " << j.salary << std::endl;
+	drawLine(nameLen);
+	std::cout << std::endl;
+}
 
-    std::cout << "Input number of job offers:";
-    std::cin >> n;
+void readOffer(std::ifstream& inFile, jobOffer& toRead) {
+	inFile.read((char*)&toRead, sizeof(toRead));
+}
 
-    std::cout << "Input preferred maximum number of coworkers:";
-    std::cin >> maxCoworkers;
+void addOffers(const char* filePath, int n) {
+	std::ofstream outFile(filePath, std::ios::binary | std::ios::app);
+	if (!outFile) {
+		std::cerr << "Problem with oppening file " << filePath;
+		return;
+	}
 
-    std::cout << "Input preferred minimum vacancy days:";
-    std::cin >> minVacancyDays;
+	for (int i = 0; i < n; i++) {
+		jobOffer toWrite = readOffer();
+		saveOfferToFile(outFile, toWrite);
+	}
 
-    std::cout << "Input preferred minimum salary:";
-    std::cin >> minSalary;
+	outFile.close();
+}
 
-    std::cin.ignore();
+void filterOffers(const char* filePath, long long minSalary) {
+	std::ifstream inFile(filePath, std::ios::binary);
+	if (!inFile) {
+		std::cerr << "Error";
+		return;
+	}
 
-    std::cout << "Input searched offer name:";
-    std::cin.getline(searchedOffer, MAX_NAME_LENGTH);
+	// Same as !inFile.eof()
+	while (inFile) {
+		jobOffer toRead;
+		readOffer(inFile, toRead);
+		if (!inFile) {
+			break;
+        }
+		if (toRead.salary >= minSalary) {
+			printOffer(toRead);
+        }
+	}
 
-    using namespace jobOfferFunctions;
+	inFile.close();
+}
 
-    writeJobOfferToFile(n);
+bool searchOffer(const char* filePath, const char* name) {
+	std::ifstream inFile(filePath, std::ios::binary);
+	if (!inFile) {
+		std::cerr << "Error";
+		return false;
+	}
 
-    filterOffers(FILE_NAME, minSalary);
+	while (inFile) {
+		jobOffer toRead;
+		readOffer(inFile, toRead);
+		if (!inFile) {
+			break;
+        }
+		if (!strcmp(toRead.name, name)) {
+			inFile.close();
+			return true;
+		}
+	}
 
-    perfectOffer(FILE_NAME, maxCoworkers, minVacancyDays, minSalary);
+	inFile.close();
+	return false;
+}
 
-    if(existOffer(FILE_NAME, searchedOffer)) {
-        std::cout << searchedOffer << " is in offers.";
-    } else {
-        std::cout << searchedOffer << " isn't in offers.";
-    }
+bool isPerfect(const jobOffer& j, int maxCoworkers, int minVacancyDays, int minSalary) {
+	return j.peopleCount <= maxCoworkers && j.restDaysCount >= minVacancyDays && j.salary >= minSalary;
+}
 
-    delete[] searchedOffer;
+void saveOfferToTextFile(std::ofstream& outFile, const jobOffer& j) {
+	outFile << j.name << " " << j.peopleCount << " " << j.restDaysCount << " " << j.salary << std::endl;
+}
 
-    return 0;
+void perfectOffer(const char* filePath, int maxCoworkers, int minVacancyDays, int minSalary) {
+	std::ifstream inFile(filePath, std::ios::binary);
+	std::ofstream outFile("perfect.txt", std::ios::app);
+	if (!inFile || !outFile) {
+		std::cerr << "Error";
+		return;
+	}
+
+	while (inFile) {
+		jobOffer toRead;
+		readOffer(inFile, toRead);
+		if (!inFile) {
+			break;
+        }
+		if (isPerfect(toRead, maxCoworkers, minVacancyDays, minSalary)) {
+			saveOfferToTextFile(outFile, toRead);
+        }
+	}
+
+	inFile.close();
+    outFile.close();
+}
+
+void printAll(const char* filePath) {
+	std::ifstream inFile(filePath, std::ios::binary);
+	if (!inFile) {
+		std::cerr << "Error";
+		return;
+	}
+
+	// eq to !inFile.eof()
+	while (inFile) {
+		jobOffer toRead;
+		readOffer(inFile, toRead);
+		if (!inFile) {
+			break;
+        }
+		printOffer(toRead);
+	}
+
+	inFile.close();
+}
+
+void runSystem(const char* filePath = FILE_PATH) {
+	bool running = true;
+	while (running) {
+		char c;
+		std::cin.get(c);
+
+		switch (c) {
+		case 'a':
+			flushStream();
+			addOffers(filePath, 1);
+			break;
+		case 'f':
+			long long salary;
+			std::cin >> salary;
+			filterOffers(filePath, salary);
+			break;
+		case 's':
+			flushStream();
+			char name[MAX_LENGTH];
+			std::cin.getline(name, MAX_LENGTH, '\n');
+			if (searchOffer(filePath, name))
+				std::cout << "Offer exist\n";
+			else
+				std::cout << "No such offer\n";
+			break;
+		case 'q': running = false; break;
+		case 'i': printAll(filePath); break;
+		default:break;
+		}
+	}
+}
+
+int main() {
+	runSystem();
 }

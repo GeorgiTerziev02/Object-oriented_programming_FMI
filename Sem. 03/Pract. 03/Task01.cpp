@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#pragma warning (disable: 4996)
 
 const char* UNSORTED_FILE_NAME = "unsortedDeliveries.bin";
 const char* SORTED_FILE_NAME = "sortedDeliveries.bin";
@@ -9,47 +10,23 @@ const int ADDRESS_MAX_LENGTH = 25;
 
 struct Delivery {
     double price;
-    char address[ADDRESS_MAX_LENGTH];
+    char address[ADDRESS_MAX_LENGTH + 1];
 };
 
-int stringLength(const char* str) {
-    int length = 0;
-
-    for (int i = 0; str[i] != '\0'; ++i) {
-        length++;
-    }
-
-    return length;
-}
-
-int minStringLength(const char* str1, const char* str2) {
-    int length1 = stringLength(str1);
-    int length2 = stringLength(str2);
-
-    return length1 < length2 ? length1 : length2;
-}
-
 bool isSecondStringLarger(const char* str1, const char* str2) {
-    int minLength = minStringLength(str1, str2);
-    int length2 = stringLength(str2);
-
-    for (int i = 0; i < minLength; ++i) {
-        if (str1[i] == str2[i]) {
-            continue;
+    size_t i = 0;
+    while (str1[i] == str2[i]) {
+        if (str1[i] == '\0') {
+            return false;
         }
 
-        return str1[i] < str2[i];
+        i++;
     }
 
-    if(length2 > minLength) {
-        return true;
-    }
-
-    return false;
+    return str1[i] - str2[i] < 0;
 }
 
 size_t getFileSize(std::ifstream& in) {
-
     size_t currentPosition = in.tellg();
     in.seekg(0, std::ios::end);
     size_t fileSize = in.tellg();
@@ -61,11 +38,13 @@ size_t getFileSize(std::ifstream& in) {
 namespace deliveryFunctions {
 
     void assignAddress(Delivery& delivery, const char* address) {
-        int length = stringLength(address) + 1;
+        int length = strlen(address);
 
-        for (int i = 0; i < length; ++i) {
-            delivery.address[i] = address[i];
+        if(length > ADDRESS_MAX_LENGTH) {
+            return;
         }
+
+	    strcpy(delivery.address, address);
     }
 
     void swapDeliveries(Delivery& delivery1, Delivery& delivery2) {
@@ -77,9 +56,7 @@ namespace deliveryFunctions {
     void selectionSort(Delivery* deliveryArray, size_t arraySize) {
         for (int i = 0; i < arraySize - 1; ++i) {
             int minIndex = i;
-
             for (int j = i + 1; j < arraySize; ++j) {
-
                 if (isSecondStringLarger(deliveryArray[j].address, deliveryArray[minIndex].address)) {
                     minIndex = j;
                 }
@@ -108,7 +85,6 @@ namespace deliveryFunctions {
     }
 
     void printDeliveryArray(const Delivery* deliveryArray, size_t arraySize) {
-
         for (int i = 0; i < arraySize; ++i) {
             std::cout << deliveryArray[i].price << " " << deliveryArray[i].address << '\n';
         }
@@ -191,6 +167,4 @@ int main() {
     delete[] address;
     delete[] deliveryArrayFromUnsortedFile;
     delete[] deliveryArrayFromSortedFile;
-
-    return 0;
 }
