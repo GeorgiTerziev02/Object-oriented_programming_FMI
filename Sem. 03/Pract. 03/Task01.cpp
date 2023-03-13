@@ -5,23 +5,17 @@ const char* OUTPUT_FILE_NAME = "sorted.bin";
 const char* FILE_NAME = "orders.txt";
 
 const int MAX_SIZE = 25;
+const int MAX_ORDERS_SIZE = 1024;
 
 struct Order {
     char address[MAX_SIZE];
     double price;
-};
-
-void saveOrder(std::ofstream& file, const Order& order) {
-    file.write((const char*) order.address, MAX_SIZE);
-    file.write((const char*) &order.price, sizeof(double));
-}
+};  // 40 bytes
 
 void saveOrdersToFile(std::ofstream& file, const Order* orders, const int ordersCount) {
     file.write((const char*) &ordersCount, sizeof(int));
 
-    for (int i = 0; i < ordersCount; ++i) {
-        saveOrder(file, orders[i]);
-    }
+    file.write((const char*) orders, sizeof(Order) * ordersCount);
 }
 
 void saveOrderToCSV(std::ofstream& file, const Order& order) {
@@ -36,17 +30,10 @@ void saveOrdersToTxtCSV(std::ofstream& file, const Order* orders, const int orde
     }
 }
 
-void readOrder(std::ifstream& file, Order& order) {
-    file.read((char*) order.address, MAX_SIZE);
-    file.read((char*) &order.price, sizeof(double));
-}
-
 void readOrdersFromFile(std::ifstream& file, Order* orders, int& ordersCount) {
     file.read((char*) &ordersCount, sizeof(int));
 
-    for (int i = 0; i < ordersCount; ++i) {
-        readOrder(file, orders[i]);
-    }
+    file.read((char*) orders, sizeof(Order) * ordersCount);
 }
 
 void printOrders(const Order* orders, const int ordersCount) {
@@ -63,8 +50,12 @@ void swap(Order& order1, Order& order2) {
 
 char getLowerCase(const char ch) {
     int chIntValue = (int) ch;
-    if (65 <= chIntValue && chIntValue <= 90)
-        chIntValue += 32;
+    int AValue = (int) 'A';
+    int ZValue = (int) 'Z';
+    int aToADiff = 32;
+
+    if (AValue <= chIntValue && chIntValue <= ZValue)
+        chIntValue += aToADiff;
 
     return (char) chIntValue;
 }
@@ -77,7 +68,7 @@ bool compareLexicographically(const char* str1, const char* str2) {
         char ch1 = getLowerCase(str1[i]);
         char ch2 = getLowerCase(str2[i]);
 
-        if ((int) ch1 == (int) ch2)
+        if (ch1 == ch2)
             continue;
 
         return (int) ch1 < (int) ch2;
@@ -132,7 +123,7 @@ char getCommand() {
 
 int runProgram() {
     int ordersCount;
-    Order orders[1024] = {};
+    Order orders[MAX_ORDERS_SIZE] = {};
 
     {
         std::ifstream in(OUTPUT_FILE_NAME, std::ios::binary);
