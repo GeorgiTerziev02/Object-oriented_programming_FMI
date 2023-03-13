@@ -11,9 +11,10 @@ using std::ios;
 
 const int MAX_COMPANY_NAME_LEN = 25;
 const char* ERROR_MS = "Error!";
-const char* BINARY_FILE_NAME = "JobOffers.dat";
+const char* BINARY_FILE_NAME = "JobOffers.bin";
 const long long MIN_SALARY = 1234;
-const char* PERFECT_OFFERS = "perfectOffers.dat";
+const char* PERFECT_OFFERS = "perfectOffers.bin";
+const int MAX_OFFERS = 100;
 
 namespace myFunctions
 {
@@ -68,7 +69,7 @@ struct JobOffer
 	long long projectSalary;
 };
 
-void initJobOffer(JobOffer& offer,const char* name, int coworkers, int daysOff, long long salary)
+void initJobOffer(JobOffer& offer, const char* name, int coworkers, int daysOff, long long salary)
 {
 	myFunctions::myStrCopy(name, offer.companyName);
 	offer.coworkersCount = coworkers;
@@ -81,10 +82,27 @@ void saveToFile(const JobOffer& offer, ofstream& ofs)
 	ofs.write((const char*)&offer, sizeof(offer));
 }
 
-void clearBinaryFile(const char* filePath) 
+void clearBinaryFile(const char* filePath)
 {
 	ofstream ofs(filePath, ios::out | ios::binary | ios::trunc);
 	ofs.close();
+}
+
+void addJobOffers(JobOffer* jobOffers, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Job offer: " << i + 1 << endl << "Enter company name: " << endl;
+		cin.getline(jobOffers[i].companyName, MAX_COMPANY_NAME_LEN + 1);
+		cout << "Enter coworkers count: " << endl;
+		cin >> jobOffers[i].coworkersCount;
+		cout << "Enter paid leave days: " << endl;
+		cin >> jobOffers[i].paidPaysOff;
+		cout << "Enter project pay: " << endl;
+		cin >> jobOffers[i].projectSalary;
+
+		cin.ignore();
+	}
 }
 
 size_t getFileSize(ifstream& ifs)
@@ -125,12 +143,12 @@ void filterOffers(const char* fileName, long long minSalary)
 		}
 	}
 	in.close();
-	
+
 }
 
 bool existOffer(const char* fileName, const char* companyName)
 {
-	JobOffer jobOffer;
+	JobOffer jobOffer = {};
 	ifstream in(fileName);
 
 	if (!in.is_open())
@@ -154,7 +172,9 @@ bool existOffer(const char* fileName, const char* companyName)
 	in.close();
 	return false;
 }
+
 //Bonus 1
+
 void perfectOffer(const char* filePath, int maxCoworkers, int minVacancyDays, int minSalary) {
 	ifstream fileIn(filePath, ios::binary);
 
@@ -166,7 +186,7 @@ void perfectOffer(const char* filePath, int maxCoworkers, int minVacancyDays, in
 	ofstream fileOut(PERFECT_OFFERS, ios::binary);
 
 	if (!fileOut.is_open()) {
-		cout  << ERROR_MS << endl;
+		cout << ERROR_MS << endl;
 		return;
 	}
 
@@ -181,22 +201,23 @@ void perfectOffer(const char* filePath, int maxCoworkers, int minVacancyDays, in
 	fileIn.close();
 	fileOut.close();
 }
-//Bonus2
-void addJobOffers(JobOffer* jobOffers, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		cout << "Job offer: " << i + 1 << endl << "Enter company name: " << endl;
-		cin.getline(jobOffers[i].companyName, MAX_COMPANY_NAME_LEN + 1);
-		cout << "Enter coworkers count: " << endl;
-		cin >> jobOffers[i].coworkersCount;
-		cout << "Enter paid leave days: " << endl;
-		cin >> jobOffers[i].paidPaysOff;
-		cout << "Enter project pay: " << endl;
-		cin >> jobOffers[i].projectSalary;
 
-		cin.ignore();
-	}
+//Bonus2
+
+void addJobOffer(JobOffer& jobOffer)
+{
+	cout << "Enter company name: " << endl;
+	cin.getline(jobOffer.companyName, MAX_COMPANY_NAME_LEN + 1);
+	cin.ignore();
+	cout << "Enter coworkers count: " << endl;
+	cin >> jobOffer.coworkersCount;
+	cout << "Enter paid leave days: " << endl;
+	cin >> jobOffer.paidPaysOff;
+	cout << "Enter project pay: " << endl;
+	cin >> jobOffer.projectSalary;
+
+	cin.ignore();
+	
 }
 
 void displayAllOffers(const char* filePath)
@@ -222,64 +243,83 @@ void displayAllOffers(const char* filePath)
 
 int main() 
 {
-	JobOffer jobOffers[10];
-	int n = 0;
-
-	{
-		cout << "How many job offers would you like to add?" << endl;
-		cin >> n;
-
-		cin.ignore();
-
-		addJobOffers(jobOffers, n);
-	}
-
-	{
-		ofstream ofs(BINARY_FILE_NAME, ios::out | ios::binary | ios::app);
-		if (!ofs.is_open()) {
+	int n;
+	cout << "Enter job offers count" << endl;
+	cin >> n;
+	JobOffer* jobOffers = new JobOffer[n];
+   
+    char command;
+    cout << "Enter command: (a/i/s/f/q)" << endl;
+    cin >> command;
+	
+		ofstream ofs(BINARY_FILE_NAME, ios::binary | ios::app);
+		if (!ofs.is_open())
+		{
 			cout << ERROR_MS << endl;
 			return 1;
 		}
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
+		{
 			saveToFile(jobOffers[i], ofs);
 		}
 
-		ofs.close();
-	}
 
-	displayAllOffers(BINARY_FILE_NAME);
-
+    switch (command) 
 	{
-		long long minSalary = 0;
+        case 'a':
+		{
+			JobOffer jobOffer;
+            addJobOffer(jobOffer);
+			saveToFile(jobOffer, ofs);
+            break;
+        }
+        case 'i':
 
-		cout << "Enter minimum salary: " << endl;
-		cin >> minSalary;
+            displayAllOffers(BINARY_FILE_NAME);
+            break;
 
-		filterOffers(BINARY_FILE_NAME, minSalary);
-	}
+        case 's': 
+		{
+            cout << "Enter company name: " << endl;
+            char companyName[MAX_COMPANY_NAME_LEN];
+            cin.ignore();
+            cin.getline(companyName, MAX_COMPANY_NAME_LEN);
 
-	{
-		cout << "Enter company name: " << endl;
-		char companyName[26];
-		cin.ignore();
-		cin.getline(companyName, 26);
+            if (existOffer(BINARY_FILE_NAME, companyName))
+			{
+                cout << companyName << " exists" << endl;
+            }
+            else 
+			{
+                cout << companyName << " does not exist" << endl;
+            }
 
-		if (existOffer(BINARY_FILE_NAME, companyName)) {
-			cout << companyName << " exists" << endl;
-		}
-		else {
-			cout << companyName << " does not exist" << endl;
-		}
-	}
+            break;
+        }
+        case 'f':
+		{
+            long long minSalary = 0;
 
-	perfectOffer(BINARY_FILE_NAME, 5, 25, 1234);
+            cout << "Enter minimum salary: " << endl;
+            if (!(cin >> minSalary)) 
+			{
+                cout << "Invalid input. Please enter a valid number." << endl;
+                return 1;
+            }
 
-	return 0;
+            filterOffers(BINARY_FILE_NAME, minSalary);
 
-	//clearBinaryFile(BINARY_FILE_NAME);
+            break;
+        }
+        case 'q':
+            cout << "Quitting..." << endl;
+            break;
+        default:
+            cout << "Invalid command. Please enter a valid command." << endl;
+            break;
+    }
 
-	
+	ofs.close();
+    return 0;
 }
-
-
