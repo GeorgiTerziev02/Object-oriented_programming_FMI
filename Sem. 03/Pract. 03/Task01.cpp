@@ -93,7 +93,11 @@ void sortOrders(Order* orders, const int ordersCount) {
     }
 }
 
-void addOrder(Order* orders, int& orderCount) {
+bool addOrder(Order* orders, int& orderCount) {
+    if (orderCount + 1 > MAX_ORDERS_SIZE) {
+        return false;
+    }
+
     Order newOrder{};
 
     std::cout << "Address: " << std::endl;
@@ -106,6 +110,7 @@ void addOrder(Order* orders, int& orderCount) {
     std::cout << std::endl;
 
     orders[orderCount++] = newOrder;
+    return true;
 }
 
 char getCommand() {
@@ -146,7 +151,10 @@ int runProgram() {
         command = getCommand();
 
         if (command == 'a') {
-            addOrder(orders, ordersCount);
+            bool isSuccessful = addOrder(orders, ordersCount);
+            if (!isSuccessful) {
+                std::cout << "Order could not be added!" << std::endl;
+            }
         }
         else if (command == 's') {
             sortOrders(orders, ordersCount);
