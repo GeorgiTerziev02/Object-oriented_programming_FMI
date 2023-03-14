@@ -1,10 +1,10 @@
 ## Бонус: Алгоритми за сортиране
 
 От курса по УП трябва да знаете следните сортировки:
-* Bubble sort
-* Insertion sort
-* Selection sort
-* Counting sort
+* Bubble sort (stable)
+* Insertion sort (stable)
+* Selection sort (unstable)
+* Counting sort (stable)
 
 Как работят нагледно: https://visualgo.net/en/sorting
 
