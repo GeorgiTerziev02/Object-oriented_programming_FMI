@@ -1,6 +1,6 @@
 #include <iostream> 
 
-unsigned myDiff(unsigned a, unsigned b) {
+unsigned myAbsDiff(unsigned a, unsigned b) {
 	return a > b ? a - b : b - a;
 }
 
@@ -69,7 +69,7 @@ public:
 	}
 
 	Time getDifference(const Time& other) const {
-		unsigned diff = myDiff(this->getTotalSeconds(), other.getTotalSeconds());
+		unsigned diff = myAbsDiff(this->getTotalSeconds(), other.getTotalSeconds());
 
 		return Time(diff);
 	}
