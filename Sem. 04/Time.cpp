@@ -1,6 +1,6 @@
 #include <iostream> 
 
-unsigned myDiff(unsigned a, unsigned b) {
+unsigned myAbsDiff(unsigned a, unsigned b) {
 	return a > b ? a - b : b - a;
 }
 
@@ -27,8 +27,20 @@ public:
 		setSeconds(seconds);
 	}
 
+	unsigned getHours() const {
+		return this->hours;
+	}
+
+	unsigned getMinutes() const {
+		return this->minutes;
+	}
+
+	unsigned getSeconds() const {
+		return this->seconds;
+	}
+
 	void setHours(unsigned newValue) {
-		if (0 > newValue || newValue >= 24) {
+		if (newValue >= 24) {
 			newValue = 0;
 		}
 
@@ -36,7 +48,7 @@ public:
 	}
 
 	void setMinutes(unsigned newValue) {
-		if (0 > newValue || newValue >= 60) {
+		if (newValue >= 60) {
 			newValue = 0;
 		}
 
@@ -44,7 +56,7 @@ public:
 	}
 
 	void setSeconds(unsigned newValue) {
-		if (0 > newValue || newValue >= 60) {
+		if (newValue >= 60) {
 			newValue = 0;
 		}
 
@@ -69,7 +81,7 @@ public:
 	}
 
 	Time getDifference(const Time& other) const {
-		unsigned diff = myDiff(this->getTotalSeconds(), other.getTotalSeconds());
+		unsigned diff = myAbsDiff(this->getTotalSeconds(), other.getTotalSeconds());
 
 		return Time(diff);
 	}
