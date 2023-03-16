@@ -28,15 +28,15 @@ public:
 	}
 
 	unsigned getHours() const {
-		return this->hours;
+		return hours;
 	}
 
 	unsigned getMinutes() const {
-		return this->minutes;
+		return minutes;
 	}
 
 	unsigned getSeconds() const {
-		return this->seconds;
+		return seconds;
 	}
 
 	void setHours(unsigned newValue) {
@@ -64,30 +64,49 @@ public:
 	}
 
 	void addSecond() {
-		++seconds;
-		if (seconds >= 60) {
+		if (++seconds >= 60) {
 			++minutes;
 			seconds = 0;
 		}
-
 		if (minutes >= 60) {
 			++hours;
 			minutes = 0;
 		}
-
 		if (hours >= 24) {
 			hours = 0;
 		}
 	}
 
 	Time getDifference(const Time& other) const {
-		unsigned diff = myAbsDiff(this->getTotalSeconds(), other.getTotalSeconds());
-
-		return Time(diff);
+		return Time(myAbsDiff(getTotalSeconds(), other.getTotalSeconds()));
 	}
 
-	bool isEarlierThan(const Time& other) const {
-		return this->getTotalSeconds() < other.getTotalSeconds();
+	int compare(const Time& other) const {
+		unsigned currentTotalSeconds = getTotalSeconds();
+		unsigned otherTotalSeconds = other.getTotalSeconds();
+
+		if(currentTotalSeconds == otherTotalSeconds) {
+			return 0;
+		}
+		// 1 - the current is later, -1 the current is earlier
+		return currentTotalSeconds > otherTotalSeconds ? 1 : -1;
+	}
+
+	Time getTimeToMidnight() const {
+		// TODO:
+	}
+
+	bool isDinnerTime() const {
+		Time lowerBound(20, 30, 0);
+		Time upperBound(22, 0, 0);
+		
+		return compare(lowerBound) >= 0 && compare(upperBound) <= 0;
+	}
+
+	bool isPartyTime() const {
+		Time lowerBound(23, 0, 0);
+		Time upperBound(6, 0, 0);
+		return compare(lowerBound) >= 0 || compare(upperBound) <= 0;
 	}
 
 	unsigned getTotalSeconds() const {
@@ -98,3 +117,7 @@ public:
 		std::cout << hours << ":" << minutes << ":" << seconds;
 	}
 };
+
+void stableSortTimes(Time* arr, size_t arrSize) {
+	// TODO:
+}
