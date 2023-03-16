@@ -28,7 +28,7 @@ public:
 	}
 
 	void setHours(unsigned newValue) {
-		if (0 > newValue || newValue >= 24) {
+		if (newValue >= 24) {
 			newValue = 0;
 		}
 
@@ -36,7 +36,7 @@ public:
 	}
 
 	void setMinutes(unsigned newValue) {
-		if (0 > newValue || newValue >= 60) {
+		if (newValue >= 60) {
 			newValue = 0;
 		}
 
@@ -44,7 +44,7 @@ public:
 	}
 
 	void setSeconds(unsigned newValue) {
-		if (0 > newValue || newValue >= 60) {
+		if (newValue >= 60) {
 			newValue = 0;
 		}
 
