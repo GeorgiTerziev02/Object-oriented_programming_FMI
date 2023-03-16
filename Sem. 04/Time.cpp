@@ -27,6 +27,18 @@ public:
 		setSeconds(seconds);
 	}
 
+	unsigned getHours() const {
+		return this->hours;
+	}
+
+	unsigned getMinutes() const {
+		return this->minutes;
+	}
+
+	unsigned getSeconds() const {
+		return this->seconds;
+	}
+
 	void setHours(unsigned newValue) {
 		if (newValue >= 24) {
 			newValue = 0;
