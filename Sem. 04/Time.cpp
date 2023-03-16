@@ -17,7 +17,7 @@ private:
 	}
 
 public:
-	Time() {
+	Time() /* : Time(0, 0, 0) */ {
 		hours = minutes = seconds = 0;
 	}
 
