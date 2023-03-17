@@ -5,7 +5,7 @@
 - [Тема 2](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2002): Потоци и текстови файлове. Писане и четене в текстов файл.
 - [Тема 3](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2003): Двоични файлове. Запазване на обекти в двоичен файл. Четене на обекти от двоичен файл.
 - [Тема 4](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2004): Член-функции. Жизнен цикъл на обект. Конструктори и деструктор.  **Капсулация**. Модификатори за достъп. Член-функции **get** и **set**.
-- [Тема 5](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2004): TBA
+- [Тема 5](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2005): TBA
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
