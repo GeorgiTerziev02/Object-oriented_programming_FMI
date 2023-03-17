@@ -116,7 +116,10 @@ int Time::compare(const Time& other) const {
 }
 
 Time Time::getTimeToMidnight() const {
-	// TODO:
+	Time leftTime = getDifference(Time(23, 59, 59));
+	leftTime.addSecond();
+
+	return leftTime;
 }
 
 bool Time::isDinnerTime() const {
