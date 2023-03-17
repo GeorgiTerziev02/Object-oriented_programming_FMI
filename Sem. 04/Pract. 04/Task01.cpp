@@ -9,11 +9,11 @@ int strLength(const char* str) {
         length++;
     }
 
-    return length;
+    return length + 1;
 }
 
 void strCopy(char* destination, const char* origin) {
-    int length = strLength(origin) + 1;
+    int length = strLength(origin);
 
     for (int i = 0; i < length; ++i) {
         destination[i] = origin[i];
@@ -22,26 +22,13 @@ void strCopy(char* destination, const char* origin) {
 
 class Teacher {
 private:
-    char* name;
+    char name[MAX_NAME_LENGTH + 1];
     int age;
     int yearsOfExperience;
-
-    void setName(char* newName) {
-        if(newName == nullptr) {
-            return;
-        }
-
-        int newNameLength = strLength(newName) + 1;
-
-        this->name = new char[newNameLength];
-
-        strCopy(this->name, newName);
-    }
 
 public:
 
     Teacher() {
-        this->name = nullptr;
         this->age = 0;
         this->yearsOfExperience = 0;
     }
@@ -64,12 +51,12 @@ public:
         return yearsOfExperience;
     }
 
-    void setNewName(char* newName) {
-        if(this->name != nullptr){
-            delete[] this->name;
+    void setName(char* newName) {
+        if(newName == nullptr) {
+            return;
         }
 
-        setName(newName);
+        strCopy(this->name, newName);
     }
 
     void setAge(int newAge) {
@@ -95,20 +82,18 @@ public:
         std::cout << "---" << std::endl;
     }
 
-    ~Teacher() {
-        delete[] this->name;
-    }
+    ~Teacher() = default;
 
 };
 
 int main()
 {
-    char name[MAX_NAME_LENGTH] = {};
+    char name[MAX_NAME_LENGTH + 1] = {};
     int age = 0;
     int yearsOfExperience = 0;
 
     std::cout << "Input name of teacher:";
-    std::cin.getline(name, MAX_NAME_LENGTH);
+    std::cin.getline(name, MAX_NAME_LENGTH + 1);
 
     std::cout << "Input age of teacher:";
     std::cin >> age;
@@ -122,9 +107,9 @@ int main()
 
     std::cout << "Input new name of teacher:";
     std::cin.ignore();
-    std::cin.getline(name, MAX_NAME_LENGTH);
+    std::cin.getline(name, MAX_NAME_LENGTH + 1);
 
-    person.setNewName(name);
+    person.setName(name);
 
     person.print();
 
