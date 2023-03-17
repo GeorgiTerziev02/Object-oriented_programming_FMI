@@ -8,14 +8,18 @@ const int MAX =  9999999;
 const int MIN = -9999999;
 const char fileName[10] = "games.txt";
 
-char* strCopy(char* destination, const char* source)
+void strCopy(char* destination, const char* source)
 {
 	if (destination == NULL) {
-		return NULL;
+		return ;
+	}
+	
+	if (source == NULL) {
+		return;
 	}
 
 	char* ptr = destination;
-	
+
 	while (*source != '\0')
 	{
 		*destination = *source;
@@ -24,7 +28,7 @@ char* strCopy(char* destination, const char* source)
 	}
 	*destination = '\0';
 
-	return ptr;
+	destination = ptr;
 }
 
 int strCompare(const char* X, const char* Y)
@@ -40,10 +44,19 @@ int strCompare(const char* X, const char* Y)
 	return *(const unsigned char*)X - *(const unsigned char*)Y;
 }
 
+size_t strLen(const char* s) {
+	size_t count = 0;
+	while (*s != '\0') {
+		count++;
+		s++;
+	}
+	return count;
+}
+
 class Game {
 private:
 	char title[MAX_SIZE];
-	int price;
+	double price;
 	bool isAvailable;
 public:
 	Game() {
@@ -52,8 +65,10 @@ public:
 		this->isAvailable = false;
 	}
 	
-	Game(const char* title, const int price, const bool isAvailable) {
-		strCopy(this->title, title);
+	Game(char* title, double price, bool isAvailable) {
+		if (strLen(title) < MAX_SIZE) {
+			
+		}
 		this->price = price;
 		this->isAvailable = isAvailable;
 	}
@@ -62,11 +77,11 @@ public:
 		return this->title;
 	}
 	
-	const int getPrice() const {
+	double getPrice() const {
 		return this->price;
 	}
 
-	const bool getAvailabilty() const {
+	bool getAvailabilty() const {
 		return this->isAvailable;
 	}
 
@@ -74,19 +89,16 @@ public:
 		strCopy(this->title, title);
 	}
 
-	void setPrice(const int price) {
+	void setPrice(double price) {
 		this->price = price;
 	}
 
-	void setAvailability(const bool isAvailable) {
+	void setAvailability(bool isAvailable) {
 		this->isAvailable=isAvailable;
 	}
 
 	bool isFree() const {
-		if (this->price == 0) {
-			return true;
-		}
-		return false;
+		this->price == 0 ?  false : true;
 	}
 
 	void print() const {
@@ -100,7 +112,7 @@ public:
 		if (!out.is_open()) {
 			return;
 		}
-		out << this->getTitle() << this->getPrice() << this->getAvailabilty();
+		out << this->title << this->price << this->isAvailable;
 	}
 
 	void readGameFromFile(std::ifstream& in) {
@@ -116,79 +128,80 @@ public:
 
 class GamePlatform {
 private:
-	Game* Games;
-	int size = 0;
+	Game* games;
+	int size;
 public:
 	GamePlatform() {
-		this->Games = nullptr;
-		this->size = 0;
-	};
+		size = 0;
+	}
 
-	GamePlatform(const char* title,const int price,const  bool isAvailable) {
+	void addGame(const char* title,double price,bool isAvailable) {
 		if (this->size > MAX_GAMES) {
 			std::cout << "You hava reached the max number of games" << std::endl;
 			return;
 		}
-		this->Games[this->size].setTitle(title);
-		this->Games[this->size].setPrice(price);
-		this->Games[this->size].setAvailability(isAvailable);
+		this->games[this->size].setTitle(title);
+		this->games[this->size].setPrice(price);
+		this->games[this->size].setAvailability(isAvailable);
 		this->size++;
 	}
 
-	void printGame(const int index) const {
-		this->Games[index].print();
+	void printGame(size_t index) const {
+		if (index < this->size) {
+			this->games[index].print();
+		}
 	}
 
 	void printAllGame() const {
 		for (int i = 0; i < this->size; i++) {
-			this->Games[i].print();
+			this->games[i].print();
 		}
 	}
 		
 	void cheapestGame() const {
-		int min = MAX;
+		int min = INT_MAX;
 		for (int i = 0; i < this->size; i++) {
-			if (this->Games[i].getPrice() < min) {
-				min = this->Games[size].getPrice();
+			if (this->games[i].getPrice() < min) {
+				min = this->games[size].getPrice();
 			}
 		}
 		for(int i=0;i<this->size;i++){
-			if (this->Games[i].getPrice() == min) {
-				this->Games[i].print();
+			if (this->games[i].getPrice() == min) {
+				this->games[i].print();
 			}
 		}
 	}
 
 	void mostExpensiveGame() const {
-		int max = MIN;
+		int max = INT_MIN;
 		for (int i = 0; i < this->size; i++) {
-			if (this->Games[i].getPrice() > max) {
-				max = this->Games[size].getPrice();
+			if (this->games[i].getPrice() > max) {
+				max = this->games[size].getPrice();
 			}
 		}
 		for (int i = 0; i < this->size; i++) {
-			if (this->Games[i].getPrice() == max) {
-				this->Games[i].print();
+			if (this->games[i].getPrice() == max) {
+				this->games[i].print();
 			}
 		}
 	}
 
 	void printAllFreeGame() const {
 		for (int i = 0; i < this->size; i++) {
-			if (this->Games[i].getPrice() == 0) {
-				this->Games[i].print();
+			if (this->games[i].isFree()) {
+				this->games[i].print();
 			}
 		}
 	}
 
 	void removeGame(const char* titleToRemove) {
-		GamePlatform Games2;
+		int indexToRemove=-1;
 		for (int i = 0; i < this->size; i++) {
-			if (strcmp(this->Games[i].getTitle(), titleToRemove) != 0) {
-				Games2.Games[i] = this->Games[i];
+			if (strCompare(this->games[i].getTitle(), titleToRemove) == 0) {
+				indexToRemove = i;
 			}
 		}
-		this->Games = Games2.Games;
+		this->games[indexToRemove] = this->games[this->size];
 		this->size--;
 	}
 
@@ -197,8 +210,11 @@ public:
 		if (!out.is_open()) {
 			return;
 		}
+		
+		out.write((const char*)this->size, sizeof(this->size));
+		
 		for (int i = 0; i < this->size; i++) {
-			this->Games[i].writeGameToFile(out);
+			this->games[i].writeGameToFile(out);
 		}
 	}
 
@@ -207,16 +223,16 @@ public:
 		if (!in.is_open()) {
 			return;
 		}
-		int i = 0;
-		while (!in.eof()) {
-			this->Games[i++].readGameFromFile(in);
+		in.read((char*)this->size, sizeof(this->size));
+		for (int i = 0; i < this->size; i++) {
+			this->games[i].readGameFromFile(in);
 		}
 	}
 
 
 
 	~GamePlatform() {
-		delete[] Games;
+		delete[] games;
 	}
 };
 
