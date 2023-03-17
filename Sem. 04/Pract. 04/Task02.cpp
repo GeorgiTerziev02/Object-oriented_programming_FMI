@@ -14,11 +14,11 @@ int strLength(const char* str) {
         length++;
     }
 
-    return length;
+    return length + 1;
 }
 
 void strCopy(char* destination, const char* origin) {
-    int length = strLength(origin) + 1;
+    int length = strLength(origin);
 
     for (int i = 0; i < length; ++i) {
         destination[i] = origin[i];
@@ -27,46 +27,14 @@ void strCopy(char* destination, const char* origin) {
 
 class Task {
 private:
-    char* name;
-    char* problem;
-    int nameLength;
-    int problemLength;
+    char name[MAX_NAME_LENGTH + 1];
+    char problem[MAX_PROBLEM_LENGTH + 1];
     int points;
-
-    void setName(char* newName) {
-        if(newName == nullptr){
-            return;
-        }
-
-        int newNameLength = strLength(newName);
-
-        this->name = new char[newNameLength + 1];
-
-        strCopy(this->name, newName);
-        this->nameLength = newNameLength + 1;
-    }
-
-    void setProblem(char* newProblem) {
-        if(newProblem == nullptr) {
-            return;
-        }
-
-        int newProblemLength = strLength(newProblem);
-
-        this->problem = new char[newProblemLength + 1];
-
-        strCopy(this->problem, newProblem);
-        this->problemLength = newProblemLength + 1;
-    }
 
 public:
 
     Task() {
-        name = nullptr;
-        problem = nullptr;
-        nameLength = 0;
-        problemLength = 0;
-        points = 0;
+        this->points = 0;
     }
 
     Task(char* name, char* problem, int points) {
@@ -75,20 +43,20 @@ public:
         setPoints(points);
     }
 
-    void setNewName(char* newName) {
-        if(this->name != nullptr){
-            delete[] this->name;
+    void setName(char* newName) {
+        if(newName == nullptr){
+            return;
         }
 
-        setName(newName);
+        strCopy(this->name, newName);
     }
 
-    void setNewProblem(char* newProblem) {
-        if(this->problem != nullptr){
-            delete[] this->problem;
+    void setProblem(char* newProblem) {
+        if(newProblem == nullptr) {
+            return;
         }
 
-        setProblem(newProblem);
+        strCopy(this->problem, newProblem);
     }
 
     void setPoints(int newPoints) {
@@ -99,20 +67,12 @@ public:
         this->points = newPoints;
     }
 
-    const char* getName() {
+    const char* getName() const{
         return name;
     }
 
-    const char* getProblem() {
+    const char* getProblem() const{
         return problem;
-    }
-
-    int getNameLength() const {
-        return nameLength;
-    }
-
-    int getProblemLength() const {
-        return problemLength;
     }
 
     int getPoints() const {
@@ -120,28 +80,34 @@ public:
     }
 
     void writeTaskToFile(std::ofstream& out, const char* fileName, char* newName, char* newProblem, int newPoints) const{
-        int newNameLength = strLength(newName) + 1;
-        int newProblemLength = strLength(newProblem) + 1;
+        int newNameLength = strLength(newName);
+        int newProblemLength = strLength(newProblem);
 
         out.write((const char*) &newNameLength, sizeof(int));
-        out.write((const char*) &newName, newNameLength);
+        out.write((const char*) newName, newNameLength);
         out.write((const char*) &newProblemLength, sizeof(int));
-        out.write((const char*) &newProblem, newProblemLength);
+        out.write((const char*) newProblem, newProblemLength);
         out.write((const char*) &newPoints, sizeof(int));
     }
 
     void readTaskFromFile(std::ifstream& in, const char* fileName) {
-        in.read((char*) &this->nameLength, sizeof(int));
+        int nameLength = 0;
+        int problemLength = 0;
 
-        this->name = new char[nameLength];
-        in.read((char*) &this->name, nameLength);
+        in.read((char*) &nameLength, sizeof(int));
 
-        in.read((char*) &this->problemLength, sizeof(int));
+        char* newName = new char[nameLength];
 
-        this->problem = new char[problemLength];
-        in.read((char*) &this->problem, problemLength);
+        in.read(newName, nameLength);
+        in.read((char*) &problemLength, sizeof(int));
 
+        char* newProblem = new char[problemLength];
+
+        in.read(newProblem, problemLength);
         in.read((char*) &this->points, sizeof(int));
+
+        strCopy(this->name, newName);
+        strCopy(this->problem, newProblem);
     }
 
     void printTask() const{
@@ -162,9 +128,9 @@ private:
 public:
 
     Exam() {
-        arraySize = 0;
-        minPoints = 0;
-        taskArray = nullptr;
+        this->arraySize = 0;
+        this->minPoints = 0;
+        this->taskArray = nullptr;
     }
 
     Exam(Task* taskArray, int arraySize, int minPoints) {
@@ -173,6 +139,9 @@ public:
     }
 
     void writeExamToFile(Task* newTaskArray, int newArraySize) const {
+        char name[MAX_NAME_LENGTH + 1] = {};
+        char problem[MAX_PROBLEM_LENGTH + 1] = {};
+
         std::ofstream out(EXAM_FILE, std::ios::binary);
 
         if(!out.is_open()) {
@@ -183,14 +152,10 @@ public:
         out.write((const char*) &newArraySize, sizeof(int));
 
         for(int i = 0; i < newArraySize; ++i) {
-            int nameLength = newTaskArray[i].getNameLength();
-            int problemLength = newTaskArray[i].getProblemLength();
             int points = newTaskArray[i].getPoints();
 
-            char* name = new char[nameLength];
             strCopy(name, newTaskArray[i].getName());
 
-            char* problem = new char[problemLength];
             strCopy(problem, newTaskArray[i].getProblem());
 
             newTaskArray[i].writeTaskToFile(out, EXAM_FILE, name, problem, points);
@@ -253,8 +218,8 @@ public:
 int main() {
     int arraySize = 0;
     int minPoints = 0;
-    char name[MAX_NAME_LENGTH] = {};
-    char problem[MAX_PROBLEM_LENGTH] = {};
+    char name[MAX_NAME_LENGTH + 1] = {};
+    char problem[MAX_PROBLEM_LENGTH + 1] = {};
     int taskPoints = 0;
 
     std::cout << "Input number of tasks:";
@@ -268,10 +233,10 @@ int main() {
     for(int i = 0; i < arraySize; ++i){
         std::cin.ignore();
         std::cout << "Input task(" << i + 1 << ") name:";
-        std::cin.getline(name, MAX_NAME_LENGTH);
+        std::cin.getline(name, MAX_NAME_LENGTH + 1);
 
         std::cout << "Input task(" << i + 1 << ") problem:";
-        std::cin.getline(problem, MAX_NAME_LENGTH);
+        std::cin.getline(problem, MAX_NAME_LENGTH + 1);
 
         std::cout << "Input task(" << i + 1 << ") points:";
         std::cin >> taskPoints;
