@@ -23,26 +23,21 @@ void strCopy(char* destination, const char* origin) {
     destination[index] = '\0';
 }
 
+bool isValidString(char* str, const int maxLength) {
+
+    return str != nullptr && strLength(str) <= maxLength;
+}
+
+bool isNonNegativeNumber(int number) {
+
+    return number >= 0;
+}
+
 class Teacher {
 private:
     char name[MAX_NAME_LENGTH + 1];
     int age;
     int yearsOfExperience;
-
-    bool isNameValid(char* nameToValidate) const {
-
-        return nameToValidate != nullptr && strLength(nameToValidate) <= MAX_NAME_LENGTH;
-    }
-
-    bool isAgeValid(int ageToValidate) const {
-
-        return ageToValidate >= 0;
-    }
-
-    bool areYearsOfExperienceValid(int yearsOfExperienceToValidate) const {
-
-        return yearsOfExperienceToValidate >= 0 && yearsOfExperienceToValidate < this->age;
-    }
 
 public:
 
@@ -69,28 +64,34 @@ public:
         return yearsOfExperience;
     }
 
-    void setName(char* newName) {
-        if(!isNameValid(newName)) {
-            return;
+    bool setName(char* newName) {
+        if(!isValidString(newName, MAX_NAME_LENGTH)) {
+            return false;
         }
 
         strCopy(this->name, newName);
+
+        return true;
     }
 
-    void setAge(int newAge) {
-        if(!isAgeValid(newAge)) {
-            return;
+    bool setAge(int newAge) {
+        if(!isNonNegativeNumber(newAge)) {
+            return false;
         }
 
         this->age = newAge;
+
+        return true;
     }
 
-    void setYearsOfExperience(int newYearsOfExperience) {
-        if(newYearsOfExperience < 0 || newYearsOfExperience > this->age) {
-            return;
+    bool setYearsOfExperience(int newYearsOfExperience) {
+        if(!isNonNegativeNumber(newYearsOfExperience) || newYearsOfExperience > this->age) {
+            return false;
         }
 
         this->yearsOfExperience = newYearsOfExperience;
+
+        return true;
     }
 
     void print() const{
