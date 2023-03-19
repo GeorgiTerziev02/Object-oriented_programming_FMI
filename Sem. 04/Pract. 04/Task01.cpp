@@ -3,21 +3,24 @@
 const int MAX_NAME_LENGTH = 128;
 
 int strLength(const char* str) {
-    int length = 0;
+    int index = 0;
 
-    for (int i = 0; str[i] != '\0'; ++i) {
-        length++;
+    while(str[index] != '\0') {
+        index++;
     }
 
-    return length + 1;
+    return index;
 }
 
 void strCopy(char* destination, const char* origin) {
-    int length = strLength(origin);
+    int index = 0;
 
-    for (int i = 0; i < length; ++i) {
-        destination[i] = origin[i];
+    while(origin[index] != '\0') {
+        destination[index] = origin[index];
+        index++;
     }
+
+    destination[index] = '\0';
 }
 
 class Teacher {
@@ -25,6 +28,21 @@ private:
     char name[MAX_NAME_LENGTH + 1];
     int age;
     int yearsOfExperience;
+
+    bool isNameValid(char* nameToValidate) const {
+
+        return nameToValidate != nullptr && strLength(nameToValidate) <= MAX_NAME_LENGTH;
+    }
+
+    bool isAgeValid(int ageToValidate) const {
+
+        return ageToValidate >= 0;
+    }
+
+    bool areYearsOfExperienceValid(int yearsOfExperienceToValidate) const {
+
+        return yearsOfExperienceToValidate >= 0 && yearsOfExperienceToValidate < this->age;
+    }
 
 public:
 
@@ -52,7 +70,7 @@ public:
     }
 
     void setName(char* newName) {
-        if(newName == nullptr) {
+        if(!isNameValid(newName)) {
             return;
         }
 
@@ -60,7 +78,7 @@ public:
     }
 
     void setAge(int newAge) {
-        if(newAge < 0) {
+        if(!isAgeValid(newAge)) {
             return;
         }
 
