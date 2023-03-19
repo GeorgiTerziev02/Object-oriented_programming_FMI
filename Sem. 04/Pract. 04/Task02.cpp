@@ -5,7 +5,8 @@ const char* EXAM_FILE = "exam.bin";
 const char* ERROR_MESSAGE = "Error";
 
 const int MAX_NAME_LENGTH = 128;
-const int MAX_PROBLEM_LENGTH = 1024;
+const int MAX_PROBLEM_LENGTH = 256;
+const int NUMBER_OF_TASKS_IN_EXAM = 3;
 
 int strLength(const char* str) {
     int index = 0;
@@ -28,26 +29,21 @@ void strCopy(char* destination, const char* origin) {
     destination[index] = '\0';
 }
 
+bool isValidString(char* str, const int maxLength) {
+
+    return str != nullptr && strLength(str) <= maxLength;
+}
+
+bool isNonNegativeNumber(int number) {
+
+    return number >= 0;
+}
+
 class Task {
 private:
     char name[MAX_NAME_LENGTH + 1];
     char problem[MAX_PROBLEM_LENGTH + 1];
     int points;
-
-    bool isNameValid(char* nameToValidate) const {
-
-        return nameToValidate != nullptr && strLength(nameToValidate) <= MAX_NAME_LENGTH;
-    }
-
-    bool isProblemValid(char* problemToValidate) const {
-
-        return problemToValidate != nullptr && strLength(problemToValidate) <= MAX_PROBLEM_LENGTH;
-    }
-
-    bool arePointsValid(int pointsToValidate) const {
-
-        return pointsToValidate >= 0;
-    }
 
 public:
 
@@ -61,28 +57,34 @@ public:
         setPoints(points);
     }
 
-    void setName(char* newName) {
-        if(!isNameValid(newName)){
-            return;
+    bool setName(char* newName) {
+        if(!isValidString(newName, MAX_NAME_LENGTH)){
+            return false;
         }
 
         strCopy(this->name, newName);
+
+        return true;
     }
 
-    void setProblem(char* newProblem) {
-        if(!isProblemValid(newProblem)) {
-            return;
+    bool setProblem(char* newProblem) {
+        if(!isValidString(newProblem, MAX_PROBLEM_LENGTH)) {
+            return false;
         }
 
         strCopy(this->problem, newProblem);
+
+        return true;
     }
 
-    void setPoints(int newPoints) {
-        if(!arePointsValid(newPoints)) {
-            return;
+    bool setPoints(int newPoints) {
+        if(!isNonNegativeNumber(newPoints)) {
+            return false;
         }
 
         this->points = newPoints;
+
+        return true;
     }
 
     const char* getName() const{
@@ -97,35 +99,23 @@ public:
         return points;
     }
 
-    void writeTaskToFile(std::ofstream& out, const char* fileName, char* newName, char* newProblem, int newPoints) const{
-        int newNameLength = strLength(newName) + 1;
-        int newProblemLength = strLength(newProblem) + 1;
+    bool writeTaskToFile(std::ofstream& out, const char* fileName, char* newName, char* newProblem, int newPoints) const {
+        if(!isValidString(newName, MAX_NAME_LENGTH) || !isValidString(newProblem, MAX_PROBLEM_LENGTH) || !isNonNegativeNumber(newPoints)) {
+            return false;
+        }
 
-        out.write((const char*) &newNameLength, sizeof(int));
-        out.write((const char*) newName, newNameLength);
-        out.write((const char*) &newProblemLength, sizeof(int));
-        out.write((const char*) newProblem, newProblemLength);
+        out.write((const char*) newName, MAX_NAME_LENGTH);
+        out.write((const char*) newProblem, MAX_PROBLEM_LENGTH);
         out.write((const char*) &newPoints, sizeof(int));
+
+        return true;
     }
 
     void readTaskFromFile(std::ifstream& in, const char* fileName) {
-        int nameLength = 0;
-        int problemLength = 0;
 
-        in.read((char*) &nameLength, sizeof(int));
-
-        char* newName = new char[nameLength];
-
-        in.read(newName, nameLength);
-        in.read((char*) &problemLength, sizeof(int));
-
-        char* newProblem = new char[problemLength];
-
-        in.read(newProblem, problemLength);
+        in.read((char*) this->name, MAX_NAME_LENGTH);
+        in.read((char*) this->problem, MAX_PROBLEM_LENGTH);
         in.read((char*) &this->points, sizeof(int));
-
-        strCopy(this->name, newName);
-        strCopy(this->problem, newProblem);
     }
 
     void printTask() const{
@@ -137,43 +127,30 @@ public:
 
 };
 
+bool isValidTaskArray(Task* taskArrayToValidate) {
+
+    return taskArrayToValidate != nullptr;
+}
+
 class Exam {
 private:
-    int arraySize;
     int minPoints;
-    Task* taskArray;
-
-    bool isArraySizeValid(int arraySizeToValidate) const {
-
-        return arraySizeToValidate >= 0;
-    }
-
-    bool areMinPointsValid(int minPointsToValidate) const {
-
-        return minPointsToValidate >= 0;
-    }
-
-    bool isTaskArrayValid(Task* taskArrayToValidate) const {
-
-        return taskArrayToValidate != nullptr;
-    }
+    Task taskArray[NUMBER_OF_TASKS_IN_EXAM];
 
 public:
 
     Exam() {
-        this->arraySize = 0;
         this->minPoints = 0;
-        this->taskArray = nullptr;
     }
 
-    Exam(Task* taskArray, int arraySize, int minPoints) {
-        writeExamToFile(taskArray, arraySize);
+    Exam(Task* taskArray, int minPoints) {
+        writeExamToFile(taskArray);
         changeMinPoints(minPoints);
     }
 
-    void writeExamToFile(Task* newTaskArray, int newArraySize) const {
-        if(!isTaskArrayValid(newTaskArray) || !isArraySizeValid(newArraySize)) {
-            return;
+    bool writeExamToFile(Task* newTaskArray) const {
+        if(!isValidTaskArray(newTaskArray)) {
+            return false;
         }
 
         char name[MAX_NAME_LENGTH + 1] = {};
@@ -183,12 +160,10 @@ public:
 
         if(!out.is_open()) {
             std::cerr << ERROR_MESSAGE;
-            return;
+            return false;
         }
 
-        out.write((const char*) &newArraySize, sizeof(int));
-
-        for(int i = 0; i < newArraySize; ++i) {
+        for(int i = 0; i < NUMBER_OF_TASKS_IN_EXAM; ++i) {
             int points = newTaskArray[i].getPoints();
 
             strCopy(name, newTaskArray[i].getName());
@@ -199,6 +174,8 @@ public:
         }
 
         out.close();
+
+        return true;
     }
 
     void readExamFromFile() {
@@ -209,33 +186,27 @@ public:
             return;
         }
 
-        if(this->taskArray != nullptr){
-            delete[] this->taskArray;
-        }
-
-        in.read((char*) &this->arraySize, sizeof(int));
-
-        this->taskArray = new Task[this->arraySize];
-
-        for(int i = 0; i < this->arraySize; ++i) {
+        for(int i = 0; i < NUMBER_OF_TASKS_IN_EXAM; ++i) {
             this->taskArray[i].readTaskFromFile(in, EXAM_FILE);
         }
 
         in.close();
     }
 
-    void changeMinPoints(int newMinPoints) {
-        if(!areMinPointsValid(newMinPoints)) {
-            return;
+    bool changeMinPoints(int newMinPoints) {
+        if(!isNonNegativeNumber(newMinPoints) || newMinPoints > this->getMaxPoints()) {
+            return false;
         }
 
         this->minPoints = newMinPoints;
+
+        return true;
     }
 
     int getMaxPoints() const {
         int maxPoints = 0;
 
-        for(int i = 0; i < this->arraySize; ++i) {
+        for(int i = 0; i < NUMBER_OF_TASKS_IN_EXAM; ++i) {
             maxPoints += taskArray[i].getPoints();
         }
 
@@ -243,31 +214,28 @@ public:
     }
 
     void printExam() const{
-        for(int i = 0; i < this->arraySize; ++i){
+        for(int i = 0; i < NUMBER_OF_TASKS_IN_EXAM; ++i){
             taskArray[i].printTask();
         }
 
-        std::cout << "Max points: " << this->getMaxPoints();
+        std::cout << "Min points: " << this->minPoints << std::endl;
+        std::cout << "Max points: " << this->getMaxPoints() << std::endl;
     }
 
 };
 
 int main() {
-    int arraySize = 0;
     int minPoints = 0;
     char name[MAX_NAME_LENGTH + 1] = {};
     char problem[MAX_PROBLEM_LENGTH + 1] = {};
     int taskPoints = 0;
 
-    std::cout << "Input number of tasks:";
-    std::cin >> arraySize;
-
     std::cout << "Input minimum points:";
     std::cin >> minPoints;
 
-    Task* taskArray = new Task[arraySize];
+    Task* taskArray = new Task[NUMBER_OF_TASKS_IN_EXAM];
 
-    for(int i = 0; i < arraySize; ++i){
+    for(int i = 0; i < NUMBER_OF_TASKS_IN_EXAM; ++i){
         std::cin.ignore();
         std::cout << "Input task(" << i + 1 << ") name:";
         std::cin.getline(name, MAX_NAME_LENGTH + 1);
@@ -282,7 +250,7 @@ int main() {
         taskArray[i] = taskToAdd;
     }
 
-    Exam testExam(taskArray, arraySize, minPoints);
+    Exam testExam(taskArray, minPoints);
 
     Exam examFromFile;
 
