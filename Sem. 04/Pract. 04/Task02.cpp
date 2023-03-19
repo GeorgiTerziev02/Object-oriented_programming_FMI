@@ -8,21 +8,24 @@ const int MAX_NAME_LENGTH = 128;
 const int MAX_PROBLEM_LENGTH = 1024;
 
 int strLength(const char* str) {
-    int length = 0;
+    int index = 0;
 
-    for (int i = 0; str[i] != '\0'; ++i) {
-        length++;
+    while(str[index] != '\0') {
+        index++;
     }
 
-    return length + 1;
+    return index;
 }
 
 void strCopy(char* destination, const char* origin) {
-    int length = strLength(origin);
+    int index = 0;
 
-    for (int i = 0; i < length; ++i) {
-        destination[i] = origin[i];
+    while(origin[index] != '\0') {
+        destination[index] = origin[index];
+        index++;
     }
+
+    destination[index] = '\0';
 }
 
 class Task {
@@ -30,6 +33,21 @@ private:
     char name[MAX_NAME_LENGTH + 1];
     char problem[MAX_PROBLEM_LENGTH + 1];
     int points;
+
+    bool isNameValid(char* nameToValidate) const {
+
+        return nameToValidate != nullptr && strLength(nameToValidate) <= MAX_NAME_LENGTH;
+    }
+
+    bool isProblemValid(char* problemToValidate) const {
+
+        return problemToValidate != nullptr && strLength(problemToValidate) <= MAX_PROBLEM_LENGTH;
+    }
+
+    bool arePointsValid(int pointsToValidate) const {
+
+        return pointsToValidate >= 0;
+    }
 
 public:
 
@@ -44,7 +62,7 @@ public:
     }
 
     void setName(char* newName) {
-        if(newName == nullptr){
+        if(!isNameValid(newName)){
             return;
         }
 
@@ -52,7 +70,7 @@ public:
     }
 
     void setProblem(char* newProblem) {
-        if(newProblem == nullptr) {
+        if(!isProblemValid(newProblem)) {
             return;
         }
 
@@ -60,7 +78,7 @@ public:
     }
 
     void setPoints(int newPoints) {
-        if(newPoints < 0) {
+        if(!arePointsValid(newPoints)) {
             return;
         }
 
@@ -80,8 +98,8 @@ public:
     }
 
     void writeTaskToFile(std::ofstream& out, const char* fileName, char* newName, char* newProblem, int newPoints) const{
-        int newNameLength = strLength(newName);
-        int newProblemLength = strLength(newProblem);
+        int newNameLength = strLength(newName) + 1;
+        int newProblemLength = strLength(newProblem) + 1;
 
         out.write((const char*) &newNameLength, sizeof(int));
         out.write((const char*) newName, newNameLength);
@@ -125,6 +143,21 @@ private:
     int minPoints;
     Task* taskArray;
 
+    bool isArraySizeValid(int arraySizeToValidate) const {
+
+        return arraySizeToValidate >= 0;
+    }
+
+    bool areMinPointsValid(int minPointsToValidate) const {
+
+        return minPointsToValidate >= 0;
+    }
+
+    bool isTaskArrayValid(Task* taskArrayToValidate) const {
+
+        return taskArrayToValidate != nullptr;
+    }
+
 public:
 
     Exam() {
@@ -139,6 +172,10 @@ public:
     }
 
     void writeExamToFile(Task* newTaskArray, int newArraySize) const {
+        if(!isTaskArrayValid(newTaskArray) || !isArraySizeValid(newArraySize)) {
+            return;
+        }
+
         char name[MAX_NAME_LENGTH + 1] = {};
         char problem[MAX_PROBLEM_LENGTH + 1] = {};
 
@@ -188,7 +225,7 @@ public:
     }
 
     void changeMinPoints(int newMinPoints) {
-        if(newMinPoints < 0) {
+        if(!areMinPointsValid(newMinPoints)) {
             return;
         }
 
