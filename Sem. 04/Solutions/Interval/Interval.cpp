@@ -1,5 +1,15 @@
+#include "Interval.h"
 #include <iostream>
 
+bool isPow2(int a) {
+    if (a <= 0) {
+        return false;
+    }
+
+    return (a & a - 1) == 0;
+}
+
+// blame Nikola Svetoslavov for the next 3 functions
 bool isPrime(int n)
 {
     double temp = sqrt(n);
@@ -41,38 +51,6 @@ bool containsOnlyDistinctNumbers(int n)
     return true;
 }
 
-class Interval {
-private:
-    int a, b;
-
-    unsigned countNumbersMeetingCondition(bool(*pred)(int)) const;
-public:
-    Interval();
-    Interval(int a, int b);
-
-    int getA() const;
-    int getB() const;
-
-    void setA(int);
-    void setB(int);
-
-    unsigned getLength() const;
-    bool isInInterval(int) const;
-
-    // primenumbers
-    unsigned countPrimeNumbers() const;
-    // palindorms
-    unsigned countPalidroms() const;
-    // uniquedigits 
-    unsigned countUniqueDigits() const;
-     
-    // startendpowof2
-    bool areStartAndEndPowOf2() const;
-    // intersec
-    Interval intersec(const Interval& other) const;
-    // subinterval
-    bool subInterval(const Interval& other) const;
-};
 
 Interval::Interval() : Interval(0, 0) { }
 
@@ -128,14 +106,6 @@ bool Interval::isInInterval(int x) const {
     return a <= x && x <= b;
 }
 
-bool isPow2(int a) {
-    if (a <= 0) {
-        return false;
-    }
-
-    return (a & a - 1) == 0;
-}
-
 bool Interval::areStartAndEndPowOf2() const {
     return isPow2(a) && isPow2(b);
 }
@@ -163,13 +133,6 @@ unsigned Interval::countPalidroms() const {
     return countNumbersMeetingCondition(isPalindorme);
 }
 
-// uniquedigits 
 unsigned Interval::countUniqueDigits() const {
     return countNumbersMeetingCondition(containsOnlyDistinctNumbers);
-}
-
-int main() {
-    bool (*isPrimePtr)(int) = isPrime;
-    
-    bool b = isPrimePtr(5);
 }

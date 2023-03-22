@@ -1,38 +1,9 @@
+#include "Time.h"
 #include <iostream> 
 
 unsigned myAbsDiff(unsigned a, unsigned b) {
 	return a > b ? a - b : b - a;
 }
-
-class Time {
-private:
-	unsigned hours, minutes, seconds;
-
-	Time(unsigned seconds);
-
-public:
-	Time();
-	Time(unsigned hours, unsigned minutes, unsigned seconds);
-
-	unsigned getHours() const;
-	unsigned getMinutes() const;
-	unsigned getSeconds() const;
-
-	void setHours(unsigned newValue);
-	void setMinutes(unsigned newValue);
-	void setSeconds(unsigned newValue);
-
-	void addSecond();
-	Time getDifference(const Time& other) const;
-	int compare(const Time& other) const;
-
-	Time getTimeToMidnight() const;
-	bool isDinnerTime() const;
-	bool isPartyTime() const;
-
-	unsigned getTotalSeconds() const;
-	void print() const;
-};
 
 Time::Time(unsigned seconds) {
 	this->seconds = seconds % 60;
@@ -132,6 +103,7 @@ bool Time::isDinnerTime() const {
 bool Time::isPartyTime() const {
 	Time lowerBound(23, 0, 0);
 	Time upperBound(6, 0, 0);
+	
 	return compare(lowerBound) >= 0 || compare(upperBound) <= 0;
 }
 
@@ -141,28 +113,4 @@ unsigned Time::getTotalSeconds() const {
 
 void Time::print() const {
 	std::cout << hours << ":" << minutes << ":" << seconds << std::endl;
-}
-
-void stableSortTimes(Time* arr, size_t arrSize) {
-	for (int i = 1; i < arrSize; i++) {
-		Time temp = arr[i];
-
-		int j = i - 1;
-		while (j >= 0 && arr[j].compare(temp) == 1) {
-			arr[j + 1] = arr[j];
-			j--;
-		}
-
-		arr[j + 1] = temp;
-	}
-}
-
-int main()
-{
-	Time times[10] = { Time(11, 30, 0), Time(12, 44, 29), Time(), Time(17, 15, 23), Time(23, 60, 0), Time(3, 14, 15), Time(2, 71, 82), Time(21, 22, 3), Time(17, 15, 23), Time(7, 31, 43) };
-	stableSortTimes(times, 10);
-
-	for (int i = 0; i < 10; i++) {
-		times[i].print();
-	}
 }
