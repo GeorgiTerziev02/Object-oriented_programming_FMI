@@ -83,6 +83,7 @@ struct Test
     Test& operator=(const Test& other)
     {
         cout << "operator=" << endl;
+	return *this;
     }
 
     ~Test()
