@@ -1,5 +1,6 @@
 #include <Teacher.h>
 #include <cstring>
+#pragma warning(disable : 4996)
 
 const short MIN_AGE = 18;
 const short MAX_AGE = 100;
