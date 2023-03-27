@@ -14,7 +14,7 @@ bool isNameValid(const char *name) {
     return nameLength > 0 && nameLength <= MAX_NAME_LENGTH;
 }
 
-Teacher::Teacher(const char *name, unsigned age, unsigned experience) {
+Teacher::Teacher(const char *name, size_t age, size_t experience) {
     this->name[0] = '\0';
     if (isNameValid(name)) {
         strcpy(this->name, name);
@@ -35,34 +35,37 @@ const char *Teacher::getName() const {
     return name;
 }
 
-unsigned Teacher::getAge() const {
+size_t Teacher::getAge() const {
     return age;
 }
 
-unsigned Teacher::getExperience() const {
+size_t Teacher::getExperience() const {
     return experience;
 }
 
-void Teacher::setName(const char *name) {
+bool Teacher::setName(const char *name) {
     if (!isNameValid(name)) {
-        return;
+        return false;
     }
 
     strcpy(this->name, name);
+    return true;
 }
 
-void Teacher::setAge(unsigned age) {
+bool Teacher::setAge(size_t age) {
     if(age < MIN_AGE || age > MAX_AGE) {
-        return;
+        return false;
     }
 
     this->age = age;
+    return true;
 }
 
-void Teacher::setExperience(unsigned experience) {
+bool Teacher::setExperience(size_t experience) {
     if(experience > MAX_EXPERIENCE) {
-        return;
+        return false;
     }
 
     this->experience = experience;
+    return true;
 }

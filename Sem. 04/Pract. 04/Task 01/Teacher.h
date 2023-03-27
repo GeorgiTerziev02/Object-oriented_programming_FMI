@@ -5,16 +5,16 @@ const short MAX_NAME_LENGTH = 30;
 class Teacher {
 private:
     char name[MAX_NAME_LENGTH + 1];
-    unsigned age;
-    unsigned experience;
+    size_t age;
+    size_t experience;
 public:
-    Teacher(const char* name, unsigned age, unsigned experience);
+    Teacher(const char* name, size_t age, size_t experience);
 
     const char* getName() const;
-    unsigned getAge() const;
-    unsigned getExperience() const;
+    size_t getAge() const;
+    size_t getExperience() const;
 
-    void setName(const char* name);
-    void setAge(unsigned age);
-    void setExperience(unsigned experience);
+    bool setName(const char* name);
+    bool setAge(size_t age);
+    bool setExperience(size_t experience);
 };
