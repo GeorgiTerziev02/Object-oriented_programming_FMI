@@ -122,6 +122,8 @@ int main()
 
 } //Destructor Destructor Destructor Destructor
  ```
+ 
+ [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision)
 
 ## **Задачи**
 
