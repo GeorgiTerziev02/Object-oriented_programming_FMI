@@ -83,7 +83,7 @@ struct Test
     Test& operator=(const Test& other)
     {
         cout << "operator=" << endl;
-	return *this;
+		return *this;
     }
 
     ~Test()
@@ -123,7 +123,42 @@ int main()
 } //Destructor Destructor Destructor Destructor
  ```
  
- [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision)
+ Относно следващия пример: В рамките на курса ще възприемаме, че определените констуктори ще се изброят в реда, както са изписани в коментарите.
+ В реалността това обаче не е така заради [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision)
+ ```c++
+struct Test {
+	Test() 
+	{
+		std::cout << "Consturctor";
+	}
+	
+	Test(const Test& other) 
+	{
+		std::cout << "Copy consturctor";
+	}
+	
+	Test& operator=(const Test& other) 
+	{
+		std::cout << "operator=";
+		return *this;
+	}
+	
+	~Test() 
+	{
+		std::cout << "Destuctor";
+	}
+};
+
+Test create() 
+{
+	return Test(); // default constructor // copy constructor
+} // destructor
+
+int main() 
+{
+	Test t = create(); // copy constructor
+}
+ ```
 
 ## **Задачи**
 
