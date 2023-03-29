@@ -4,6 +4,7 @@
 const short BITS[] = { 128, 64, 32, 16, 8, 4, 2, 1};
 const short MAX_BITS = 8;
 const short ALL_ONES = 255;
+const short MAX_ALLOWED_NUMBER = 1000;
 
 void Set::resize(size_t number) {
 	size_t newSize = number / MAX_BITS + 1;
@@ -38,6 +39,10 @@ Set::~Set() {
 }
 
 void Set::addNumber(size_t number) {
+	if(number > MAX_ALLOWED_NUMBER) {
+		return;
+	}
+
 	if (number / MAX_BITS >= size) {
 		resize(number);
 	}
