@@ -5,6 +5,8 @@ private:
 	char* userName = nullptr;
 	char* password = nullptr;
 
+	void copyUserName(const char* userName);
+	void copyPassword(const char* password);
 public:
 	User(const char* userName, const char* password);
 	User(const User& other);

@@ -28,6 +28,14 @@ User::~User() {
 	free();
 }
 
+void User::copyUserName(const char* userName) {
+	copyCharArray(this->userName, userName);
+}
+
+void User::copyPassword(const char* password){
+	copyCharArray(this->password, password);
+}
+
 const char* User::getUserName() const {
 	return userName;
 }
@@ -41,7 +49,7 @@ void User::setUserName(const char* userName) {
 		delete[] this->userName;
 	}
 
-	copyCharArray(this->userName, userName);
+	copyUserName(userName);
 }
 
 void User::setPassword(const char* password) {
@@ -53,12 +61,12 @@ void User::setPassword(const char* password) {
 		delete[] this->password;
 	}
 
-	copyCharArray(this->password, password);
+	copyPassword(password);
 }
 
 void User::copyFrom(const User& other) {
-	copyCharArray(this->userName, other.userName);
-	copyCharArray(this->password, other.password);
+	copyUserName(other.userName);
+	copyPassword(other.password);
 }
 
 void User::free() {
