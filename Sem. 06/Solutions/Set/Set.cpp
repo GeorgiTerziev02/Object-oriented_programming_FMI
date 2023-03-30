@@ -1,10 +1,14 @@
 #include "Set.h"
 #include <iostream>
 
-const short BITS[] = { 128, 64, 32, 16, 8, 4, 2, 1};
+const short BITS[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
 const short MAX_BITS = 8;
 const short ALL_ONES = 255;
 const short MAX_ALLOWED_NUMBER = 1000;
+
+bool isBitSet(unsigned char byte, size_t bitIndex) {
+	return (byte & BITS[bitIndex]) != 0;
+}
 
 void Set::resize(size_t number) {
 	size_t newSize = number / MAX_BITS + 1;
@@ -63,23 +67,23 @@ bool Set::containsNumber(size_t number) const {
 		return false;
 	}
 
-	return (numbers[number / MAX_BITS] & BITS[number % MAX_BITS]) != 0;
+	return isBitSet(numbers[number / MAX_BITS], number % MAX_BITS);
 }
 
 Set Set::merge(const Set& other) const {
-    // TODO:
-    return *this;
+	// TODO:
+	return *this;
 }
 
 Set Set::intersect(const Set& other) const {
-    // TODO:
-    return *this;
+	// TODO:
+	return *this;
 }
 
 void Set::print() const {
 	for (size_t i = 0; i < size; i++) {
 		for (size_t j = 0; j < MAX_BITS; j++) {
-			if ((numbers[i] & BITS[j]) != 0) { // TODO: extract function
+			if (isBitSet(numbers[i], j)) {
 				std::cout << i * MAX_BITS + j << " ";
 			}
 		}
@@ -89,7 +93,7 @@ void Set::print() const {
 void Set::printBits() const {
 	for (size_t i = 0; i < size; i++) {
 		for (size_t j = 0; j < MAX_BITS; j++) {
-			std::cout << ((numbers[i] & BITS[j]) != 0);
+			std::cout << isBitSet(numbers[i], j);
 		}
 	}
 }
