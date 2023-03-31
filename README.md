@@ -7,6 +7,7 @@
 - [Тема 4](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2004): Член-функции. Жизнен цикъл на обект. Конструктори и деструктор.  **Капсулация**. Модификатори за достъп. Член-функции **get** и **set**.
 - [Тема 5](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2005): Копиращ конструктор и оператор=. Композиция. Извикване на конструктор, деструктор, копиращ конструктор, оператор= при композиция. Разделна компилация .h .cpp.
 - [Тема 6](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2006): Голямата четворка (Rule of four)
+- [Тема 7](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2007): TBA
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
