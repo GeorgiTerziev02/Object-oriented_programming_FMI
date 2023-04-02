@@ -2,7 +2,7 @@
 #include <iostream>
 #pragma warning(disable:4996)
 
-Spell::Spell(const char* name, const char* effect, const SpellType& type) {
+Spell::Spell(const char* name, const char* effect, const SpellType type) {
 	setName(name);
 	setEffect(effect);
 	setType(type);
@@ -18,7 +18,7 @@ void Spell::setEffect(const char* effect) {
 		strcpy(this->effect, effect);
 	}
 }
-void Spell::setType(const SpellType& type) {
+void Spell::setType(const SpellType type) {
 	this->type = type;
 }
 

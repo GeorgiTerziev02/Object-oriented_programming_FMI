@@ -1,40 +1,43 @@
 #include "Deck.h"
 #include <iostream>
 
-size_t Deck::getMonsterCardsNum()const {
-	return monsterCardsNum;
+void Deck::monsterCardsSwap(Monster& a, Monster& b) {
+	Monster temp = a;
+	a = b;
+	b = temp;
 }
-size_t Deck::getSpellCardsNum()const {
-	return spellCardsNum;
+
+void Deck::spellCardsSwap(Spell& a, Spell& b) {
+	Spell temp = a;
+	a = b;
+	b = temp;
+}
+
+size_t Deck::getMonsterCardsCount()const {
+	return monsterCardsCount;
+}
+size_t Deck::getSpellCardsCount()const {
+	return spellCardsCount;
 }
 void Deck::addMonsterCard(const char* name, size_t attackPoints, size_t defensePoints) {
-	monsterCards[monsterCardsNum]=Monster(name, attackPoints, defensePoints);
-	monsterCardsNum++;
+	monsterCards[monsterCardsCount]=Monster(name, attackPoints, defensePoints);
+	monsterCardsCount++;
 }
-void Deck::addSpellCard(const char* name, const char* effect, const SpellType& type) {
-	spellCards[spellCardsNum] = Spell(name,effect,type);
-	spellCardsNum++;
+void Deck::addSpellCard(const char* name, const char* effect, const SpellType type) {
+	spellCards[spellCardsCount] = Spell(name,effect,type);
+	spellCardsCount++;
 }
 void Deck::changeMonsterCard(size_t index, const char* name, size_t attackPoints, size_t defensePoints) {
 	monsterCards[index] = Monster(name,attackPoints,defensePoints);
 }
-void Deck::changeSpellCard(size_t index, const char* name, const char* effect, const SpellType& type) {
+void Deck::changeSpellCard(size_t index, const char* name, const char* effect, const SpellType type) {
 	spellCards[index] = Spell(name, effect, type);
 }
 void Deck::removeMonsterCard(size_t index) {
-	monsterCards[monsterCardsNum] = monsterCards[index];
-	monsterCardsNum--;
+	monsterCardsSwap(monsterCards[monsterCardsCount], monsterCards[index]);
+	monsterCardsCount--;
 }
 void Deck::removeSpellCard(size_t index) {
-	spellCards[spellCardsNum] = spellCards[index];
-	spellCardsNum--;
-}
-Deck& Deck::operator=(const Deck& other) {
-	for (size_t i = 0; i < monsterCardsNum; i++) {
-		monsterCards[i] = other.monsterCards[i];
-	}
-	for (size_t i = 0; i < spellCardsNum; i++) {
-		spellCards[i] = other.spellCards[i];
-	}
-	return *this;
+	spellCardsSwap(spellCards[monsterCardsCount], spellCards[index]);
+	spellCardsCount--;
 }

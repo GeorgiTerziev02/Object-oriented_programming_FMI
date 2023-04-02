@@ -2,8 +2,8 @@
 #include <iostream>
 #pragma warning(disable:4996)
 void Duelist::copy(const Duelist& other) {
-	strcpy(this->name, name);
-	this->deck = deck;
+	strcpy(name, other.name);
+	deck = other.deck;
 }
 void Duelist::free() {
 	delete[] name;
@@ -24,11 +24,11 @@ Duelist& Duelist::operator=(const Duelist& other) {
 	return *this;
 }
 
-size_t Duelist::getMonsterCardsNumFromDeck()const {
-	return deck.getMonsterCardsNum();
+size_t Duelist::getMonsterCardsCountFromDeck()const {
+	return deck.getMonsterCardsCount();
 }
-size_t Duelist::getSpellCardsNumFromDeck()const {
-	return deck.getSpellCardsNum();
+size_t Duelist::getSpellCardsCountFromDeck()const {
+	return deck.getSpellCardsCount();
 }
 void Duelist::addMonsterCardInDeck(const Monster& newMonster) {
 	deck.addMonsterCard(newMonster.getName(), newMonster.getAttackPoints(), newMonster.getDefensePoints());
@@ -50,5 +50,5 @@ void Duelist::removeSpellCardInDeck(size_t index) {
 }
 
 Duelist::~Duelist() {
-	delete[] name;
+	free();
 }

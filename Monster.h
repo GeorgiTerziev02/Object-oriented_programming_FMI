@@ -18,7 +18,7 @@ public:
 	void setAttackPoints(size_t attackPoints);
 	void setDefensePoints(size_t defensePoints);
 
-	char* getName() const;
+	const char* getName() const;
 	size_t getAttackPoints() const;
 	size_t getDefensePoints() const;
 

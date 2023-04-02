@@ -23,6 +23,7 @@ Monster::Monster(const Monster& other) {
 }
 
 void Monster::setName(const char* name) {
+	delete[] name;
 	strcpy(this->name, name);
 }
 void Monster::setAttackPoints(size_t attackPoints) {
@@ -32,7 +33,7 @@ void Monster::setDefensePoints(size_t defensePoints) {
 	this->defensePoints = defensePoints;
 }
 
-char* Monster::getName() const {
+const char* Monster::getName() const {
 	return name;
 }
 

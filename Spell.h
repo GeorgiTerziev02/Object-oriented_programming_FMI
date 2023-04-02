@@ -16,11 +16,11 @@ private:
 	SpellType type;
 public:
 	Spell() = default;
-	Spell(const char* name, const char* effect, const SpellType& type);
+	Spell(const char* name, const char* effect, const SpellType type);
 
 	void setName(const char* name);
 	void setEffect(const char* effect);
-	void setType(const SpellType& type);
+	void setType(const SpellType type);
 
 	const char* getName() const;
 	const char* getEffect() const;

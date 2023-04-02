@@ -14,8 +14,8 @@ public:
 	Duelist(const Duelist& other);
 	Duelist& operator=(const Duelist& other);
 
-	size_t getMonsterCardsNumFromDeck()const;
-	size_t getSpellCardsNumFromDeck()const;
+	size_t getMonsterCardsCountFromDeck()const;
+	size_t getSpellCardsCountFromDeck()const;
 	void addMonsterCardInDeck(const Monster& newMonster);
 	void addSpellCardInDeck(const Spell& newSpell);
 	void changeMonsterCardInDeck(size_t index, const Monster& newMonster);

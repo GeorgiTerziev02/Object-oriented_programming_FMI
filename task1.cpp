@@ -12,20 +12,20 @@ int main() {
 	d.changeSpellCard(5, "Monster reborn", "revive", SpellType::spell);
 
 	//Returns the amount of MagicCards in the deck
-	d.getSpellCardsNum(); //1
+	d.getSpellCardsCount(); //1
 
 	//Returns the amount of MonsterCards in the deck
-	d.getMonsterCardsNum(); //13
+	d.getMonsterCardsCount(); //13
 
 	Duelist player1("Seto Kaiba");
 
 	///Changes the 2-nd monster card in the Monster deck to“Dark Magician”
 	Monster DarkMagician("Dark Magician", 2500, 2100);
-	player1.changeMonsterCard(2, DarkMagician);
+	player1.changeMonsterCardInDeck(2, DarkMagician);
 
 	Duelist player2("Yugi Muto");
 
 	//Changes the 2-nd magic card in the Magic deck to “Reflection”
 	Spell Reflection("Reflection", "Reflects the last played spell", SpellType::trap);
-		Player2.changeSpellCard(2, Reflection);
+		player2.changeSpellCardInDeck(2, Reflection);
 }
