@@ -6,14 +6,14 @@ void swap(int& a, int& b) {
 	b = temp;
 }
 
-void print(const int* arr, size_t length) {
+void print(const int* arr, int length) {
 	for (size_t i = 0; i < length; i++) {
 		std::cout << arr[i] << " ";
 	}
 }
 
-void insertionSort(int* arr, size_t length) {
-	for (size_t i = 1; i < length; i++) {
+void insertionSort(int* arr, int length) {
+	for (int i = 1; i < length; i++) {
 		int currentNumber = arr[i];
 
 		int j = i - 1;
