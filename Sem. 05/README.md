@@ -83,7 +83,7 @@ struct Test
     Test& operator=(const Test& other)
     {
         cout << "operator=" << endl;
-	return *this;
+		return *this;
     }
 
     ~Test()
@@ -123,7 +123,43 @@ int main()
 } //Destructor Destructor Destructor Destructor
  ```
  
- [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision)
+ Относно следващия пример: В рамките на курса ще възприемаме, че няма да се извикват нито излишни copy constructor-и(защото връщаме по копие), нито destructor-и(в scope на функцията обектът умира, но преди това би трябвало да се копира, за да се върне по копие) в scope-a на функцията,
+ защото се случва [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision), което ни спестява излишни копирания => единствено ще се извикат constructor и destructor на съответние места индикирани с коментари.
+ 
+ ```c++
+struct Test {
+	Test() 
+	{
+		std::cout << "Consturctor";
+	}
+	
+	Test(const Test& other) 
+	{
+		std::cout << "Copy consturctor";
+	}
+	
+	Test& operator=(const Test& other) 
+	{
+		std::cout << "operator=";
+		return *this;
+	}
+	
+	~Test() 
+	{
+		std::cout << "Destuctor";
+	}
+};
+
+Test create() 
+{
+	return Test(); // default constructor 
+}
+
+int main() 
+{
+	Test t = create();
+} // destructor
+ ```
 
 ## **Задачи**
 
