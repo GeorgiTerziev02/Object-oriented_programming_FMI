@@ -95,8 +95,6 @@ int getPer(const Triangle& t) {
 **При липсата на дефиниран/и копиращ конструктор и/или оператор=, компилаторът автоматично създава такива по подразбиране.**
 **Забележка:** Копиращият конструктор създава нов обект, а оператор= модифицира вече съществуващ такъв!
 
- **Относно следващия пример:** <br />
- В рамките на курса ще възприемаме, че няма да се извикват нито излишни copy constructor-и(защото връщаме по копие), нито destructor-и(в scope на функцията обектът умира, но преди това би трябвало да се копира, за да се върне по копие) в scope-a на функцията, защото се случва [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision), което ни спестява излишни копирания, тоест единствено ще се извикат constructor и destructor на съответние места индикирани с коментари.
 ```c++
 #include <iostream>
 
@@ -146,6 +144,42 @@ int main()
     delete ptr; // Destructor	
 
 } //Destructor Destructor Destructor Destructor
+```
+
+**Относно следващия пример:** <br />
+ В рамките на курса ще възприемаме, че няма да се извикват нито излишни copy constructor-и(защото връщаме по копие), нито destructor-и(в scope на функцията обектът умира, но преди това би трябвало да се копира, за да се върне по копие) в scope-a на функцията, защото се случва [RVO - return value optimization](https://en.cppreference.com/w/cpp/language/copy_elision), което ни спестява излишни копирания, тоест единствено ще се извикат constructor и destructor на съответние места индикирани с коментари.
+
+```c++
+struct Test {
+	Test() 
+	{
+		std::cout << "Consturctor";
+	}
+	
+	Test(const Test& other) 
+	{
+		std::cout << "Copy consturctor";
+	}
+	
+	Test& operator=(const Test& other) 
+	{
+		std::cout << "operator=";
+		return *this;
+	}
+	
+	~Test() 
+	{
+		std::cout << "Destuctor";
+	}
+};
+
+Test create() {
+	return Test(); // default constructor 
+}
+
+int main() {
+	Test t = create();
+} // destructor
 ```
 
 ## **Задачи**
