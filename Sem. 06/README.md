@@ -1,4 +1,4 @@
-# Голямата четворка (Rule of four)
+# **Голямата четворка (Rule of four)**
 
 ## [Голямата четворка](https://en.cppreference.com/w/cpp/language/rule_of_three)
  - Конструктор по подразбиране (конструктор без параметри)
@@ -8,8 +8,7 @@
  
 Да разгледаме следната структура:
 ```c++
-struct Test
-{
+struct Test {
 	char str[20];
 	A obj2;
 	B obj3;
@@ -17,8 +16,7 @@ struct Test
  ```
 Понеже функциите (от голямата четворка) не са дефинирани в структурата, то компилаторът ще създаде такива:
 ```c++
-int main()
-{
+int main() {
 	Test currentObject; //default constructor
 	 
 	Test object2(currentObject); //copy constructor
@@ -28,27 +26,28 @@ int main()
 } //destructor (x2)
 ```
 Кодът се компилира успешно и функциите имат правилно поведение.
-###  Как работят дефинираните от компилатора функции?
+###  **Как работят дефинираните от компилатора функции?**
 Всяка една от тезу функции **извиква рекурсивно същите функции връху член-данните.**
 
-####  Пример за конструктора по подразбиране:
+- **Пример за конструктора по подразбиране:**
  
 ![enter image description here](https://i.ibb.co/s2m8XtC/1.png)
  
-####  Пример за деструктора:
+- **Пример за деструктора:**
+
 ![enter image description here](https://i.ibb.co/kmYSzP7/2.png)
 
-####  Пример за копиращия конструктор:
+- **Пример за копиращия конструктор:**
+
 ![enter image description here](https://i.ibb.co/9Vqk7Mn/3.png)
-### Проблем при функциите, генерирани от компилатора:
+
+### **Проблем при функциите, генерирани от компилатора:**
 
 Да разгледаме следния код:
 
  ```c++
-struct Person
-{
-	PersonA(const char* name, int age)
-	{
+struct Person {
+	PersonA(const char* name, int age) {
 		this->name = new char[strlen(name) + 1];
 		strcpy(this->name, name);
 		this->age = age;
@@ -58,8 +57,7 @@ private:
 	int age;
 };
 
-int main()
-{
+int main() {
 	Person p1;
 	Person p2(p1);
 }
@@ -81,28 +79,24 @@ int main()
  ```c++
 struct Person
 {
-	Person(const char* name, int age) : name(nullptr), age(age)
-	{
+	Person(const char* name, int age) : name(nullptr), age(age) {
 		setName(name);
 		setAge(age);
 	}
 
-	Person(const Person& other)
-	{	
+	Person(const Person& other) {	
 		copyFrom(other); // копираме
 	}
 
-	Person& operator=(const Person& other)
-	{
-		if (this != &other)
-		{
+	Person& operator=(const Person& other) {
+		if (this != &other) {
 			free(); //трием
 			copyFrom(other); //копираме
 		}
 		return *this;
 	}
-	~Person()
-	{
+
+	~Person() {
 		free(); //трием
 	}
 	

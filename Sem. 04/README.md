@@ -2,59 +2,52 @@
 
 ## Член-функции.
 Член-функциите са функции, които работят с член-данните на обекта от дадена структура.
- ```c++
-struct Point
-{
+```c++
+struct Point {
 	int x;
 	int y;
 };
 
-bool IsInFirstQuadrant(const Point& p)
-{
+bool IsInFirstQuadrant(const Point& p) {
 	return p.x >= 0 && p.y >= 0;
 }
 
-int main()
-{
+int main() {
 	Point p1 = {3, 4};
 	Point p2 = {-9, 8};
 	std::cout << IsInFirstQuadrant(p1) << std::endl;
 	std::cout << IsInFirstQuadrant(p2) << std::endl;
 }
- ```
+```
  
 Може функцията да бъде член-функция:
- ```c++
-struct Point
-{
+```c++
+struct Point {
 	int x, y;
 
-	bool IsInFirstQuadrant() const
-	{
+	bool IsInFirstQuadrant() const {
 		return x >= 0 && y >= 0;
 	}
 	
 };
 
-int main()
-{
+int main() {
 	Point p1 = {3, 4};
 	Point p2 = {-9, 8};
 	std::cout << p1.IsInFirstQuadrant() << std::endl;
 	std::cout << p2.IsInFirstQuadrant() << std::endl;
 }
- ```
-#  
+```
+  
 **Член-функциите**:
  - Работят с член-данните на класа.
- -  Извикват се с обект на класа
+ - Извикват се с обект на класа
  - Компилаторът преобразува всяка **член-функция** на дадена структура в
    обикновена функция с уникално име и един допълнителен параметър
    – **константен указател към обекта**.
 
 ```c++
-bool Point::isInFirstQuadrant()
-{
+bool Point::isInFirstQuadrant() {
 	return x >= 0 && y >= 0;
 }
 ```
@@ -62,8 +55,7 @@ bool Point::isInFirstQuadrant()
 се превежда в:
 
 ```c++
-bool Point::isInFirstQuadrant(Point* const this)
-{     
+bool Point::isInFirstQuadrant(Point* const this) {     
 	//remember since this is a pointer (const) to Point we use the -> operator instead, which is equivalent to (*this).member;
 	return this->x >= 0 && this->y >= 0;
 }
@@ -85,9 +77,26 @@ Point::isInFirstQuadrant(&pt);
 **Константни член-функции**:
 
  - Не променят член-данните на структурата.
- -  Оказва се чрез записването на ключовата  дума **const** в декларацията и в края на заглавието в дефиницията им
- -  Могат да се извикват от константни обекти.
+ - Оказва се чрез записването на ключовата  дума **const** в декларацията и в края на заглавието(суфикс) в дефиницията им
+ - Могат да се извикват от константни обекти.
+ 
+```c++
+struct obj {
+	void inspect() const;   //This member-function promises not to change *this
+	void mutate();          //This member-function might change *this
+};
 
+void Test(obj& changeable, const obj& unchangeable) {
+	changeable.inspect();   // Okay: doesn't change a changeable object
+	changeable.mutate();    // Okay: changes a changeable object
+	
+	unchangeable.inspect(); // Okay: doesn't change an unchangeable object
+	unchangeable.mutate();  // ERROR: attempt to change unchangeable object
+}
+```
+- **const** индикира, че **this** е указател към **const**. <br />
+Член-функции, които използват **const** по този начин не могат да променят обекта, върху който са извикани! <br />
+ 
 ## Конструктори и деструктор.
 
 **Жизнен цикъл на обект**:
@@ -96,37 +105,35 @@ Point::isInFirstQuadrant(&pt);
  - Обектът и паметта, която е асоциирана с него се разрушава.
 
 **Конструктор**:
- - Извиква се веднъж - при създаването на обекта.
- - Не се оказва експлицитно тип на връщане (връща констатна референция).
- - Има същото име като класа.
- - Задава стойности на член-данните на class-a (в тялото си или чрез **member initializer list**) 
+ - Извиква се веднъж - при създаването на обекта;
+ - Не се оказва експлицитно тип на връщане (връща констатна референция);
+ - Има същото име като класа;
+ - Задава стойности на член-данните на class-a (в тялото си или чрез **member initializer list**);
  
 **Деструктор**:
- - Извиква се веднъж - при изтриването на обекта.
+ - Извиква се веднъж - при изтриването на обекта:
+   - когато той излезне извън scope-a, в който е деклариран;
+   - когато е извикан delete[]/delete оператор върху динамично заделени обекти от съответния тип;
  - Не се оказва експлицитно тип на връщане.
- - Има същото име като класа със символа '~' в началото.
+ - Има същото име като класа със символа '~' в началото
 
  **При липсата на дефинирани конструктори или деструктори, компилаторът автоматично създава такива по подразбиране.**
  ```c++
 #include <iostream>
 
-struct Test 
-{
-  Test()
-  {
+struct Test  {
+  Test() {
   	std::cout << "Object is created" << std::endl;
   }
   
- ~Test()
-  {
+  ~Test() {
   	std::cout << "Object is destroyed" << std::endl;
   }
 
   int a, b;
 };
 
-int main()
-{
+int main() {
 	{
 		Test t; // Object is created 
 			{
@@ -136,50 +143,39 @@ int main()
 	} //Object is destroyed (t)
 }
  ```
- 
-  ## Конструктори и деструктор при влагане на обекти.
+
+**Конструктори и деструктор при влагане на обекти.**
  
   ```c++
 #include <iostream>
 #include <iomanip>
-
-using namespace std;
-
-struct A
-{
-	A()
-	{
+struct A {
+	A() {
 		std::cout << "Constructor(default) of A" << std::endl;
 	}
 
-	~A()
-	{
+	~A() {
 		std::cout << "Destructor of A" << std::endl;
 	}
 };
 
-struct B
-{
-	B()
-	{
+struct B {
+	B() {
 		std::cout << "Constructor(default) of B" << std::endl;
 	}
 
-	~B()
-	{
+	~B() {
 		std::cout << "Destructor of B" << std::endl;
 	}
 };
 
 struct C
 {
-	C()
-	{
+	C() {
 		std::cout << "Constructor(default) of C" << std::endl;
 	}
 
-	~C()
-	{
+	~C() {
 		std::cout << "Destructor of C" << std::endl;
 	}
 };
@@ -190,12 +186,11 @@ struct X
 	B second;
 	C obejectsArray[3];
 
-	X()
-	{ //calls Constructor(default) of A, Constructor(default) of B, Constructor(default) of C" (x3)
+	X() { //calls Constructor(default) of A, Constructor(default) of B, Constructor(default) of C" (x3)
 		std::cout << "Constructor of X" << std::endl;
 	}
-	~X()
-	{
+
+	~X() {
 		std::cout << "Destructor of X" << std::endl;
 	} //calls Destructor of C" (x3) , Destructor of B, Destructor of A
 
@@ -205,12 +200,13 @@ int main()
 {
 	X  obj; //Constructor of X
 } // Destructor of X
- ```
- 
- ## Капсулация (encapsulation).
- **Капсулацията** (известно още като "скриване на информация") е един от основните принципи в ООП. Тя налага разбиването на един клас на интерфейс и имплементация. Интерфейсът представлява набор от операции, които потребителят може да изпълнява свободно по начин, който не "бърка" в имплементацията.
-Понякога искаме потребителите да **нямат достъп до всички член-данни и методи на даден клас**.
-Това е така, защото тяхната промяна може да доведе до **неочаквано поведение** на нашата програма. Принципът за **капсулация** ни помага като позволява да определим кои методи и атрибути може да използват потребителите на нашия клас.
+```
+
+## Капсулация (encapsulation).
+**Капсулацията** (известно още като "скриване на информация") е един от основните принципи в ООП. Тя налага разбиването на един клас на интерфейс и имплементация. <br />
+Интерфейсът представлява набор от операции, които потребителят може да изпълнява свободно по начин, който не "бърка" в имплементацията. <br />
+Понякога искаме потребителите да **нямат достъп до всички член-данни и методи на даден клас**. <br />
+Това е така, защото тяхната промяна може да доведе до **неочаквано поведение** на нашата програма. Принципът за **капсулация** ни помага като позволява да определим кои методи и атрибути може да използват потребителите на нашия клас. <br />
 
 **Модификатор за достъп**:
  
@@ -220,52 +216,48 @@ int main()
 | protected              | В текущия клас и *наследниците. |
 | public                 | За всеки                        |
 
- ## Селектори и мутатори
+**Note 1:** При **struct** модификаторът за достъп **по подразбиране е public**, а при **class - private**;
+**Note 2:** Структурите и класовете се различават по Note 1 и семантично - дали ще пишем class/struct, oттук нататък, след въвеждане на модифкаторите за достъп, ще използваме класове;
+
+## Селектори и мутатори
 Това са публични член-функции, които се използват за достъпване (get) и промяна (set) на член-данни, които са декларирани в private/protected секция на един клас.
 
 **Пример за get-ъри и set-ъри**
 ```c++
 #include <iostream>
 
-struct Student 
-{
+struct Student {
 private:
 	int grade;
 	int age;
 public:
-	Student(int grade, int age)
-	{
+	Student(int grade, int age) {
 		setGrade(grade);
 		setAge(age);
 	}
 
-	int getGrade() const
-	{
+	int getGrade() const {
 		return grade;
 	}
 
-	int getAge() const
-	{
+	int getAge() const {
 		return age;
 	}
 
-	void setGrade(int grade)
-	{
+	void setGrade(int grade) {
 		if(grade >= 2 && grade <= 6) {
 			this->grade = grade;
 		}
 	}
 
-	void setAge(int age) 
-	{
+	void setAge(int age) {
 		if(age >= 0) {
 			this->age = age;
 		}
 	}
 };
 
-int main()
-{
+int main() {
 	{
 		Test t; // Object is created 
 		{
