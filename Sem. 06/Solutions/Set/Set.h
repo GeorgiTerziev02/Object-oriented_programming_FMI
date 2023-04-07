@@ -1,6 +1,5 @@
 #pragma once
 
-// TODO: set upper bound 1000
 class Set {
 private:
 	unsigned char* numbers;
