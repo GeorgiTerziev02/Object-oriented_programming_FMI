@@ -71,13 +71,27 @@ bool Set::containsNumber(size_t number) const {
 }
 
 Set Set::merge(const Set& other) const {
-	// TODO:
-	return *this;
+	Set result = size >= other.size ? *this : other;
+	const Set& shorterSet = size >= other.size ? other : *this;
+
+	size_t lowerSize = std::min(result.size, other.size);
+	for (size_t i = 0; i < lowerSize; i++) {
+		result.numbers[i] |= shorterSet.numbers[i];
+	}
+
+	return result;
 }
 
 Set Set::intersect(const Set& other) const {
-	// TODO:
-	return *this;
+	Set result = size >= other.size ? other : *this;
+	const Set& longerSet = size >= other.size ? *this : other;
+
+	size_t lowerSize = std::min(result.size, other.size);
+	for (size_t i = 0; i < lowerSize; i++) {
+		result.numbers[i] &= longerSet.numbers[i];
+	}
+
+	return result;
 }
 
 void Set::print() const {
