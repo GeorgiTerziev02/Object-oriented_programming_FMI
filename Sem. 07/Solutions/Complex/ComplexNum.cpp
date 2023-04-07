@@ -72,12 +72,12 @@ ComplexNum operator/(ComplexNum& lhs, const ComplexNum& rhs) {
 }
 
 std::ostream& operator<<(std::ostream& os, const ComplexNum& complexNum) {
+	os << complexNum.real;
+	
 	if (complexNum.imaginary > 0) {
-		os << complexNum.real << "+" << complexNum.imaginary << "*i";
+		os << "+" << complexNum.imaginary << "*i";
 	} else if (complexNum.imaginary < 0) {
-		os << complexNum.real << complexNum.imaginary << "*i";
-	} else {
-		os << complexNum.real;
+		os << complexNum.imaginary << "*i";
 	}
 
 	return os;
