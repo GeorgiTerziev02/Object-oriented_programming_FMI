@@ -74,8 +74,7 @@ Set Set::merge(const Set& other) const {
 	Set result = size >= other.size ? *this : other;
 	const Set& shorterSet = size >= other.size ? other : *this;
 
-	size_t lowerSize = std::min(result.size, other.size);
-	for (size_t i = 0; i < lowerSize; i++) {
+	for (size_t i = 0; i < shorterSet.size; i++) {
 		result.numbers[i] |= shorterSet.numbers[i];
 	}
 
@@ -86,8 +85,7 @@ Set Set::intersect(const Set& other) const {
 	Set result = size >= other.size ? other : *this;
 	const Set& longerSet = size >= other.size ? *this : other;
 
-	size_t lowerSize = std::min(result.size, other.size);
-	for (size_t i = 0; i < lowerSize; i++) {
+	for (size_t i = 0; i < result.size; i++) {
 		result.numbers[i] &= longerSet.numbers[i];
 	}
 
