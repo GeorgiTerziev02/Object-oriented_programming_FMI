@@ -1,9 +1,9 @@
 #include "Set.h"
 #include <iostream>
 
-const short BITS[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
-const short MAX_BITS = 8;
-const short ALL_ONES = 255;
+const unsigned char BITS[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
+const unsigned char MAX_BITS = 8;
+const unsigned char ALL_ONES = 255;
 const short MAX_ALLOWED_NUMBER = 1000;
 
 bool isBitSet(unsigned char byte, size_t bitIndex) {
