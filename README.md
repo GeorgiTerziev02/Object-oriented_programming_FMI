@@ -8,7 +8,7 @@
 - [Тема 5](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2005): Копиращ конструктор и оператор=. Композиция. Извикване на конструктор, деструктор, копиращ конструктор, оператор= при композиция. Разделна компилация .h .cpp.
 - [Тема 6](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2006): Голямата четворка (Rule of four)
 - [Тема 7](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2007): Предефиниране на оператори. Приятелски класове и функции.
-- [Тема 8](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2008): TBA
+- [Тема 8](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2008): Композиция и агрегация в ООП. Масиви от обекти. has-a взаимоотношения.
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
