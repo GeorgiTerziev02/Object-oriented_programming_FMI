@@ -2,7 +2,7 @@
 
 class Set {
 private:
-	unsigned char* numbers;
+	char* numbers;
 	size_t size = 0; // how many bytes we have allocated
 
 	void resize(size_t number);
