@@ -266,6 +266,24 @@ int main() {
 
 	} //Object is destroyed (t)
 }
+
+```
+### Mutable (пример)
+Спецификатора mutable е приложен само в С++. Той позволява на член на обект да предефинира константността. Така mutable член на const обект не е const и може да бъде изменян.
+ ```c++
+struct Test {
+private:
+	mutable int n;
+public:
+	void f() const {
+		n++;
+	}
+};
+
+int main() {
+	const Test t;
+	t.f();
+}
 ```
 
 ## Задачи
