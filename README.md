@@ -9,6 +9,7 @@
 - [Тема 6](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2006): Голямата четворка (Rule of four)
 - [Тема 7](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2007): Предефиниране на оператори. Приятелски класове и функции.
 - [Тема 8](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2008): Композиция и агрегация в ООП. Масиви от обекти. has-a взаимоотношения.
+- [Тема 8](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2008): TBA.
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
