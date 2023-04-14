@@ -28,7 +28,7 @@ void OOPcourse::addStudent(const MyString& name, int fn)
 {
 	if (size >= capacity)
 	{
-		return;
+		resize();
 	}
 	students[size++] = new Student(name, fn);
 }
@@ -117,4 +117,17 @@ double OOPcourse::getAverage(bool (*filterFunc)(const Grade&, const MyString&), 
 		}
 	}
 	return count > 0 ? sum / count : 0;
+}
+
+void OOPcourse::resize()
+{
+	capacity *= 2;
+	Student** temp = new Student* [capacity];
+	for (size_t i = 0; i < size ; i++)
+	{
+		temp[i] = students[i];
+	}
+
+	delete[] students;
+	students = temp;
 }

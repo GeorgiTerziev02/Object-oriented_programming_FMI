@@ -24,5 +24,7 @@ public:
     double getAverageGradePerTask(const MyString& task) const;
     double getAverageFromTeacher(const MyString& teacher) const;
     double getAverage(bool (*filterFunc)(const Grade&, const MyString&), const MyString& param) const;
+private:
+    void resize();
 };
 
