@@ -145,12 +145,12 @@ struct Box
  ```c++
 Box b; // default values to height and width and length
 
-Box b2 = {3, 4, 3.4} // height = 3, width = 3, length = 3.4;
+Box b2 = {3, 4, 3.4}; // height = 3, width = 3, length = 3.4;
 
 Box b3;
 b3.height = 13;
 b3.width = 14;
-b3.lenght = 20;
+b3.length = 20;
  ```
 	
 #### **Подаване във функции**

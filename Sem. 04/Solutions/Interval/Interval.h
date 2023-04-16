@@ -23,6 +23,6 @@ public:
     unsigned countPalidroms() const;
     unsigned countUniqueDigits() const;
     bool areStartAndEndPowOf2() const;
-    Interval intersec(const Interval& other) const;
+    Interval intersect(const Interval& other) const;
     bool subInterval(const Interval& other) const;
 };

@@ -110,7 +110,7 @@ bool Interval::areStartAndEndPowOf2() const {
     return isPow2(a) && isPow2(b);
 }
 
-Interval Interval::intersec(const Interval& other) const {
+Interval Interval::intersect(const Interval& other) const {
     if (b < other.getA() || a > other.getB()) {
         return Interval(0, 0);
     }
