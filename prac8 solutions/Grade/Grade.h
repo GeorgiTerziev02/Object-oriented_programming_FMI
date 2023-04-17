@@ -9,15 +9,7 @@ private:
     unsigned _studentFac;
     unsigned _value;
 
-    void copyFrom(const Grade &other);
-    void free();
-
 public:
-    Grade() = default;
-    Grade(const Grade &other);
-    Grade &operator=(const Grade &other);
-    ~Grade();
-
     Grade(const char *assignmentName, const char *teacherName, unsigned studentFac, unsigned value);
 
     unsigned getValue() const;
@@ -25,4 +17,5 @@ public:
     const char *getAssignmentName() const;
     const char *getTeacherName() const;
 
+    void setValue(unsigned value);
 };

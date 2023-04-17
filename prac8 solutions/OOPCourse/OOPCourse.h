@@ -43,13 +43,14 @@ public:
     void addStudent(const char *studentName, unsigned studentFac);
     void addGrade(unsigned studentFac, const char *assignmentName, unsigned grade, const char *teacherName);
 
+    void changeGrade(unsigned studentFac, const char *assignmentName, unsigned grade, const char *teacherName);
+
     double getAverageForCourse() const;
 
     void removeStudent(unsigned studentFac);
 
     double getAverageGradePerTask(const char *assignmentName) const;
     double getAverageFromTeacher(const char *assignmentName) const;
-
 
 private:
     unsigned getStudentIndexByFac(unsigned studentFac);
@@ -60,5 +61,8 @@ private:
     void removeGradesByStudentFac(unsigned studentFac);
 
     double getAverageByCriteria(bool (*compFunc)(const Grade &grade, const char *name), const char *name) const;
+
+    bool doesStudentHasGradeOnAssignment(unsigned studentFac, const char *assignmentName, const char *teacherName);
+    Grade &getGrade(unsigned studentFac, const char *assignmentName, const char *teacherName);
 
 };
