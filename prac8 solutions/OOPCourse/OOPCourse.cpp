@@ -239,7 +239,7 @@ double OOPcourse::getAverageFromTeacher(const char *teacherName) const {
     return getAverageByCriteria(areTeacherMatching, teacherName);
 }
 
-bool OOPcourse::doesStudentHasGradeOnAssignment(unsigned studentFac, const char *assignmentName, const char *teacherName) {
+bool OOPcourse::doesStudentHasGradeOnAssignment(unsigned studentFac, const char *assignmentName, const char *teacherName) const {
     try {
         getGrade(studentFac, assignmentName, teacherName);
     }
@@ -253,6 +253,28 @@ bool OOPcourse::doesStudentHasGradeOnAssignment(unsigned studentFac, const char 
 Grade &OOPcourse::getGrade(unsigned studentFac, const char *assignmentName, const char *teacherName) {
     for (int i = 0; i < _gradesCount; ++i) {
         Grade &curGrade = *_grades[i];
+
+        if (curGrade.getStudentFac() != studentFac) {
+            continue;
+        }
+
+        if (strcmp(curGrade.getAssignmentName(), assignmentName) != 0) {
+            continue;
+        }
+
+        if (strcmp(curGrade.getTeacherName(), teacherName) != 0) {
+            continue;
+        }
+
+        return curGrade;
+    }
+
+    throw "Grade not found!";
+}
+
+const Grade &OOPcourse::getGrade(unsigned studentFac, const char *assignmentName, const char *teacherName) const {
+    for (int i = 0; i < _gradesCount; ++i) {
+        const Grade &curGrade = *_grades[i];
 
         if (curGrade.getStudentFac() != studentFac) {
             continue;
