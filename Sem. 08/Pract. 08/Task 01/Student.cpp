@@ -85,6 +85,19 @@ void Student::receiveGrade(const Grade& grade) {
 	grades[gradesCount++] = grade;
 }
 
+Grade& Student::getGradeByTaskName(const char* task) {
+	for (size_t i = 0; i < gradesCount; i++) {
+		if (strcmp(grades[i].getTask(), task) == 0) {
+			return grades[i];
+		}
+	}
+	throw std::exception("No such grade!");
+}
+
+void Student::editGrade(const char* task, double newValue) {
+	getGradeByTaskName(task).setValue(newValue);
+}
+
 const double Student::getGradeValueByTaskName(const char* task) const {
 	for (size_t i = 0; i < gradesCount; i++) {
 		if (strcmp(grades[i].getTask(), task) == 0) {

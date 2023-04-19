@@ -27,7 +27,9 @@ public:
 	const size_t getGradesCount() const;
 	
 	void receiveGrade(const Grade& grade);
+	void editGrade(const char* task, double newValue);
 
+	Grade& getGradeByTaskName(const char* task);
 	const double getGradeValueByTaskName(const char* task) const;
 	
 private:

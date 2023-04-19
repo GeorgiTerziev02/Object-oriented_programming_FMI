@@ -26,6 +26,9 @@ public:
 	void addStudent(const char* name, unsigned int facultyNumber);
 	void removeStudent(unsigned int facultyNumber);
 	void addGrade(unsigned int facultyNumber, const char* task, double value, const char* teacherName);
+	void editGrade(unsigned int facultyNumber, const char* task, double newValue);
+	Grade& findGrade(unsigned int facultyNumber, const char* task);
+	Student& getStudentByFacultyNumber(unsigned int facultyNumber);
 
 	const double getAverageGradeForCourse() const;
 	const double getAverageGradePerTask(const char* task) const;

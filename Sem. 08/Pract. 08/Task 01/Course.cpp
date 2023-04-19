@@ -121,10 +121,42 @@ void Course::addGrade(unsigned int facultyNumber, const char* task, double value
 	if (courseGradesCount >= courseGradesCapacity) {
 		resizeGrades();
 	}
-	Grade grade(task, value, getTeacherByName(teacherName));
+	Grade grade(facultyNumber, task, value, getTeacherByName(teacherName));
 	students[studentIndex]->receiveGrade(grade);
 	courseGrades[courseGradesCount++] = new Grade(grade);
 }
+
+Grade& Course::findGrade(unsigned int facultyNumber, const char* task) {
+	for (size_t i = 0; i < courseGradesCount; i++) {
+		if (courseGrades[i]->getStudentFacultyNumber() == facultyNumber && strcmp(task, courseGrades[i]->getTask()) == 0) {
+			return *courseGrades[i];
+		}
+	}
+	throw std::exception("No such grade!");
+}
+
+Student& Course::getStudentByFacultyNumber(unsigned int facultyNumber) {
+	for (size_t i = 0; i < studentsCount; i++) {
+		if (students[i]->getFacultyNumber() == facultyNumber) {
+			return *students[i];
+		}
+	}
+	throw std::exception("No such student!");
+}
+
+void Course::editGrade(unsigned int facultyNumber, const char* task, double newValue) {
+
+	Grade& gradeToEdit = findGrade(facultyNumber, task);
+	gradeToEdit.setValue(newValue);
+	try {
+		Student& student = getStudentByFacultyNumber(facultyNumber);
+		student.editGrade(task, newValue);
+	}
+	catch (std::exception e) {
+		std::cout << "Grade successfully edited, but student with faculty number " << facultyNumber << " is no longer in this course!" << std::endl;
+	}
+}
+
 
 const size_t Course::getIndexOfStudentByFacultyNumber(unsigned int facultyNumber) const {
 	for (size_t i = 0; i < studentsCount; i++) {

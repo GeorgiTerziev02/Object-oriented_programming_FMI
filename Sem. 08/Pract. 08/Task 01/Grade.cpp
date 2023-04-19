@@ -7,16 +7,19 @@ void Grade::free() {
 	delete[] task;
 	task = nullptr;
 	value = 0;
+	studentFacultyNumber = 0;
 }
 
 void Grade::copyFrom(const Grade& other) {
 
+	this->studentFacultyNumber = other.studentFacultyNumber;
 	Util::copyDynamicCharArray(this->task, other.task);
 	this->value = other.value;
 	this->teacher = other.teacher;
 }
 
-Grade::Grade(const char* task, double value, const Teacher& teacher):teacher(teacher) {
+Grade::Grade(unsigned int facultyNumber, const char* task, double value, const Teacher& teacher):teacher(teacher),
+studentFacultyNumber(facultyNumber) {
 	setTask(task);
 	setValue(value);
 }
@@ -62,4 +65,8 @@ void Grade::setTask(const char* task) {
 
 void Grade::setValue(double value) {
 	this->value = value;
+}
+
+const unsigned int Grade::getStudentFacultyNumber() const {
+	return this->studentFacultyNumber;
 }

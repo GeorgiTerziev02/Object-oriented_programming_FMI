@@ -5,11 +5,12 @@ class Grade
 	char* task = nullptr;
 	double value = 0.0;
 	Teacher teacher;
+	unsigned int studentFacultyNumber;
 
 public:
 
 	Grade() = default;
-	Grade(const char* task, double value, const Teacher& teacher);
+	Grade(unsigned int facultyNumber, const char* task, double value, const Teacher& teacher);
 	Grade(const Grade& other);
 	Grade& operator=(const Grade& other);
 	~Grade();
@@ -19,6 +20,7 @@ public:
 	double getValue() const;
 	void setValue(double value);
 	const Teacher& getTeacher() const;
+	const unsigned int getStudentFacultyNumber() const;
 
 private:
 	void free();
