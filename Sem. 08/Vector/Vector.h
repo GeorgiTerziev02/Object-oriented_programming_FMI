@@ -13,7 +13,7 @@ private:
 	size_t size = 0;
 	size_t capacity;
 	// the resize function of the actual std::vector
-	// just lowers the size, this function is called reserve there
+	// just lowers the size, the function that changes capacity is called reserve there
 	void resize(size_t newCapacity);
 
 	// Not needed functions - created in class to reuse code
