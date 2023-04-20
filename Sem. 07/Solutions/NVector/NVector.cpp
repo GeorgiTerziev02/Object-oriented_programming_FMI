@@ -1,7 +1,8 @@
 #include "NVector.h"
 #include <iostream>
-
-const double EPSILON = 0.001;
+{
+	const double EPSILON = 0.001;
+}
 
 NVector::NVector(size_t size) {
 	if (size == 0) {
@@ -118,35 +119,16 @@ NVector operator-(const NVector& lhs, const NVector& rhs) {
 
 // parallel
 bool operator||(const NVector& lhs, const NVector& rhs) {
-	if (lhs.size != rhs.size) {
+	if (~lhs != ~rhs) {
 		return false;
 	}
-
-	bool hasCoef = false;
-	double coef = 0;
-	// TODO: does not work if one of the vectors is the zero one
-	for (size_t i = 0; i < lhs.size; i++) {
-		if (lhs[i] == rhs[i] && lhs[i] == 0) {
-			continue;
-		}
-
-		if (lhs[i] == 0 || rhs[i] == 0) {
-			return false;
-		}
-
-		if (!hasCoef) {
-			coef = (double)lhs[i] / rhs[i];
-			hasCoef = true;
-			continue;
-		}
-
-		double nextCoef = (double)lhs[i] / rhs[i];
-
-		if (abs(coef - nextCoef) >= EPSILON) {
+	
+	for (int i = 0; i < ~lhs - 1; i++) {
+		if (lhs[i] * rhs[i + 1] != lhs[i + 1] * rhs[i]) {
 			return false;
 		}
 	}
-
+	
 	return true;
 }
 
