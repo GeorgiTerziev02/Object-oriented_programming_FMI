@@ -24,15 +24,15 @@ void Student::setFn(unsigned int fn)
 	this->fn = fn;
 }
 
-void Student::setGrades(const Grade* grades)
+void Student::setGrades(const Grade* grades, unsigned int  gradesCount)
 {
-	for (size_t i = 0; i < MAX_GRADES; i++)
+	for (size_t i = 0; i < gradesCount; i++)
 	{
 		this->grades[i] = grades[i];
 	}
 }
 
-MyString Student::getName() const
+const MyString& Student::getName() const
 {
 	return this->name;
 }
@@ -42,7 +42,7 @@ unsigned int Student::getFn() const
 	return this->fn;
 }
 
-Grade Student::getGrades(int index) const
+const Grade& Student::getGrades(int index) const
 {
 	return this->grades[index];
 }
@@ -50,7 +50,7 @@ Grade Student::getGrades(int index) const
 double Student::getAverageGrade() const
 {
 	double sum = 0;
-	for (size_t i = 0; i < numGrades ; i++)
+	for (size_t i = 0; i < numGrades; i++)
 	{
 		sum += grades[i].getGrade();
 	}
@@ -68,10 +68,10 @@ void Student::addGrade(double score, const MyString& task, const Teacher& teache
 	{
 		return;
 	}
-	grades[numGrades++] = Grade(score,  teacher, task);
+	grades[numGrades++] = Grade(score, teacher, task);
 }
 
-Grade Student::getGrade(unsigned int index) const
+const Grade& Student::getGrade(unsigned int index) const
 {
 	if (index < 0 || index >= numGrades)
 	{

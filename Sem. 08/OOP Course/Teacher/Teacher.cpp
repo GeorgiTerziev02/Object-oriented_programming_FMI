@@ -2,12 +2,9 @@
 
 Teacher::Teacher() :teacherName("") {}
 
-Teacher::Teacher(const MyString& name)
-{
-    this->teacherName = name;
-}
+Teacher::Teacher(const MyString& name) : teacherName(name) {}
 
-MyString Teacher::getTeacherName() const
+const MyString& Teacher::getTeacherName() const
 {
     return teacherName;
 }

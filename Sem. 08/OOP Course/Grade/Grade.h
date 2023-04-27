@@ -15,6 +15,7 @@ public:
 	void setGrade(double grade);
 	double getGrade() const;
 	Teacher getTeacher() const;
-	MyString getSubject() const;
+	const MyString& getSubject() const;
 	void setSubject(const MyString& subject);
 };
+

@@ -18,12 +18,12 @@ public:
 
 	void setName(const MyString& name);
 	void setFn(unsigned int fn);
-	void setGrades(const Grade* grades);
+	void setGrades(const Grade* grades, unsigned int gradesdCount);
 
-	MyString getName() const ;
+	const MyString& getName() const;
 	unsigned int getFn() const;
-	Grade getGrades(int index) const;
-	Grade getGrade(unsigned int index) const;
+	const Grade& getGrades(int index) const;
+	const Grade& getGrade(unsigned int index) const;
 	double getAverageGrade() const;
 	unsigned int getGradesCount() const;
 

@@ -7,9 +7,9 @@ class Teacher
 public:
     Teacher();
     Teacher(const MyString& name);
-    MyString getTeacherName() const;
+    const MyString& getTeacherName() const;
 
     bool operator==(const Teacher& other) const;
-    
+
 };
 

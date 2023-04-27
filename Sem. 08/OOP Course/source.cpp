@@ -1,5 +1,5 @@
 #include<iostream>
-#include"OOPcource.h"
+#include"OOPcourse.h"
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
 	p.addGrade(42069, "K1", 5, "Assistant1");
 
 
-	std::cout << p.getAverageForCourse() << std::endl; 
+	std::cout << p.getAverageForCourse() << std::endl;
 
 	std::cout << p.getAverageGradePerTask("HW1") << std::endl;
 

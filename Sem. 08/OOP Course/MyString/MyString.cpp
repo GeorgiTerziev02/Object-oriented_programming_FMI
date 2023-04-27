@@ -4,8 +4,9 @@
 
 #pragma warning (disable:4996)
 
-MyString::MyString(const char* str, size_t len) : len(len), data(new char[len + 1])
+MyString::MyString(const char* str, size_t len) : len(len)
 {
+	data = new char[len + 1];
 	for (size_t i = 0; i < len; ++i)
 	{
 		data[i] = str[i];
@@ -50,7 +51,7 @@ void MyString::copyFrom(const MyString& str)
 {
 	len = str.len;
 	data = new char[len + 1];
-    strCpy(data, str.data);
+	strCpy(data, str.data);
 }
 
 void MyString::free()
@@ -70,7 +71,7 @@ MyString operator+(const MyString& lhs, const MyString& rhs)
 MyString& MyString::operator+=(const MyString& rhs)
 {
 	char* result = new char[length() + rhs.length() + 1];
-	result[0] = '\0'; 
+	result[0] = '\0';
 	strCat(result, data);
 	strCat(result, rhs.data);
 
@@ -81,7 +82,7 @@ MyString& MyString::operator+=(const MyString& rhs)
 	return *this;
 }
 
-bool MyString::operator==(const MyString& rhs) const 
+bool MyString::operator==(const MyString& rhs) const
 {
 	return strCmp(data, rhs.data) == 0;
 }
@@ -96,7 +97,7 @@ bool MyString::operator<(const MyString& rhs) const
 	return strCmp(data, rhs.data) < 0;
 }
 
-bool MyString::operator>(const MyString& rhs) const 
+bool MyString::operator>(const MyString& rhs) const
 {
 	return strCmp(data, rhs.data) > 0;
 }
@@ -116,7 +117,7 @@ char& MyString::operator[](size_t index)
 	return data[index];
 }
 
-const char& MyString::operator[](size_t index) const 
+const char& MyString::operator[](size_t index) const
 {
 	return data[index];
 }
@@ -130,14 +131,14 @@ MyString MyString::substr(size_t pos, size_t len) const
 	return MyString(data + pos, std::min(len, len - pos));
 }
 
-size_t MyString::find(const MyString& str, size_t pos) const 
+size_t MyString::find(const MyString& str, size_t pos) const
 {
 	if (pos > len)
 	{
 		throw std::out_of_range("MyString::find");
 	}
 	char* p = strStr(data + pos, str.data);
-	if (p == nullptr) 
+	if (p == nullptr)
 	{
 		return npos;
 	}
