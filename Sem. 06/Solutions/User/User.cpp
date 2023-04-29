@@ -41,7 +41,7 @@ const char* User::getUserName() const {
 }
 
 void User::setUserName(const char* userName) {
-	if (userName == nullptr) {
+	if (userName == nullptr || this->userName == userName) {
 		return;
 	}
 
@@ -53,7 +53,7 @@ void User::setUserName(const char* userName) {
 }
 
 void User::setPassword(const char* password) {
-	if (password == nullptr) {
+	if (password == nullptr || this->password == password) {
 		return;
 	}
 

@@ -38,8 +38,8 @@ void Event::setName(const char* str)
 {
 	if (strlen(str) > 20)
 		return;
-	else
-		strcpy(_name, str);
+		
+	strcpy(_name, str);
 }
 void Event::validateTimes()
 {

@@ -39,10 +39,10 @@ const char* Teacher::getName() const {
 }
 
 void Teacher::setName(const char* name) {
-	
-	if (!name) {
+	if (!name || this->name == name) {
 		return;
 	}
+	
 	delete[] this->name;
 	Util::copyDynamicCharArray(this->name, name);
 }

@@ -55,7 +55,7 @@ const Teacher& Grade::getTeacher() const {
 }
 
 void Grade::setTask(const char* task) {
-	if (!task) {
+	if (!task || this->task == task) {
 		return;
 	}
 	 

@@ -44,7 +44,7 @@ size_t Teacher::getExperience() const {
 }
 
 bool Teacher::setName(const char *name) {
-    if (!isNameValid(name)) {
+    if (!isNameValid(name) || this->name == name) {
         return false;
     }
 

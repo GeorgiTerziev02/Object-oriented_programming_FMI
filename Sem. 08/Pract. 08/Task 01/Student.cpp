@@ -58,7 +58,7 @@ unsigned int Student::getFacultyNumber() const {
 }
 
 void Student::setName(const char* name) {
-	if (!name) {
+	if (!name || this->name == name) {
 		throw "Error! Bad name!";
 	}
 

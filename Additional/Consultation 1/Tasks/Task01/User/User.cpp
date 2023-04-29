@@ -62,7 +62,7 @@ size_t User::getAccessCounter() const {
 }
 
 void User::setUserName(const char* userName) {
-    if (!userName) {
+    if (!userName || this->userName == userName) {
         return;
     }
 
@@ -74,7 +74,7 @@ void User::setUserName(const char* userName) {
 }
 
 void User::setPassword(const char* password) {
-    if (!password) {
+    if (!password || this->password == password) {
         return;
     }
 
