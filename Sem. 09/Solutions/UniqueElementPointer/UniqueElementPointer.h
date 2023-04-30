@@ -17,7 +17,9 @@ public:
 	UniqueElementPointer& operator=(UniqueElementPointer&& other) noexcept;
 	
 	TestClass* operator->();
+	const TestClass* operator->() const;
 	TestClass& operator*();
+	const TestClass& operator*() const;
 
 	TestClass* get();
 	void reset(TestClass* ptr);

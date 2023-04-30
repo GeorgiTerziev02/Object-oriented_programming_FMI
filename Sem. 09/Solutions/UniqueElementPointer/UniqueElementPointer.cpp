@@ -22,7 +22,15 @@ TestClass* UniqueElementPointer::operator->() {
 	return ptr;
 }
 
+const TestClass* UniqueElementPointer::operator->() const {
+	return ptr;
+}
+
 TestClass& UniqueElementPointer::operator*() {
+	return *ptr;
+}
+
+const TestClass& UniqueElementPointer::operator*() const {
 	return *ptr;
 }
 
