@@ -24,10 +24,14 @@ const size_t StringPool::SmallString::getRefsCount() const {
 }
 
 bool StringPool::SmallString::operator==(const SmallString& other) const {
-	return strcmp(data, other.data) == 0;
+	return compare(*this, other) == 0;
 }
 bool StringPool::SmallString::operator<(const SmallString& other) const {
-	return strcmp(data, other.data) == -1;
+	return compare(*this, other) == -1;
+}
+
+int compare(const StringPool::SmallString& lhs, const StringPool::SmallString& rhs){
+	return strcmp(lhs.c_str(), rhs.c_str());
 }
 
 void StringPool::resize() {
@@ -46,11 +50,12 @@ long long StringPool::find(const SmallString& str) const {
 
 	while (left <= right) {
 		long long mid = left + (right - left) / 2;
-		if (*data[mid] == str) {
+		int comparisonResult = compare(*data[mid], str);
+		if (comparisonResult == 0) { // ==
 			result = mid;
 			right = mid - 1;
 		}
-		else if (*data[mid] < str) {
+		else if (comparisonResult == -1) { // <
 			left = mid + 1;
 		}
 		else {

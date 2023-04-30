@@ -17,9 +17,12 @@ private:
 		const size_t getRefsCount() const;
 
 		bool operator==(const SmallString& other) const;
-		bool operator<(const SmallString& other) const;
+		bool operator<(const SmallString& other) const;		
 		friend class StringPool;
 	};
+	// should be a friend of the StringPool so that
+	// we can access the SmallString
+	friend int compare(const StringPool::SmallString& lhs, const StringPool::SmallString& rhs);
 
 	SmallString** data;
 	size_t size = 0;
