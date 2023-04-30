@@ -21,7 +21,7 @@ public:
 
 	TestClass* get();
 	void reset(TestClass* ptr);
-	void release();
+	TestClass* release(); // releases the ownership of the pointer
 
 	~UniqueElementPointer();
 private:
