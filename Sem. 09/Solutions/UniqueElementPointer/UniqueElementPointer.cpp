@@ -39,8 +39,10 @@ void UniqueElementPointer::reset(TestClass* ptr) {
 	this->ptr = ptr;
 }
 
-void UniqueElementPointer::release() {
-	free();
+TestClass* UniqueElementPointer::release() {
+	TestClass* temp = ptr;
+	ptr = nullptr;
+	return temp;
 }
 
 UniqueElementPointer::~UniqueElementPointer() {
