@@ -118,7 +118,8 @@ void StringPool::removeAt(size_t index) {
 		throw std::out_of_range(INVALID_INDEX_ERROR_MESSAGE);
 	}
 	// if was last ref -> delete
-	if (data[index]->refsCount == 1) {
+	// either way we decrement the refsCount with the --
+	if (data[index]->refsCount-- == 1) {
 		delete data[index];
 	}
 	// set to null ptr and move to the right
