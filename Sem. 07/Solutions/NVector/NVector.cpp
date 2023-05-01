@@ -1,6 +1,6 @@
 #include "NVector.h"
 #include <iostream>
-{
+namespace {
 	const double EPSILON = 0.001;
 }
 
