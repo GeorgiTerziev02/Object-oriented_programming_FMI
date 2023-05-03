@@ -37,7 +37,7 @@ public:
 		std::cout << "Test()" << std::endl;
 	}
 
-	Test(const Test& other) {
+	Test(const Test& other) : a(other.a) {
 		std::cout << "Test(const Test& other)" << std::endl;
 	}
 
@@ -47,7 +47,7 @@ public:
 
 	Test& operator=(const Test& other) {
 		std::cout << "operator=(const Test& other)" << std::endl;
-
+		a = other.a;
 		return *this;
 	}
 

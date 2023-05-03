@@ -10,7 +10,7 @@
 - [Тема 7](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2007): Предефиниране на оператори. Приятелски класове и функции.
 - [Тема 8](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2008): Композиция и агрегация в ООП. Масиви от обекти. has-a взаимоотношения.
 - [Тема 9](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2009): Move семантики.
-- [Тема 10](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2010): TBA.
+- [Тема 10](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2010): Наследяване.
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
