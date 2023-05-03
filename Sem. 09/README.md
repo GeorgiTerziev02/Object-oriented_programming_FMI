@@ -8,7 +8,6 @@
 ```c++
 int a;
 a = 4;    // = requires a (modifiable) lvalue as it's lhs, which is a
-lvalue-тата могат и да не са променливи
 ```
 
 lvalue-тата могат и да не са променливи
