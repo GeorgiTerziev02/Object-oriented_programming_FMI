@@ -89,8 +89,9 @@ size_t MyString::length() const {
 		return MyString::SSO_MAX_SIZE - ssoData[MyString::SSO_MAX_SIZE];
 	}
 	else {
-		size_t realSize = _size;
-		size_t mask = ~(1 << (sizeof(_size) * 8 - 1)); //we remove the bit of the size that shows us that SSO is not applied.
+		size_t realSize = _size;		
+		size_t mask = 1; // we can not use 1 as literal in the following statement because the 1 literal uses 32bits
+		mask = ~(mask << (sizeof(_size) * 8 - 1)); //we remove the bit of the size that shows us that SSO is not applied.
 		return realSize & mask;
 	}
 }
