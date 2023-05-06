@@ -127,7 +127,7 @@ Test Vector::popBack() {
 	// Note: the actual std::vector does NOT lower its capacity on this function
 	//downsizeIfNeeded();
 	// Note: the actual std::vector does NOT return on popback
-	return data[size--];
+	return data[--size];
 }
 
 Test Vector::popAt(size_t index) {
@@ -141,7 +141,7 @@ Test Vector::popAt(size_t index) {
 		data[i] = data[i + 1];
 	}
 
-	return data[index];
+	return temp;
 }
 
 bool Vector::empty() const {
