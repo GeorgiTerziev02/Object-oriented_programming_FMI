@@ -3,24 +3,19 @@
 ```c++
 #include <iostream>
 
-struct A
-{ 
-    void f() const 
-    {
+struct A { 
+    void f() const {
 	std::cout << "A::f()" << std::endl;
     }	
 };
 
-struct B : A
-{
-    void f() const 
-    {
+struct B : A {
+    void f() const {
 	std::cout << "B::f()" << std::endl;
     }	
 };
 
-void func(const A& obj) 
-{
+void func(const A& obj)  {
      obj.f();
 }	
 
@@ -42,18 +37,14 @@ int main()
 #include <iostream>
 using namespace std;
 
-struct A
-{
-    virtual void f() const 
-    {
+struct A {
+    virtual void f() const  {
 	std::cout << "A::f()" << std::endl;
     }	
 };
 
-struct B : public A
-{
-    void f() const 
-    {
+struct B : public A {
+    void f() const {
        std::cout << "B::f()" << std::endl;
     }	
 };
@@ -88,38 +79,31 @@ int main()
 #### Виртуални таблици - таблица с указатели към функции. 
 
 ```c++
-struct A
-{
-	virtual int f()
-	{
+struct A {
+	virtual int f() {
 		return 1;
 	}
-	virtual int g()
-	{
+	
+	virtual int g() {
 		return 1;
 	}
 };
 
-struct B : public A
-{
-	int f() override
-	{
+struct B : public A {
+	int f() override {
 		return 2;
 	}
 };
 
-struct C : public B
-{
-	int f() override
-	{
+struct C : public B {
+	int f() override {
 		return 3;
 	} 
-	int g() override
-	{
+	
+	int g() override {
 		return 3;
 	}
 };
-
 
  ```
 
@@ -149,24 +133,20 @@ An entity(object or function) behaves differently in different scenarios. <br />
 
 class Base {
 public:
-    Base()
-    {
+    Base() {
         std::cout << "Constructing base\n";
     }
-    virtual ~Base()
-    {
+    virtual ~Base() {
         std::cout << "Destructing base\n";
     }
 };
 
 class Derived : public Base {
 public:
-    Derived()
-    {
+    Derived() {
         std::cout << "Constructing derived\n";
     }
-    ~Derived()
-    {
+    ~Derived() {
         std::cout << "Destructing derived\n";
     }
 };
@@ -182,28 +162,22 @@ int main()
 ```c++
 #include<iostream>
 
-struct Animal
-{
-	virtual void sayHello() const
-	{
+struct Animal {
+	virtual void sayHello() const {
 		std::cout << "Hello, I am a random animal" << std::endl;
 	}
 
-	virtual ~Animal(){} //virtual destructor
+	virtual ~Animal() = default; //virtual destructor
 };
 
-struct Dog : public Animal
-{
-	void sayHello() const override
-	{
+struct Dog : public Animal {
+	void sayHello() const override {
 		std::cout << "Hello, I am a dog!" << std::endl;
 	}
 };
 
-struct Cat : public Animal
-{
-	void sayHello() const override
-	{
+struct Cat : public Animal {
+	void sayHello() const override {
 		std::cout << "Hello, I am a cat!" << std::endl;
 	}
 };
@@ -240,32 +214,25 @@ int main()
 ```c++
 #include<iostream>
 
-struct Animal
-{
-	virtual void sayHello() const = 0;
-	
-	virtual ~Animal(){} 
+struct Animal {
+	virtual void sayHello() const = 0;	
+	virtual ~Animal() = default;
 };
-struct Dog : public Animal
-{
-	void sayHello() const override
-	{
+
+struct Dog : public Animal {
+	void sayHello() const override {
 		std::cout << "Hello, I am a dog!" << std::endl;
 	}
 };
 
-struct Cat : public Animal
-{
-	void sayHello() const override
-	{
+struct Cat : public Animal {
+	void sayHello() const override {
 		std::cout << "Hello, I am a cat!" << std::endl;
 	}
 };
 
-struct Mouse : public Animal
-{
-	void sayHello() const override
-	{
+struct Mouse : public Animal {
+	void sayHello() const override {
 		std::cout << "Hello, I am a mouse!" << std::endl;
 	}
 };
@@ -330,8 +297,8 @@ class Base {
 public:
     virtual ~Base() = 0; // Pure virtual destructor
 };
-Base::~Base() // Explicit destructor call
-{
+
+Base::~Base() // Explicit destructor call {
     std::cout << "Pure virtual destructor is called" << std::endl;
 }
 
@@ -361,7 +328,6 @@ int main()
 - keyword abstract за aбстракция (function can be made pure virtual or abstract with keyword abstract)
 
 ## Diamond problem
-![alt text](https://github.com/Justsvetoslavov/Object-oriented_programming_FMI_2021-2022/blob/main/Sem.%2012/img/diamond-problem.png)
 ```c++
 //indicate problem
 
