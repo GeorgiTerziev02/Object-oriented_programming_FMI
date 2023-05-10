@@ -82,59 +82,52 @@ int main()
   - Достъпът до виртуалните функции трябва да се осъществява използвайки reference/pointer към базовия клас, за да се осъществи Runtime polymorphism.
   - **Класът може да има виртуален деструктор, но не може да има виртуален конструктор.**
 
-### Virtual pointer(vPtr) | Virtual table(vTable)
+# Виртуални таблици. Ключови думи override и final. Колекции от обекти в полиморфна йерархия. Копиране и триене.
+## Виртуални таблици.
 
-![alt text](https://github.com/Justsvetoslavov/Object-oriented_programming_FMI_2021-2022/blob/main/Sem.%2012/img/vtable-1.png)
+#### Виртуални таблици - таблица с указатели към функции. 
 
 ```c++
-class Base
+struct A
 {
-public:
-    virtual void print() const
-    {
-        std::cout << "print base class\n";
-    }
-
-    void show() const
-    {
-        std::cout << "show base class\n";
-    }
+	virtual int f()
+	{
+		return 1;
+	}
+	virtual int g()
+	{
+		return 1;
+	}
 };
 
-class Derived : public Base
+struct B : public A
 {
-public:
-    void print() const override
-    {
-        std::cout << "print derived class\n";
-    }
-
-    void show() const
-    {
-        std::cout << "show derived class\n";
-    }
+	int f() override
+	{
+		return 2;
+	}
 };
 
-int main()
+struct C : public B
 {
-    Base* bptr;
-    Derived d;
-    bptr = &d;
+	int f() override
+	{
+		return 3;
+	} 
+	int g() override
+	{
+		return 3;
+	}
+};
 
-    // Virtual function, binded at runtime
-    bptr->print();
 
-    // Non-virtual function, binded at compile time
-    bptr->show();
+ ```
 
-    return 0;
-}
-```
-Output:
-```
-print derived class
-show base class
-```
+![enter image description here](https://i.ibb.co/dbzJTtm/vtable-2-1.png)
+
+#### Specifiers - override & final
+- override указва, че дадена функция презаписва функция от базовия клас. Ако в базовия клас няма такава функция, то кодът няма да се компилира.
+- final указва, че дадена функция не може да се презависва надолу по йерархията или че даден клас не може да се наследява.
 
 ## Полиморфизъм
 Едни и същи действия се реализират по различен начин, в зависимост от обектите, върху които се прилагат. <br />
@@ -463,7 +456,3 @@ Solution - virtual. <br />
 
 Важно:
 Когато използваме keyword: virtual, **конструкторът по подразбиране на прародителя се извиква по подразбиране**, дори ако родителските класове извикват изрично конструктор с параметри.
-
-## Specifiers - override & final
-- override указва, че дадена функция презаписва функция от базовия клас. Ако в базовия клас няма такава функция, то кодът няма да се компилира.
-- final указва, че дадена функция не може да се презависва надолу по йерархията или че даден клас не може да се наследява.
