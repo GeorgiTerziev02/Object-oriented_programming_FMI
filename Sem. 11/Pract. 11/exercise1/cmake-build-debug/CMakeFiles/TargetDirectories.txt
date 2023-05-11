@@ -1,0 +1,3 @@
+C:/c++ files clion/oop/oop_prac/prac11/cmake-build-debug/CMakeFiles/prac11.dir
+C:/c++ files clion/oop/oop_prac/prac11/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/c++ files clion/oop/oop_prac/prac11/cmake-build-debug/CMakeFiles/rebuild_cache.dir
