@@ -10,7 +10,7 @@
 - [Задачи](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8)
 
 ##  **Преговор. Указатели, референции, динамична памет.**
-<img align="right" width="450" height="600" src="https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png">
+<img style="object-fit:contain;" align="right" width="450" height="600" src="https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png">
 
 Паметта, която можем да използваме в **C++** има 4 основни типа:
 <br />
@@ -145,12 +145,12 @@ struct Box
  ```c++
 Box b; // default values to height and width and length
 
-Box b2 = {3, 4, 3.4} // height = 3, width = 3, length = 3.4;
+Box b2 = {3, 4, 3.4}; // height = 3, width = 3, length = 3.4;
 
 Box b3;
 b3.height = 13;
 b3.width = 14;
-b3.lenght = 20;
+b3.length = 20;
  ```
 	
 #### **Подаване във функции**
