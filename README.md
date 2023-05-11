@@ -11,9 +11,14 @@
 - [Тема 8](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2008): Композиция и агрегация в ООП. Масиви от обекти. has-a взаимоотношения.
 - [Тема 9](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2009): Move семантики.
 - [Тема 10](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2010): Наследяване.
+- [Тема 11](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2011): Статично и динамично свързване. Виртуални функции. Полиморфизъм. Абстрактни класове. Ключови думи - override, final. Виртуални таблици.
+- [Тема 12](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2012): TBA.
+- [Тема 13](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2013): TBA.
+- [Тема 14](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2014): TBA.
+- [Тема 15](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015): TBA.
 
 ## Допълнителни материали
 - [Документация на езика - cppreference](https://en.cppreference.com/w/)
 - [Увод в програмирането - преговор](https://github.com/Justsvetoslavov/Introduction_to_programming/tree/master/SI)
 - [Моите материали от миналата година](https://github.com/GeorgiTerziev02/FMI/tree/main/Object%20Oriented%20Programming)
-- [Нужната теория за изпит спрямо миналогодишния конспект (на 80% се препокрива!)](https://github.com/GeorgiTerziev02/FMI/blob/main/Object%20Oriented%20Programming/OOP%20theory.docx)
+- [Нужната теория за изпит спрямо миналогодишния конспект (на 80% се припокрива!)](https://github.com/GeorgiTerziev02/FMI/blob/main/Object%20Oriented%20Programming/OOP%20theory.docx)
