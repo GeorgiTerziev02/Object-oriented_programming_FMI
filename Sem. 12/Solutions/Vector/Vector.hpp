@@ -5,7 +5,10 @@
 // They were created for testing purposes
 template<typename T>
 class Vector {
-private:
+private:{
+	static const short INITIAL_CAPACITY = 4;
+	static const short RESIZE_COEF = 2; // the most optimal is between 1.4 and 1.5
+	
 	T* data = nullptr;
 	size_t size = 0;
 	size_t capacity;
@@ -49,11 +52,6 @@ private:
 	void copyFrom(const Vector<T>& other);
 	void free();
 };
-
-namespace {
-	const short INITIAL_CAPACITY = 4;
-	const short RESIZE_COEF = 2; // the most optimal is between 1.4 and 1.5
-}
 
 template<typename T>
 Vector<T>::Vector() : Vector(INITIAL_CAPACITY) { }
