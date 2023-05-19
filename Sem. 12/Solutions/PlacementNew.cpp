@@ -1,7 +1,7 @@
 #include <iostream>
 
 int x = 0;
-
+// https://en.cppreference.com/w/cpp/language/new ctrl+f "placement new" for more info
 struct Test {
 	int a;
 	
