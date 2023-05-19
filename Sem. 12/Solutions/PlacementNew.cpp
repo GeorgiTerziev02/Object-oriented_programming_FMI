@@ -17,7 +17,7 @@ struct Test {
 };
 
 int main() {
-    const size_t capacity = 4;
+    	const size_t capacity = 4;
 	Test* ptr =(Test*) new char[capacity * sizeof(Test)];
 
 	Test* test1 = new (&ptr[0]) Test();
