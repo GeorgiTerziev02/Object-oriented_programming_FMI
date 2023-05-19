@@ -1,170 +1,188 @@
 #include <iostream>
 #include <fstream>
-#pragma warning (disable: 4996)
 
-const char* UNSORTED_FILE_NAME = "unsortedDeliveries.bin";
-const char* SORTED_FILE_NAME = "sortedDeliveries.bin";
-const char* ERROR_MESSAGE = "Error";
+const char* OUTPUT_FILE_NAME = "sorted.bin";
+const char* FILE_NAME = "orders.txt";
 
-const int ADDRESS_MAX_LENGTH = 25;
+const int MAX_SIZE = 25;
+const int MAX_ORDERS_SIZE = 1024;
 
-struct Delivery {
+struct Order {
+    char address[MAX_SIZE];
     double price;
-    char address[ADDRESS_MAX_LENGTH + 1];
-};
+};  // 40 bytes
 
-bool isSecondStringLarger(const char* str1, const char* str2) {
-    size_t i = 0;
-    while (str1[i] == str2[i]) {
-        if (str1[i] == '\0') {
+void saveOrdersToFile(std::ofstream& file, const Order* orders, const int ordersCount) {
+    file.write((const char*) &ordersCount, sizeof(int));
+
+    file.write((const char*) orders, sizeof(Order) * ordersCount);
+}
+
+void saveOrderToCSV(std::ofstream& file, const Order& order) {
+    file << order.address << ", " << order.price << std::endl;
+}
+
+void saveOrdersToTxtCSV(std::ofstream& file, const Order* orders, const int ordersCount) {
+    file << "address, price" << std::endl;
+
+    for (int i = 0; i < ordersCount; ++i) {
+        saveOrderToCSV(file, orders[i]);
+    }
+}
+
+void readOrdersFromFile(std::ifstream& file, Order* orders, int& ordersCount) {
+    file.read((char*) &ordersCount, sizeof(int));
+
+    file.read((char*) orders, sizeof(Order) * ordersCount);
+}
+
+void printOrders(const Order* orders, const int ordersCount) {
+    for (int i = 0; i < ordersCount; ++i) {
+        std::cout << orders[i].address << ", " << orders[i].price << std::endl;
+    }
+}
+
+void swap(Order& order1, Order& order2) {
+    Order temp = order1;
+    order1 = order2;
+    order2 = temp;
+}
+
+char getLowerCase(const char ch) {
+    int chIntValue = (int) ch;
+    int AValue = (int) 'A';
+    int ZValue = (int) 'Z';
+    int aToADiff = 32;
+
+    if (AValue <= chIntValue && chIntValue <= ZValue)
+        chIntValue += aToADiff;
+
+    return (char) chIntValue;
+}
+
+bool compareLexicographically(const char* str1, const char* str2) {
+    for (int i = 0; str1[i] != '\0'; ++i) {
+        if (str2[i] == '\0')
             return false;
-        }
 
-        i++;
+        char ch1 = getLowerCase(str1[i]);
+        char ch2 = getLowerCase(str2[i]);
+
+        if (ch1 == ch2)
+            continue;
+
+        return (int) ch1 < (int) ch2;
     }
 
-    return str1[i] - str2[i] < 0;
+    return true;
 }
 
-size_t getFileSize(std::ifstream& in) {
-    size_t currentPosition = in.tellg();
-    in.seekg(0, std::ios::end);
-    size_t fileSize = in.tellg();
-    in.seekg(currentPosition, std::ios::beg);
+void sortOrders(Order* orders, const int ordersCount) {
+    for (int i = 0; i < ordersCount; ++i) {
+        int minimalIndex = i;
 
-    return fileSize;
+        for (int y = i + 1; y < ordersCount; ++y) {
+            if (!compareLexicographically(orders[minimalIndex].address, orders[y].address)) {
+                minimalIndex = y;
+            }
+        }
+
+        if (minimalIndex != i) {
+            swap(orders[i], orders[minimalIndex]);
+        }
+    }
 }
 
-namespace deliveryFunctions {
+void addOrder(Order* orders, int& orderCount) {
+    Order newOrder{};
 
-    void assignAddress(Delivery& delivery, const char* address) {
-        int length = strlen(address);
+    std::cout << "Address: " << std::endl;
+    std::cin.ignore();
+    std::cin.getline(newOrder.address, MAX_SIZE, '\n');
+    std::cout << std::endl;
 
-        if(length > ADDRESS_MAX_LENGTH) {
-            return;
+    std::cout << "Price: " << std::endl;
+    std::cin >> newOrder.price;
+    std::cout << std::endl;
+
+    orders[orderCount++] = newOrder;
+}
+
+char getCommand() {
+    char command;
+    std::cout << "Add order- a" << std::endl;
+    std::cout << "Save to file- s" << std::endl;
+    std::cout << "Print orders- p" << std::endl;
+    std::cout << "Exit- q" << std::endl;
+    std::cout << "Pick command:";
+
+    std::cin >> command;
+
+    return command;
+}
+
+int runProgram() {
+    int ordersCount;
+    Order orders[MAX_ORDERS_SIZE] = {};
+
+    {
+        std::ifstream in(OUTPUT_FILE_NAME, std::ios::binary);
+
+        if (!in.is_open()) {
+            return -1;
         }
 
-	    strcpy(delivery.address, address);
+        readOrdersFromFile(in, orders, ordersCount);
+
+        in.close();
     }
 
-    void swapDeliveries(Delivery& delivery1, Delivery& delivery2) {
-        Delivery temp = delivery1;
-        delivery1 = delivery2;
-        delivery2 = temp;
-    }
+    std::ofstream ordersFile(FILE_NAME);
+    if (!ordersFile.is_open())
+        return -1;
 
-    void selectionSort(Delivery* deliveryArray, size_t arraySize) {
-        for (int i = 0; i < arraySize - 1; ++i) {
-            int minIndex = i;
-            for (int j = i + 1; j < arraySize; ++j) {
-                if (isSecondStringLarger(deliveryArray[j].address, deliveryArray[minIndex].address)) {
-                    minIndex = j;
-                }
+    char command;
+    while (true) {
+        command = getCommand();
 
-            }
-
-            if (minIndex != i) {
-                swapDeliveries(deliveryArray[i], deliveryArray[minIndex]);
-            }
+        if (command == 'a') {
+            addOrder(orders, ordersCount);
         }
-    }
-
-    void initializeDelivery(Delivery& delivery, double price, const char* address) {
-        delivery.price = price;
-        assignAddress(delivery, address);
-    }
-
-    void writeDeliveryArrayToFile(std::ofstream& out, const Delivery* deliveryArray, size_t arraySize) {
-        out.write((const char*)deliveryArray, sizeof(Delivery) * arraySize);
-    }
-
-    void readDeliveryArrayFromFile(std::ifstream& in, Delivery*& deliveryArray, size_t& arraySize) {
-        arraySize = getFileSize(in) / sizeof(Delivery);
-        deliveryArray = new Delivery[arraySize];
-        in.read((char*)deliveryArray, sizeof(Delivery) * arraySize);
-    }
-
-    void printDeliveryArray(const Delivery* deliveryArray, size_t arraySize) {
-        for (int i = 0; i < arraySize; ++i) {
-            std::cout << deliveryArray[i].price << " " << deliveryArray[i].address << '\n';
+        else if (command == 's') {
+            sortOrders(orders, ordersCount);
+            saveOrdersToTxtCSV(ordersFile, orders, ordersCount);
+            std::cout << "Orders saved at: " << FILE_NAME << std::endl;
         }
+        else if (command == 'p') {
+            printOrders(orders, ordersCount);
+        }
+        else if (command == 'q') {
+            break;
+        }
+        else std::cout << "Enter a valid command!" << std::endl;
+
+        std::cout << std::endl;
     }
 
+    ordersFile.close();
+
+    {
+        std::ofstream out(OUTPUT_FILE_NAME, std::ios::binary);
+
+        if (!out.is_open()) {
+            return -1;
+        }
+
+        sortOrders(orders, ordersCount);
+        saveOrdersToFile(out, orders, ordersCount);
+
+        out.close();
+    }
+
+    return 0;
 }
 
 int main() {
-    size_t n = 0;
-    double price = 0;
-    char* address = new char[ADDRESS_MAX_LENGTH];
 
-    Delivery* deliveryArrayFromUnsortedFile = nullptr;
-    size_t unsortedArraySize = 0;
-    Delivery* deliveryArrayFromSortedFile = nullptr;
-    size_t sortedArraySize = 0;
-
-    std::cin >> n;
-
-    Delivery* deliveries = new Delivery[n];
-
-    for (int i = 0; i < n; ++i) {
-        std::cin >> price;
-        std::cin.ignore();
-        std::cin.getline(address, ADDRESS_MAX_LENGTH);
-        deliveryFunctions::initializeDelivery(deliveries[i], price, address);
-    }
-
-    using namespace deliveryFunctions;
-
-    std::ofstream out1(UNSORTED_FILE_NAME, std::ios::binary);
-
-    if (!out1.is_open()) {
-        std::cerr << ERROR_MESSAGE;
-        return 1;
-    }
-
-    writeDeliveryArrayToFile(out1, deliveries, n);
-
-    out1.close();
-
-    std::ofstream out2(SORTED_FILE_NAME, std::ios::binary);
-
-    if (!out2.is_open()) {
-        std::cerr << ERROR_MESSAGE;
-        return 1;
-    }
-
-    selectionSort(deliveries, n);
-    writeDeliveryArrayToFile(out2, deliveries, n);
-
-    out2.close();
-
-    std::ifstream in1(UNSORTED_FILE_NAME, std::ios::binary);
-
-    if (!in1.is_open()) {
-        std::cerr << ERROR_MESSAGE;
-        return 1;
-    }
-
-    readDeliveryArrayFromFile(in1, deliveryArrayFromUnsortedFile, unsortedArraySize);
-
-    in1.close();
-
-    std::ifstream in2(SORTED_FILE_NAME, std::ios::binary);
-
-    if (!in2.is_open()) {
-        std::cerr << ERROR_MESSAGE;
-        return 1;
-    }
-
-    readDeliveryArrayFromFile(in2, deliveryArrayFromSortedFile, sortedArraySize);
-
-    in2.close();
-
-    printDeliveryArray(deliveryArrayFromUnsortedFile, unsortedArraySize);
-    printDeliveryArray(deliveryArrayFromSortedFile, sortedArraySize);
-
-    delete[] deliveries;
-    delete[] address;
-    delete[] deliveryArrayFromUnsortedFile;
-    delete[] deliveryArrayFromSortedFile;
+    return runProgram();
 }
