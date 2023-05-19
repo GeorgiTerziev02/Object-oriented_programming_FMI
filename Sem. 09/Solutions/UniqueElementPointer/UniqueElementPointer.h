@@ -10,8 +10,8 @@ private:
 	TestClass* ptr;
 public:
 	UniqueElementPointer(TestClass* ptr);
-	UniqueElementPointer(const TestClass& ptr) = delete;
-	UniqueElementPointer& operator=(const TestClass& ptr) = delete;
+	UniqueElementPointer(const UniqueElementPointer& ptr) = delete;
+	UniqueElementPointer& operator=(const UniqueElementPointer& ptr) = delete;
 	
 	UniqueElementPointer(UniqueElementPointer&& other) noexcept;
 	UniqueElementPointer& operator=(UniqueElementPointer&& other) noexcept;

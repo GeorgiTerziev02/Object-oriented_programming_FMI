@@ -71,7 +71,7 @@ void Vector::resize(size_t newCapacity) {
 	}
 
 	for (size_t i = 0; i < size; i++) {
-		temp[i] = data[i];
+		temp[i] = std::move(data[i]);
 	}
 
 	delete[] data;
@@ -101,7 +101,7 @@ void Vector::pushAt(const Test& element, size_t index) {
 	upsizeIfNeeded();
 
 	for (size_t i = size; i > index; i--) {
-		data[i] = data[i - 1];
+		data[i] = std::move(data[i - 1]);
 	}
 
 	data[index] = element;
@@ -113,7 +113,7 @@ void Vector::pushAt(Test&& element, size_t index) {
 	upsizeIfNeeded();
 
 	for (size_t i = size; i > index; i--) {
-		data[i] = data[i - 1];
+		data[i] = std::move(data[i - 1]);
 	}
 
 	data[index] = std::move(element);
@@ -138,7 +138,7 @@ Test Vector::popAt(size_t index) {
 	Test temp = data[index];
 	size--;
 	for (size_t i = index; i < size; i++) {
-		data[i] = data[i + 1];
+		data[i] = std::move(data[i + 1]);
 	}
 
 	return temp;
@@ -173,6 +173,8 @@ void Vector::move(Vector&& other) {
 	capacity = other.capacity;
 	data = other.data;
 	other.data = nullptr;
+	other.size = 0;
+	other.capacity = 0;
 }
 
 void Vector::copyFrom(const Vector& other) {
