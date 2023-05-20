@@ -1,11 +1,13 @@
 #pragma once
+#include <utility>
+#include <exception>
 
 // NOTE!: most of the functions are not needed in the class
 // or do not work as in the original std::vector
 // They were created for testing purposes
 template<typename T>
 class Vector {
-private:{
+private:
 	static const short INITIAL_CAPACITY = 4;
 	static const short RESIZE_COEF = 2; // the most optimal is between 1.4 and 1.5
 	
