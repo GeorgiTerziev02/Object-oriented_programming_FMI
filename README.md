@@ -12,7 +12,7 @@
 - [Тема 9](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2009): Move семантики.
 - [Тема 10](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2010): Наследяване.
 - [Тема 11](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2011): Статично и динамично свързване. Виртуални функции. Полиморфизъм. Абстрактни класове. Ключови думи - override, final. Виртуални таблици.
-- [Тема 12](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2012): Колекции от обекти в полиморфна йерархия. Копиране, триене, разпознаване и прихващане..
+- [Тема 12](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2012): Колекции от обекти в полиморфна йерархия. Копиране, триене, разпознаване и прихващане.
 - [Тема 13](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2013): Шаблони. Спецификация на шаблони. Умни указатели.
 - [Тема 14](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2014): TBA.
 - [Тема 15](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015): TBA.
