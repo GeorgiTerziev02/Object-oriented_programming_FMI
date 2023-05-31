@@ -148,8 +148,8 @@ int main() {
    std::cout << "----------" << std::endl;
 
    p = &firstDerivedOject;
-   p->f(); // Dynamic binding - SecondDerived::f()
-   p->g(); // Dynamic binding - SecondDerived::g()
+   p->f(); // Dynamic binding - FirstDerived::f()
+   p->g(); // Dynamic binding - FirstDerived::g()
 
    std::cout << "----------" << std::endl;
 
