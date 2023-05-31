@@ -155,7 +155,7 @@ BooleanExpression* ExpressionCalculator::parseExpression(const StringView& str) 
 			bracketsCounter++;
 		}
 		else if (strWithoutBrackets[i] == ')') {
-			bracketsCounter++;
+			bracketsCounter--;
 		}
 		else if (isOperator(strWithoutBrackets[i]) && bracketsCounter == 0) {
 			if (strWithoutBrackets[i] == NEG) {
