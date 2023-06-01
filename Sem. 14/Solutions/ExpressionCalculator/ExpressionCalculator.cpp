@@ -86,7 +86,7 @@ bool UnaryExpression::evaluate(const BooleanInterpretation& interpretation) cons
 }
 
 BooleanExpression* UnaryExpression::clone() const {
-	return new UnaryExpression(*this);
+	return new UnaryExpression(operand, expression->clone());
 }
 
 UnaryExpression::~UnaryExpression() {
@@ -119,7 +119,7 @@ bool BinaryExpression::evaluate(const BooleanInterpretation& interpretation) con
 }
 
 BooleanExpression* BinaryExpression::clone() const {
-	return new BinaryExpression(*this);
+	return new BinaryExpression(operand, left->clone(), right->clone());
 }
 
 BinaryExpression::~BinaryExpression() {
