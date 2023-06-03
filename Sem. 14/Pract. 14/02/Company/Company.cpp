@@ -28,6 +28,30 @@ namespace {
 
 }
 
+void Company::copyFrom(const Company& other)
+{
+    for (size_t i = 0; i < other.employees.getSize(); i++)
+    {
+        employees.pushBack(other.employees[i]->clone());
+    }
+}
+
+void Company::moveFrom(Company&& other)
+{
+    employees = other.employees;
+
+    other.employees = Vector<Employee*>();
+}
+
+void Company::free()
+{
+    for (size_t i = 0; i < employees.getSize(); i++)
+    {
+        delete employees[i];
+    }
+    employees.clear();
+}
+
 Company::~Company()
 {
 	for (size_t i = 0; i < employees.getSize(); i++)
@@ -36,25 +60,43 @@ Company::~Company()
 	}
 }
 
+Company::Company() : ceo("", 0, 0.0, Vector<Manager*>()) {}
+
+Company::Company(const Company& other)
+{
+    copyFrom(other);
+}
+
+Company& Company::operator=(const Company& other)
+{
+    if (this != &other)
+    {
+        free();
+        copyFrom(other);
+    }
+    return *this;
+}
+
+Company::Company(Company&& other) noexcept
+{
+    moveFrom(std::move(other));
+}
+
+Company& Company::operator=(Company&& other) noexcept
+{
+    if (this != &other)
+    {
+        free();
+        moveFrom(std::move(other));
+    }
+
+    return *this;
+}
+
 void Company::addEmployee(Employee* employee)
 {
     employees.pushBack(employee);
     customSort(employees);
-}
-
-void Company::addWorker(Employee* worker)
-{
-    addEmployee(worker);
-}
-
-void Company::addTrainee(Employee* trainee)
-{
-    addEmployee(trainee);
-}
-
-void Company::addPaidTrainee(Employee* paidTrainee)
-{
-    addEmployee(paidTrainee);
 }
 
 double Company::calculateAverageSalary() const
@@ -85,8 +127,64 @@ bool Company::hasTwoEmployeesWithSumSalary(double val) const
     return false;
 }
 
+//Manager class
+
+void Company::Manager::copyFrom(const Manager& other)
+{
+    for (size_t i = 0; i < other.subordinates.getSize(); i++)
+    {
+        subordinates.pushBack(other.subordinates[i]->clone());
+    }
+}
+
+void Company::Manager::moveFrom(Manager&& other)
+{
+    subordinates = other.subordinates;
+
+    other.subordinates = Vector<Employee*>();
+}
+
+void Company::Manager::free()
+{
+    for (size_t i = 0; i < subordinates.getSize(); i++)
+    {
+        delete subordinates[i];
+    }
+}
+
 Company::Manager::Manager(const MyString& name, unsigned int age, double salary, Vector<Employee*> subordinates)
         : Employee(name, age, salary), subordinates(subordinates) {}
+
+Company::Manager::Manager(const Manager& other)
+{
+    copyFrom(other);
+}
+
+Company::Manager& Company::Manager::operator=(const Manager& other)
+{
+    if (this != &other)
+    {
+        free();
+        copyFrom(other);
+    }
+    return *this;
+}
+
+Company::Manager::Manager(Manager&& other) noexcept
+{
+    moveFrom(std::move(other));
+}
+
+Company::Manager& Company::Manager::operator=(Manager&& other) noexcept
+{
+    if (this != &other)
+    {
+        free();
+        moveFrom(std::move(other));
+    }
+
+    return *this;
+}
 
 void Company::Manager::addSubordinate(Employee* subordinate)
 {
@@ -119,8 +217,65 @@ Company::Manager::~Manager()
     }
 }
 
+//
+
+//CEO
+
 Company::CEO::CEO(const MyString& name, unsigned int age, double salary, Vector<Manager*> subordinates)
         : Employee(name, age, salary), managers(subordinates) {}
+
+Company::CEO::CEO(const CEO& other)
+{
+    copyFrom(other);
+}
+
+Company::CEO& Company::CEO::operator=(const CEO& other)
+{
+    if (this != &other)
+    {
+        free();
+        copyFrom(other);
+    }
+    return *this;
+}
+
+Company::CEO::CEO(CEO&& other) noexcept
+{
+    moveFrom(std::move(other));
+}
+
+Company::CEO& Company::CEO::operator=(CEO&& other) noexcept
+{
+    if (this != &other)
+    {
+        free();
+        moveFrom(std::move(other));
+    }
+
+    return *this;
+}
+
+void Company::CEO::copyFrom(const CEO& other)
+{
+    for (size_t i = 0; i < other.managers.getSize(); i++)
+    {
+        managers.pushBack(other.managers[i]);
+    }
+}
+
+void Company::CEO::moveFrom(CEO&& other)
+{
+    managers = other.managers;
+    other.managers = Vector<Manager*>();
+}
+
+void Company::CEO::free()
+{
+    for (size_t i = 0; i < managers.getSize(); i++)
+    {
+        delete managers[i];
+    }
+}
 
 Company::CEO::CEO() : Employee(), managers() {}
 
@@ -154,3 +309,5 @@ Company::CEO::~CEO()
         delete managers[i];
     }
 }
+
+//
