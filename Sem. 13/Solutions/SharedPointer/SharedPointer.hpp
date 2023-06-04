@@ -19,7 +19,7 @@ public:
 	const T& operator*() const;
 	T& operator*();
 
-	T* get();
+	T* get() const;
 	void reset(T* data = nullptr);
 	size_t getCount() const;
 
@@ -96,7 +96,7 @@ T& SharedPointer<T>::operator*() {
 }
 
 template<typename T>
-T* SharedPointer<T>::get() {
+T* SharedPointer<T>::get() const {
 	return data;
 }
 
