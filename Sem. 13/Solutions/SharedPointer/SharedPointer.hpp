@@ -126,7 +126,7 @@ SharedPointer<T>::operator bool() const {
 template<typename T>
 void SharedPointer<T>::copyFrom(const SharedPointer<T>& other) {
 	data = other.data;
-	counter = other.data;
+	counter = other.counter;
 	if (data) {
 		(*counter)++;
 	}
