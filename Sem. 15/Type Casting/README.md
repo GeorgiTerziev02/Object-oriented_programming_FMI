@@ -2,10 +2,10 @@
 # Type casting
 
 Унарен оператор(unary operator), който принуждава един тип данни да бъде преобразуван в друг тип данни.
-- [static_cast](https://github.com/Justsvetoslavov/Object-oriented_programming_FMI_2021-2022/tree/main/Sem.%2014/Type%20casting#static-cast)
-- [dynamic_cast](https://github.com/Justsvetoslavov/Object-oriented_programming_FMI_2021-2022/tree/main/Sem.%2014/Type%20casting#dynamic-cast)
-- [const_cast](https://github.com/Justsvetoslavov/Object-oriented_programming_FMI_2021-2022/tree/main/Sem.%2014/Type%20casting#const-cast)
-- [reinterpret_cast](https://github.com/Justsvetoslavov/Object-oriented_programming_FMI_2021-2022/tree/main/Sem.%2014/Type%20casting#reinterpret-cast)
+- [static_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#static-cast)
+- [dynamic_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#dynamic-cast)
+- [const_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#const-cast)
+- [reinterpret_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#reinterpret-cast)
 
 ## Static cast
 - Default cast-a за implicit conversions
