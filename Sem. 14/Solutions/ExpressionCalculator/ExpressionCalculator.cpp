@@ -8,14 +8,18 @@ namespace {
 	const char IFF = '='; // <=>
 	const char XOR = '+';
 	const char NEG = '!';
+
+	bool isOperator(char ch) {
+		return ch == AND || ch == OR || ch == IFF || ch == IMPL || ch == XOR || ch == NEG;
+	}
 }
 
 /// BooleanInterpretation
-bool BooleanInterpretation::isValidCharacter(char ch) {
+bool ExpressionCalculator::BooleanInterpretation::isValidCharacter(char ch) {
 	return 'A' <= ch && ch <= 'Z';
 }
 
-BooleanInterpretation BooleanInterpretation::createFromNumber(size_t number, const bool variables[CHARACTERS_COUNT]) {
+ExpressionCalculator::BooleanInterpretation ExpressionCalculator::BooleanInterpretation::createFromNumber(size_t number, const bool variables[CHARACTERS_COUNT]) {
 	BooleanInterpretation result;
 
 	for (size_t i = 0; i < CHARACTERS_COUNT; i++) {
@@ -31,7 +35,7 @@ BooleanInterpretation BooleanInterpretation::createFromNumber(size_t number, con
 	return result;
 }
 
-bool BooleanInterpretation::getValue(char ch) const {
+bool ExpressionCalculator::BooleanInterpretation::getValue(char ch) const {
 	if (!BooleanInterpretation::isValidCharacter(ch)) {
 		throw std::exception("Invalid character");
 	}
@@ -39,7 +43,7 @@ bool BooleanInterpretation::getValue(char ch) const {
 	return variables[ch - 'A'];
 }
 
-void BooleanInterpretation::setValue(char ch, bool value) {
+void ExpressionCalculator::BooleanInterpretation::setValue(char ch, bool value) {
 	if (!BooleanInterpretation::isValidCharacter(ch)) {
 		throw std::exception("Invalid character");
 	}
@@ -50,16 +54,16 @@ void BooleanInterpretation::setValue(char ch, bool value) {
 ///
 
 ///  Variable
-Variable::Variable(char ch) : ch(ch) {
+ExpressionCalculator::Variable::Variable(char ch) : ch(ch) {
 	variables[ch - 'A'] = true;
 	variablesCount = 1;
 }
 
-bool Variable::evaluate(const BooleanInterpretation& interpretation) const {
+bool ExpressionCalculator::Variable::evaluate(const BooleanInterpretation& interpretation) const {
 	return interpretation.getValue(ch);
 }
 
-BooleanExpression* Variable::clone() const {
+ExpressionCalculator::BooleanExpression* ExpressionCalculator::Variable::clone() const {
 	return new Variable(*this);
 }
 
@@ -67,8 +71,8 @@ BooleanExpression* Variable::clone() const {
 
 /// Unary Expression
 
-UnaryExpression::UnaryExpression(char operand, BooleanExpression* expression)
-	: operand(operand), expression(expression) 
+ExpressionCalculator::UnaryExpression::UnaryExpression(char operand, BooleanExpression* expression)
+	: operand(operand), expression(expression)
 {
 	for (size_t i = 0; i < CHARACTERS_COUNT; i++) {
 		variables[i] = expression->variables[i];
@@ -77,7 +81,7 @@ UnaryExpression::UnaryExpression(char operand, BooleanExpression* expression)
 	variablesCount = expression->variablesCount;
 }
 
-bool UnaryExpression::evaluate(const BooleanInterpretation& interpretation) const {
+bool ExpressionCalculator::UnaryExpression::evaluate(const BooleanInterpretation& interpretation) const {
 	if (operand != NEG) {
 		return false;
 	}
@@ -85,19 +89,19 @@ bool UnaryExpression::evaluate(const BooleanInterpretation& interpretation) cons
 	return !expression->evaluate(interpretation);
 }
 
-BooleanExpression* UnaryExpression::clone() const {
+ExpressionCalculator::BooleanExpression* ExpressionCalculator::UnaryExpression::clone() const {
 	return new UnaryExpression(operand, expression->clone());
 }
 
-UnaryExpression::~UnaryExpression() {
+ExpressionCalculator::UnaryExpression::~UnaryExpression() {
 	delete expression;
 }
 ///
 
 /// Binary Expression
 
-BinaryExpression::BinaryExpression(char operand, BooleanExpression* left, BooleanExpression* right)
-	: operand(operand), left(left), right(right) 
+ExpressionCalculator::BinaryExpression::BinaryExpression(char operand, BooleanExpression* left, BooleanExpression* right)
+	: operand(operand), left(left), right(right)
 {
 	for (size_t i = 0; i < CHARACTERS_COUNT; i++) {
 		variables[i] = left->variables[i] || right->variables[i];
@@ -107,7 +111,7 @@ BinaryExpression::BinaryExpression(char operand, BooleanExpression* left, Boolea
 	}
 }
 
-bool BinaryExpression::evaluate(const BooleanInterpretation& interpretation) const {
+bool ExpressionCalculator::BinaryExpression::evaluate(const BooleanInterpretation& interpretation) const {
 	switch (operand) {
 	case OR: return  left->evaluate(interpretation) || right->evaluate(interpretation);
 	case AND: return left->evaluate(interpretation) && right->evaluate(interpretation);
@@ -118,11 +122,11 @@ bool BinaryExpression::evaluate(const BooleanInterpretation& interpretation) con
 	}
 }
 
-BooleanExpression* BinaryExpression::clone() const {
+ExpressionCalculator::BooleanExpression* ExpressionCalculator::BinaryExpression::clone() const {
 	return new BinaryExpression(operand, left->clone(), right->clone());
 }
 
-BinaryExpression::~BinaryExpression() {
+ExpressionCalculator::BinaryExpression::~BinaryExpression() {
 	delete left;
 	delete right;
 }
@@ -132,13 +136,20 @@ BinaryExpression::~BinaryExpression() {
 
 /// ExpressionCalculator
 
-namespace {
-	bool isOperator(char ch) {
-		return ch == AND || ch == OR || ch == IFF || ch == IMPL || ch == XOR || ch == NEG;
+bool ExpressionCalculator::checkAllVariations(const BooleanExpression* expression, bool expectedValue) {
+	size_t variationsCount = 1 << expression->variablesCount;
+
+	for (size_t i = 0; i < variationsCount; i++) {
+		if (expression->evaluate(BooleanInterpretation::createFromNumber(i, expression->variables))
+			!= expectedValue) {
+			return false;
+		}
 	}
+
+	return true;
 }
 
-BooleanExpression* ExpressionCalculator::parseExpression(const StringView& str) {
+ExpressionCalculator::BooleanExpression* ExpressionCalculator::ExpressionCalculator::parseExpression(const StringView& str) {
 	if (str.length() == 0) {
 		return nullptr;
 	}
@@ -209,22 +220,6 @@ ExpressionCalculator& ExpressionCalculator::operator=(ExpressionCalculator&& oth
 
 ExpressionCalculator::~ExpressionCalculator() {
 	free();
-}
-
-namespace {
-	bool checkAllVariations(const BooleanExpression* expression, bool expectedValue) {
-		size_t variationsCount = 1 << expression->variablesCount;
-
-		for (size_t i = 0; i < variationsCount; i++) {
-			if (expression->evaluate(BooleanInterpretation::createFromNumber(i, expression->variables)) 
-				!= expectedValue
-			) {
-				return false;
-			}
-		}
-
-		return true;
-	}
 }
 
 bool ExpressionCalculator::isTautology() const {
