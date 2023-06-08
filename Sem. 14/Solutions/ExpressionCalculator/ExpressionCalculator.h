@@ -1,7 +1,6 @@
 #pragma once
-#include "MyString.h"
-#include "StringView.h"
-
+#include "MyString/MyString.h"
+#include "MyString/StringView.h"
 
 class ExpressionCalculator {
 private:
