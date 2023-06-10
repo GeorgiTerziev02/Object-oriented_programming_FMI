@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 class Command {
 public:
@@ -19,11 +20,7 @@ public:
   }
 };
 
-/**
- * The Receiver classes contain some important business logic. They know how to
- * perform all kinds of operations, associated with carrying out a request. In
- * fact, any class may serve as a Receiver.
- */
+// The Receiver classes contain some important/complex business logic. 
 class Receiver {
  public:
   void doSomething(const std::string& a) {
@@ -34,83 +31,59 @@ class Receiver {
   }
 };
 
-/**
- * However, some commands can delegate more complex operations to other objects, called "receivers."
- */
+// Commands can delegate complex operations to receivers
 class ComplexCommand : public Command {
 private:
-  Receiver *receiver_;
-  /**
-   * Context data, required for launching the receiver's methods.
-   */
-  std::string a_;
-  std::string b_;
-  /**
-   * Complex commands can accept one or several receiver objects along with any
-   * context data via the constructor.
-   */
+  Receiver *receiver_; // pointer to a receiver
+  std::string a;
+  std::string b;
  public:
-  ComplexCommand(Receiver *receiver, std::string a, std::string b) : receiver_(receiver), a_(a), b_(b) {
-  }
-  /**
-   * Commands can delegate to any methods of a receiver.
-   */
+  ComplexCommand(Receiver *receiver, std::string a, std::string b) : receiver_(receiver), a(a), b(b) { }
+  
   void execute() const override {
     std::cout << "ComplexCommand: Complex stuff should be done by a receiver object.\n";
-    this->receiver_->DoSomething(this->a_);
-    this->receiver_->DoSomethingElse(this->b_);
+    receiver_->doSomething(a);
+    receiver_->doSomethingElse(b);
   }
 };
 
-/**
- * The Invoker is associated with one or several commands. It sends a request to
- * the command.
- */
+// The Invoker is associated with one or several commands. It sends a request to the command.
 class Invoker {
-  /**
-   * @var Command
-   */
- private:
-  Command *on_start_;
-  /**
-   * @var Command
-   */
-  Command *on_finish_;
-  /**
-   * Initialize commands.
-   */
+private:
+  Command *onStart;
+  Command *onFinish;
  public:
+  Invoker() = default;
+  // you can have the following functions if needed
+  Invoker(const Invoker& other) = delete;
+  Invoker& operator=(const Invoker& other) = delete;
   ~Invoker() {
-    delete on_start_;
-    delete on_finish_;
+    delete onStart;
+    delete onFinish;
   }
 
-  void SetOnStart(Command *command) {
-    this->on_start_ = command;
-  }
-  void SetOnFinish(Command *command) {
-    this->on_finish_ = command;
-  }
+  void setOnStart(Command *command) { onStart = command; }
+  void setOnFinish(Command *command) { onFinish = command; }
   
-  void DoSomethingImportant() {
+  void doSomethingImportant() {
     std::cout << "Invoker: Does anybody want something done before I begin?\n";
-    if (this->on_start_) {
-      this->on_start_->execute();
+    if (onStart) {
+      onStart->execute();
     }
     std::cout << "Invoker: ...doing something really important...\n";
     std::cout << "Invoker: Does anybody want something done after I finish?\n";
-    if (this->on_finish_) {
-      this->on_finish_->execute();
+    if (onFinish) {
+      onFinish->execute();
     }
   }
 };
 
 int testFunc() {
-  Invoker *invoker = new Invoker;
-  invoker->SetOnStart(new SimpleCommand("Say Hi!"));
+  Invoker *invoker = new Invoker();
+  invoker->setOnStart(new SimpleCommand("Say Hi!"));
   Receiver *receiver = new Receiver;
-  invoker->SetOnFinish(new ComplexCommand(receiver, "Send email", "Save report"));
-  invoker->DoSomethingImportant();
+  invoker->setOnFinish(new ComplexCommand(receiver, "Send email", "Save report"));
+  invoker->doSomethingImportant();
 
   delete invoker;
   delete receiver;
