@@ -6,6 +6,7 @@
 - [dynamic_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#dynamic-cast)
 - [const_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#const-cast)
 - [reinterpret_cast](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2015/Type%20Casting#reinterpret-cast)
+- [(T) - C-style cast](https://en.cppreference.com/w/cpp/language/explicit_cast)
 
 ## Static cast
 - Default cast-a за implicit conversions
