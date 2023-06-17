@@ -115,7 +115,7 @@ void SharedPointer<T>::reset(T* data) {
 
 template<typename T>
 size_t SharedPointer<T>::getCount() const {
-	return counter;
+	return *counter;
 }
 
 template<typename T>
