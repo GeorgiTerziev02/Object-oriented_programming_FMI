@@ -15,9 +15,9 @@ public:
 	~SharedPointer();
 
 	const T* operator->() const;
-	T* operator->() const;
+	T* operator->();
 	const T& operator*() const;
-	T& operator*() const;
+	T& operator*();
 
 	T* get() const;
 	void reset(T* data = nullptr);
@@ -81,7 +81,7 @@ const T* SharedPointer<T>::operator->() const {
 }
 
 template<typename T>
-T* SharedPointer<T>::operator->() const {
+T* SharedPointer<T>::operator->() {
 	return data;
 }
 
@@ -91,7 +91,7 @@ const T& SharedPointer<T>::operator*() const {
 }
 
 template<typename T>
-T& SharedPointer<T>::operator*() const {
+T& SharedPointer<T>::operator*() {
 	return *data;
 }
 
