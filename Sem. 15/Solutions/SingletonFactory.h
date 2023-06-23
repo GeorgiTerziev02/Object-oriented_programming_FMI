@@ -33,6 +33,6 @@ public:
 
 	// v2
 	// Der1* createDer1() const;
-	// Der2* createDer1() const;
-	// Der3* createDer1() const;
+	// Der2* createDer2() const;
+	// Der3* createDer3() const;
 };
