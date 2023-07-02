@@ -2,6 +2,11 @@
 
 #include <iostream>
 
+ModifiableNaturalNumbersFunction::ModifiableNaturalNumbersFunction()
+	: ModifiableNaturalNumbersFunction(), m_capacity(2) { 
+	m_pModifiedPoints = new Pair[m_capacity];
+}
+
 ModifiableNaturalNumbersFunction::ModifiableNaturalNumbersFunction(UnaryUnsignedFunction pFunc, unsigned pointsToChange)
 	: NaturalNumbersFunction(pFunc) {
 	m_capacity = pointsToChange;
