@@ -8,7 +8,7 @@ private:
 	static const int InvalidIndex = -1;
 
 public:
-	ModifiableNaturalNumbersFunction() = default;
+	ModifiableNaturalNumbersFunction();
 	ModifiableNaturalNumbersFunction(UnaryUnsignedFunction pFunc, unsigned pointsToChange);
 	ModifiableNaturalNumbersFunction(const ModifiableNaturalNumbersFunction& other);
 	ModifiableNaturalNumbersFunction(ModifiableNaturalNumbersFunction&& other) noexcept;
