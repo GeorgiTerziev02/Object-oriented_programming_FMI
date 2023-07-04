@@ -44,8 +44,8 @@ private:
 		BooleanExpression* expression;
 	public:
 		UnaryExpression(char operand, BooleanExpression* expression);
-		bool evaluate(const BooleanInterpretation& interpretation) const;
-		BooleanExpression* clone() const;
+		bool evaluate(const BooleanInterpretation& interpretation) const override;
+		BooleanExpression* clone() const override;
 		~UnaryExpression();
 	};
 
@@ -56,8 +56,8 @@ private:
 		BooleanExpression* right;
 	public:
 		BinaryExpression(char operand, BooleanExpression* left, BooleanExpression* right);
-		bool evaluate(const BooleanInterpretation& interpretation) const;
-		BooleanExpression* clone() const;
+		bool evaluate(const BooleanInterpretation& interpretation) const override;
+		BooleanExpression* clone() const override;
 		~BinaryExpression();
 	};
 
