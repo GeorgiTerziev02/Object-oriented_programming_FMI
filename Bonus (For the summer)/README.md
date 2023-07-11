@@ -3,11 +3,11 @@
 - [Andy](https://github.com/andy489)
 
 ### Data Structures and Algorithms materials
-- [Solutions from Stoyan, Tsvetilin and me](https://github.com/Stoyan-Zlatev/SDA-22-23)
+- [Solutions by Stoyan, Tsvetilin and me](https://github.com/Stoyan-Zlatev/SDA-22-23)
 
 ### Operating Systems materials
-- [Solutions from Filip](https://github.com/RoronoaFilip/FMI_OS/tree/main)
-- [Solutions from Stoyan, Tsvetilin](https://github.com/Tsvetilin/Operating-Systems)
+- [Solutions by Filip](https://github.com/RoronoaFilip/FMI_OS/tree/main)
+- [Solutions by Stoyan, Tsvetilin](https://github.com/Tsvetilin/Operating-Systems)
 
 # Other Materials
 
