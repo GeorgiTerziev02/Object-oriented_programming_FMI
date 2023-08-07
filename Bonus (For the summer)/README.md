@@ -4,8 +4,8 @@
 
 ### Data Structures and Algorithms materials
 - [Solutions by Stoyan, Tsvetilin and me](https://github.com/Stoyan-Zlatev/SDA-22-23)
-- [Algorithms_FMI](https://github.com/Angeld55/Algorithms_FMI)
-- [Data_structures_and_algorithms_FMI](https://github.com/Angeld55/Data_structures_and_algorithms_FMI)
+- [Algorithms_FMI - Angel Dimitriev](https://github.com/Angeld55/Algorithms_FMI)
+- [Data_structures_and_algorithms_FMI - Angel Dimitriev](https://github.com/Angeld55/Data_structures_and_algorithms_FMI)
 
 ### Operating Systems materials
 - [Solutions by Filip](https://github.com/RoronoaFilip/FMI_OS/tree/main)
