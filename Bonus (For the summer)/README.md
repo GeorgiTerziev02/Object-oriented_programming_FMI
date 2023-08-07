@@ -6,6 +6,7 @@
 - [Solutions by Stoyan, Tsvetilin and me](https://github.com/Stoyan-Zlatev/SDA-22-23)
 - [Algorithms_FMI - Angel Dimitriev](https://github.com/Angeld55/Algorithms_FMI)
 - [Data_structures_and_algorithms_FMI - Angel Dimitriev](https://github.com/Angeld55/Data_structures_and_algorithms_FMI)
+- [Data structures - in a nutshell](https://www.youtube.com/watch?v=P5IH4lqCJSk&t=4802s&ab_channel=CodeItUpbyAMBITIONED)
 
 ### Operating Systems materials
 - [Solutions by Filip](https://github.com/RoronoaFilip/FMI_OS/tree/main)
