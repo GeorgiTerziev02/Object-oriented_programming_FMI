@@ -116,7 +116,7 @@ To and from void pointer:
     // Base Class declaration
     class Base {
     public:
-        void print() {
+        virtual void print() {
             std::cout << "Base\n";
         }
     };
@@ -162,7 +162,7 @@ To and from void pointer:
     // Base class declaration
     class Base {
     public:
-        void print() {
+        virtual void print() {
             std::cout << "Base\n";
         }
     };
@@ -207,7 +207,7 @@ To and from void pointer:
     // Base class declaration
     class Base {
     public:
-        void print() {
+        virtual void print() {
             std::cout << "Base\n";
         }
     };
@@ -465,6 +465,6 @@ Type of cast is not the same as original object:
     
         new_a->fun_a();
 
-        return 0l
+        return 0;
     }
 ```
