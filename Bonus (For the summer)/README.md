@@ -11,6 +11,7 @@
 ### Operating Systems materials
 - [Solutions by Filip](https://github.com/RoronoaFilip/FMI_OS/tree/main)
 - [Solutions by Stoyan, Tsvetilin](https://github.com/Tsvetilin/Operating-Systems)
+- [Solutions by Georgi Dzhanavarov](https://github.com/GeorgiDzhanavarov/Operating_Systems_Course/tree/main)
 
 # Other Materials
 
