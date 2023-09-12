@@ -3,19 +3,16 @@
 #include <stdexcept>
 #include <climits>
 
-class IntegerFunction
-{
+class IntegerFunction {
 public:
 	virtual IntegerFunction* clone() const = 0;
 	virtual int eval(int) const = 0;
 	virtual ~IntegerFunction() = default;
-
 };
 
 template <typename T>
-class ConcreteFunction : public IntegerFunction
-{
-    T criteria;
+class ConcreteFunction : public IntegerFunction {
+    	T criteria;
 public:
 	ConcreteFunction(const T& cr);
 	ConcreteFunction(T&& cr);
@@ -37,14 +34,12 @@ IntegerFunction* ConcreteFunction<T>::clone() const {
 }
 
 template <typename T>
-int ConcreteFunction<T>::eval(int num) const
-{
+int ConcreteFunction<T>::eval(int num) const {
 	return criteria(num);
 }
 
 
-class FuncOperation : public IntegerFunction
-{
+class FuncOperation : public IntegerFunction {
 protected:
 	IntegerFunction** sets;
 	size_t count;
@@ -53,34 +48,28 @@ protected:
 	void moveFrom(FuncOperation&& other);
 public:
 	FuncOperation(IntegerFunction** sets, size_t count);
-
 	FuncOperation(const FuncOperation& other);
 	FuncOperation& operator=(const FuncOperation& other);
-
 	FuncOperation(FuncOperation&& other);
 	FuncOperation& operator=(FuncOperation&& other);
-
 	~FuncOperation();
-	
-
 };
 
-void FuncOperation::copyfrom(const FuncOperation& other)
-{
+void FuncOperation::copyfrom(const FuncOperation& other) {
 	sets = new IntegerFunction * [other.count];
 	for (unsigned i = 0; i < other.count; i++)
 		sets[i] = other.sets[i]->clone();
 
 	count = other.count;
 }
-void FuncOperation::free()
-{
+
+void FuncOperation::free() {
 	for (unsigned i = 0; i < count; i++)
 		delete sets[i];
 	delete[] sets;
 }
-void FuncOperation::moveFrom(FuncOperation&& other)
-{
+
+void FuncOperation::moveFrom(FuncOperation&& other) {
 	sets = other.sets;
 	count = other.count;
 
@@ -88,22 +77,19 @@ void FuncOperation::moveFrom(FuncOperation&& other)
 	other.count = 0;
 }
 
-FuncOperation::FuncOperation(IntegerFunction** sets, size_t count)
-{
-    this->count = count;
+FuncOperation::FuncOperation(IntegerFunction** sets, size_t count) {
+    	this->count = count;
 	this->sets = new IntegerFunction * [count];
 	for (unsigned i = 0; i < count; i++)
 		this->sets[i] = sets[i]->clone();
 }
 
-FuncOperation::FuncOperation(const FuncOperation& other) : IntegerFunction(other)
-{
+FuncOperation::FuncOperation(const FuncOperation& other) : IntegerFunction(other) {
 	copyfrom(other);
 }
-FuncOperation& FuncOperation::operator=(const FuncOperation& other)
-{
-	if (this != &other)
-	{
+
+FuncOperation& FuncOperation::operator=(const FuncOperation& other) {
+	if (this != &other) {
 	    IntegerFunction::operator=(other);
 		free();
 		copyfrom(other);
@@ -111,15 +97,12 @@ FuncOperation& FuncOperation::operator=(const FuncOperation& other)
 	return *this;
 }
 
-FuncOperation::FuncOperation(FuncOperation&& other) : IntegerFunction(std::move(other))
-{
+FuncOperation::FuncOperation(FuncOperation&& other) : IntegerFunction(std::move(other)) {
 	moveFrom(std::move(other));
 }
 
-FuncOperation& FuncOperation::operator=(FuncOperation&& other)
-{
-	if (this != &other)
-	{
+FuncOperation& FuncOperation::operator=(FuncOperation&& other) {
+	if (this != &other) {
 	    	IntegerFunction::operator=(std::move(other));
 		free();
 		moveFrom(std::move(other));
@@ -127,13 +110,9 @@ FuncOperation& FuncOperation::operator=(FuncOperation&& other)
 	return *this;
 }
 
-
-FuncOperation::~FuncOperation()
-{
+FuncOperation::~FuncOperation() {
 	free();
 }
-
-
 
 class MaxOfFunctions : public FuncOperation {
 public:
@@ -151,9 +130,8 @@ IntegerFunction* MaxOfFunctions::clone() const {
 
 int MaxOfFunctions::eval(int num) const
 {
-    int max = INT_MIN;
-	for (unsigned i = 0; i < count; i++)
-	{
+    	int max = INT_MIN;
+	for (unsigned i = 0; i < count; i++) {
 	    int result = sets[i]->eval(num);
 		if (result > max)
 			max = result;
@@ -176,11 +154,9 @@ IntegerFunction* MinOfFunctions::clone() const {
 	return new MinOfFunctions(*this);
 }
 
-int MinOfFunctions::eval(int num) const
-{
-    int min = INT_MAX;
-	for (unsigned i = 0; i < count; i++)
-	{
+int MinOfFunctions::eval(int num) const {
+    	int min = INT_MAX;
+	for (unsigned i = 0; i < count; i++) {
 	    int result = sets[i]->eval(num);
 		if (result < min)
 			min = result;
@@ -188,51 +164,41 @@ int MinOfFunctions::eval(int num) const
 	return min;
 }
 
-struct BaseFunc
-{
+struct BaseFunc {
     const int* arr;
     size_t size;
     
-    bool contains(int n) const
-    {
-        for(int i = 0; i < size; i++)
-        {
+    bool contains(int n) const {
+        for(int i = 0; i < size; i++) {
             if(arr[i] == n)
                 return true;
         }
         return false;
     }
     
-    BaseFunc(const int* arr, size_t size): arr(arr), size(size){}
-    
+    BaseFunc(const int* arr, size_t size): arr(arr), size(size) {}
 };
 
-struct IdentityOrZeroFunc : BaseFunc
-{
+struct IdentityOrZeroFunc : BaseFunc {
     IdentityOrZeroFunc(const int* arr, size_t size): BaseFunc(arr, size){}
-    int operator()(int n) const
-    {
+    int operator()(int n) const {
         return contains(n) ? 0 : n;
     }
 };
 
-struct ZeroOrOneFunc : BaseFunc
-{
-    ZeroOrOneFunc(const int* arr, size_t size): BaseFunc(arr, size){}
-    int operator()(int n) const
-    {
+struct ZeroOrOneFunc : BaseFunc {
+    ZeroOrOneFunc(const int* arr, size_t size): BaseFunc(arr, size) {}
+    int operator()(int n) const {
         return contains(n) ? 1 : 0;
     }
 };
 
-void readFromFile(const char* fileName, int* arr, size_t& size)
-{
+void readFromFile(const char* fileName, int* arr, size_t& size) {
     std::ifstream ifs(fileName);
     if(!ifs.is_open())
         return;
 
-    while(!ifs.eof())
-    {
+    while(!ifs.eof()) {
         int current;
         ifs >> current;
             
@@ -240,8 +206,7 @@ void readFromFile(const char* fileName, int* arr, size_t& size)
     }
 }
 
-int main() 
-{
+int main() {
     const int MAX_SIZE = 10;
     int include[MAX_SIZE];
     size_t includeSize = 0;
@@ -275,5 +240,4 @@ int main()
       for(int i = 0; i < 10; i++)
         std::cout << "f3(" << i << ")" << f3.eval(i) << " ";
     std::cout << std::endl;
-    
 }
