@@ -31,6 +31,11 @@ Particular for c++
 roadmap.sh is a community effort to create roadmaps, guides and other educational content to help guide developers in picking up a path and guide their learnings.
 - [Roadmap](https://roadmap.sh/)
 
+## gothinkster
+
+Exemplary real world application with different technologies
+- [gothinkster](https://github.com/gothinkster)
+
 ## GIT
 Основни git познания, които ще ви трябват на работа
 - [Git tutorial official docs](https://git-scm.com/docs/gittutorial)
