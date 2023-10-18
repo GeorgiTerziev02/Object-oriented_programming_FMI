@@ -36,6 +36,9 @@ roadmap.sh is a community effort to create roadmaps, guides and other educationa
 Exemplary real world application with different technologies
 - [gothinkster](https://github.com/gothinkster)
 
+## System design with images and examples
+[System Design](https://github.com/ByteByteGoHq/system-design-101)
+
 ## GIT
 Основни git познания, които ще ви трябват на работа
 - [Git tutorial official docs](https://git-scm.com/docs/gittutorial)
