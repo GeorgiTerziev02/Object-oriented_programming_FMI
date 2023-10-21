@@ -36,6 +36,10 @@ roadmap.sh is a community effort to create roadmaps, guides and other educationa
 Exemplary real world application with different technologies
 - [gothinkster](https://github.com/gothinkster)
 
+## Project based learning
+
+- [Project-based-learning](https://github.com/practical-tutorials/project-based-learning)
+
 ## System design with images and examples
 [System Design](https://github.com/ByteByteGoHq/system-design-101)
 
