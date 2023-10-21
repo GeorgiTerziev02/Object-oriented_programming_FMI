@@ -41,7 +41,7 @@ Exemplary real world application with different technologies
 - [Project-based-learning](https://github.com/practical-tutorials/project-based-learning)
 
 ## System design with images and examples
-[System Design](https://github.com/ByteByteGoHq/system-design-101)
+- [System Design](https://github.com/ByteByteGoHq/system-design-101)
 
 ## GIT
 Основни git познания, които ще ви трябват на работа
