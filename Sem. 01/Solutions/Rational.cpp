@@ -22,7 +22,6 @@ bool isValid(const Rational& r) {
 }
 
 void rationalize(Rational& r) {
-	// TODO: validate
 	assert(isValid(lhs) && isValid(rhs));
 	int gcdValue = gcd(r.numerator, r.denominator);
 
@@ -34,7 +33,6 @@ Rational plusRational(
 	const Rational& lhs,
 	const Rational& rhs
 ) {
-	// TODO: validate
 	assert(isValid(lhs) && isValid(rhs));
 	Rational copyLhs{lhs.numerator, lhs.denominator};
 
