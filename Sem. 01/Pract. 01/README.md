@@ -79,6 +79,7 @@ struct test6 {
 };
 
 ```
+
 ```c++
 struct A
 {
