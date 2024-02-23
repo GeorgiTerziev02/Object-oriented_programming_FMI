@@ -78,13 +78,6 @@ struct test6 {
 	char d;
 };
 
-struct test7
-{
-    int number;
-    char symbol;
-    char chArr[];
-}
-
 ```
 ```c++
 struct A
