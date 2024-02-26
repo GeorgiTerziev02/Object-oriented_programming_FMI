@@ -16,7 +16,7 @@ int main() {
     Point p{1,2};
     Point p2 = {1,2};
     Point* p3 = new Point{1,2};
-    Point* arr = new Point[5]; // why is this bad?
+    Point* arr = new Point[5]; // why having constant size in dynamic arr initialization is this bad?
 
     std::cout << p.x << " " << p.y << std::endl;
     
