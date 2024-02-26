@@ -12,6 +12,12 @@ enum Fruit {
     Orange
 };
 
+// error: having same enumerator names
+enum Test {
+    T1,
+    T1
+};
+
 // no problem having duplicate values
 enum Test {
     T0, // 0
