@@ -12,6 +12,7 @@ enum Fruit {
     Orange
 };
 
+// no problem having duplicate values
 enum Test {
     T0, // 0
     T1 = 1,
