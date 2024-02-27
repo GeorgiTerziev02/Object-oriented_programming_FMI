@@ -25,7 +25,9 @@ struct Nested {
 struct Test2 {
     int a;
     char b;
-    char c[]; // You can access the padding
+    // You can access the padding with the following,
+    // NOTE: this can be written only in the end of the struct!
+    char c[]; 
 };
 // sizeof(Test2); // 8
 
@@ -34,6 +36,9 @@ struct Test3 {
     double b;
 };
 // sizeof(Test3); // 208
+
+struct Test4{};
+// sizeof(Test4); // 1 => because it needs to take some memory
 
 int main() {
     int a = 5;
