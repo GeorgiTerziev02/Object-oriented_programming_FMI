@@ -35,7 +35,7 @@ void main() {
     // error
     // int a = Orange;
     
-    // not ok
+    // not a good practice
     if (Color2::Orange == Fruit::Orange) {
 
     }
