@@ -130,3 +130,5 @@ int main() {
  - ofstream или ostream - съдържа put указател, който реферира мястото, където ще се запише следващият елемент.
  - put и get не са [форматирани](https://www.geeksforgeeks.org/unformatted-input-output-operations-in-cpp/) за разлика от operator<< и operator>>, тоест не пропускат whitespaces и др.
 
+
+## TODO: ...
