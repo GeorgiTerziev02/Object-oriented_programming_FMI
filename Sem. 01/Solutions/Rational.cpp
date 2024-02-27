@@ -1,7 +1,6 @@
 #include <iostream>
 #include <assert.h>
 
-// TODO: refactor
 struct Rational {
 	int numerator;
 	int denominator;
@@ -29,24 +28,40 @@ void rationalize(Rational& r) {
 	r.denominator /= gcdValue;
 }
 
+// lhs += rhs
+// assignment operators return ref to the left side
+Rational& plusEqualsRational(
+	Rational& lhs,
+	const Rational& rhs
+) {
+	assert(isValid(lhs) && isValid(rhs));
+	lhs.denominator *= rhs.denominator;
+	lhs.numerator *= rhs.denominator;
+	lhs.numerator += (lhs.denominator * rhs.numerator);
+
+	rationalize(lhs);
+
+	return lhs;
+}
+
+// + operator can be easily implemented using += operator
+// the same is valid for other operators
+// lhs + rhs
+// returns a new Rational number as a result
 Rational plusRational(
 	const Rational& lhs,
 	const Rational& rhs
 ) {
 	assert(isValid(lhs) && isValid(rhs));
-	Rational copyLhs{lhs.numerator, lhs.denominator};
-
-	copyLhs.denominator *= rhs.denominator;
-	copyLhs.numerator *= rhs.denominator;
-	copyLhs.numerator += (lhs.denominator * rhs.numerator);
-
-	rationalize(copyLhs);
+	Rational copyLhs = lhs;
+	// Also possible copyLhs{lhs.numerator, lhs.denominator}
+	plusEqualsRational(copyLhs, rhs);
 
 	return copyLhs;
 }
 
 void printRational(const Rational& r) {
-	std::cout << r.numerator << " " << r.denominator;
+	std::cout << r.numerator << "/" << r.denominator;
 }
 
 int main() {
