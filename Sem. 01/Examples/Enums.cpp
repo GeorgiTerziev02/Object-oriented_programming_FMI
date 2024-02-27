@@ -34,12 +34,8 @@ using std::cout;
 void main() {
     // error
     // int a = Orange;
-    
-    // not a good practice
-    if (Color2::Orange == Fruit::Orange) {
 
-    }
-
+    // overally it is not a good practice to compare different enums
     // error
     if(Color::Orange == Color2::Orange) {
 
