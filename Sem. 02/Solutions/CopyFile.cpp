@@ -15,6 +15,7 @@ int main() {
 	std::ofstream out(COPY_NAME);
 	if (!out.is_open()) {
 		std::cout << "Could not open file to write" << std::endl;
+		in.close(); // !!!
 		return -1;
 	}
 
