@@ -8,7 +8,7 @@
 * Потоците служат като посредници между програмите и самите IO устройства по начин, който освобождава програмиста от боравене с тях.
 * Потокът дефинира интерфейс с операции върху него, които не зависят от избора на IO устройство
 
-  ![enter image description here](Images/streams.png)  
+  ![enter image description here](img/streams.png)  
   За да извърши вход или изход, една C++ програма:
   * Създава поток;
   * Свързва потока с IO устройството (напр. конзола, клавиатура, файл, мрежа или друга програма);
@@ -20,7 +20,7 @@
  - Потоци за вход ([istream](https://en.cppreference.com/w/cpp/io/basic_istream)).
  - Потоци за изход ([ostream](https://en.cppreference.com/w/cpp/io/basic_ostream)).
  
-![enter image description here](Images/hierarchy.png)
+![enter image description here](img/hierarchy.png)
 
 #####  Пример за работа с вход от конзолата. [cin](https://en.cppreference.com/w/cpp/io/cin) (обект от тип istream).
  ```c++
