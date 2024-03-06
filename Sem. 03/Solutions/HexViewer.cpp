@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 
+constexpr char FILE_NAME[] = "test.bin";
+
 void changeByteAtIndex(const char* fileName, size_t index, char newValue) {
   	// TODO: why is this truncating the file???
 	std::ofstream out("test.bin", std::ios::binary | std::ios::ate);
@@ -15,6 +17,5 @@ void changeByteAtIndex(const char* fileName, size_t index, char newValue) {
 }
 
 int main() {
-	constexpr char FILE_NAME[] = "test.bin";
 	changeByteAtIndex(FILE_NAME, 3, 'Q');
 }
