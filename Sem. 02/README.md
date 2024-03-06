@@ -220,3 +220,8 @@ Name = Stefan Velkov, Email: stecho@abv.bg, FN: 123
 >save students2.csv
 file students2.csv successfully saved!
 ```
+
+5. Добавете нова функция, която променя цяла колона на CSVTable, като получава новите си стойности в един низ, разделени със запетая.
+``` c++
+	modifyColumn(Таблица, име на колоната, стринг със стойностите, разделител за стойностите в стринга)
+```
