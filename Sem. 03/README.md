@@ -14,15 +14,15 @@
 #include <iostream>
 #include <fstream>
 
-int main()
-{
-	std::ofstream f("file.dat", std::ios::binary);
+constexpr char FILE_NAME[] = "file.dat";
+
+int main() {
+	std::ofstream out(FILE_NAME, std::ios::binary);
 
 	int a = 155555;
+	out.write((const char*)&a, sizeof(a));
 
-	f.write((const char*)&a, sizeof(int));
-
-	f.close();
+	out.close();
 }
  ```
  ### Пример за четене от двоичен файл:
@@ -31,16 +31,17 @@ int main()
 #include <iostream>
 #include <fstream>
 
-int main()
-{
-	std::ifstream f("file.dat", std::ios::binary);
+constexpr char FILE_NAME[] = "file.dat";
+
+int main() {
+	std::ifstream in(FILE_NAME, std::ios::binary);
 
 	int a;
-	f.read((char*)&a, sizeof(int));
+	in.read((char*)&a, sizeof(int));
 
 	std::cout << a << std::endl;
 
-	f.close();
+	in.close();
 }
  ```
 
@@ -57,16 +58,17 @@ int main()
 #include <iostream>
 #include <fstream>
 
+constexpr char FILE_NAME[] = "testObj.bat";
+
 struct Test {
 	bool b;
 	int x;
 };
 
-int main()
-{
+int main() {
 	{
 		Test t = { true, 45 };
-		std::ofstream file("testObj.bat", std::ios::binary);
+		std::ofstream file(FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			return -1;
@@ -77,7 +79,7 @@ int main()
 
 	{
 		Test t;
-		std::ifstream file("testObj.bat", std::ios::binary);
+		std::ifstream file(FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			return -1;
@@ -95,21 +97,22 @@ int main()
 #include <cstring>
 #pragma warning (disable: 4996)
 
+constexpr char FILE_NAME[] = "testObj.bat";
+
 struct Student {
 	char name[25];
 	int fn;
 	int age;
 };
 
-int main()
-{
+int main() {
 	{
 		Student st;
 		strcpy(st.name, "Ivan");
 		st.fn = 1234;
 		st.age = 33;
 
-		std::ofstream file("student.dat", std::ios::binary);
+		std::ofstream file(FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			std::cout << "Error while writing to binary file!" << std::endl;
@@ -122,7 +125,7 @@ int main()
 
 	{
 		Student st;
-		std::ifstream file("student.dat", std::ios::binary);
+		std::ifstream file(FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			std::cout << "Error while reading from binary file!" << std::endl;
@@ -136,223 +139,33 @@ int main()
 ```
       
 - запазване на структура, която използва динамична памет
-```c++
-#include <iostream>
-#include <fstream>
-#pragma warning (disable: 4996)
 
-struct Student {
-	char* name;
-	int fn;
-	int gradesCount;
-	double averageGrade;
-};
-
-Student createStudent(const char* name, int fn, int gradesCount, double avGrade) {
-	Student obj;
-
-	size_t nameLen = strlen(name);
-
-	obj.name = new char[nameLen + 1];
-	strcpy(obj.name, name);
-
-	obj.fn = fn;
-	obj.gradesCount = gradesCount;
-	obj.averageGrade = avGrade;
-
-	return obj;
-}
-
-void saveStudentToFile(ofstream& f, const Student& st) {
-	size_t nameLen = strlen(st.name);
-
-	f.write((const char*)&nameLen, sizeof(nameLen));  //first we write the size of the name!
-	f.write(st.name, nameLen);
-
-	f.write((const char*)&st.fn, sizeof(st.fn));
-	f.write((const char*)&st.gradesCount, sizeof(st.gradesCount));
-	f.write((const char*)&st.averageGrade, sizeof(st.averageGrade));
-
-}
-
-Student readStudentFromFile(ifstream& f) {
-	Student res;
-
-	size_t nameLen;
-
-	f.read((char*)&nameLen, sizeof(nameLen)); //first we read the size of the name!
-
-	res.name = new char[nameLen + 1];
-	f.read(res.name, nameLen);
-	res.name[nameLen] = '\0';
-
-	f.read((char*)&res.fn, sizeof(res.fn));
-	f.read((char*)&res.gradesCount, sizeof(res.gradesCount));
-	f.read((char*)&res.averageGrade, sizeof(res.averageGrade));
-
-	return res;
-}
-
-void freeStudent(Student& s) {
-	delete[] s.name;
-	s.averageGrade = s.fn = s.gradesCount = 0;
-}
-
-void print(const Student& st) {
-	std::cout << st.name << " " << st.fn << " " << st.gradesCount << " " << st.averageGrade << std::endl;
-}
-
-int main()
-{
-	{
-		Student s1 = createStudent("Ivan", 1234, 2, 4);
-		Student s2 = createStudent("Petur", 5555, 5, 5.5);
-
-		std::ofstream f1("uni.dat", std::ios::binary);
-
-		if (!f1.is_open()) {
-			cout << "Error" << endl;
-			return -1;
-		}
-
-		saveStudentToFile(f1, s1);
-		saveStudentToFile(f1, s2);
-
-		freeStudent(s1);
-		freeStudent(s2);
-	}
-
-	{
-		std::ifstream f2("uni.dat", std::ios::binary);
-
-		if (!f2.is_open()) {
-			cout << "Error" << endl;
-			return -1;
-		}
-		
-		Student s1 = readStudentFromFile(f2);
-		Student s2 = readStudentFromFile(f2);
-
-		print(s1);
-		print(s2);
-
-		freeStudent(s1);
-		freeStudent(s2);
-	}
-}
-```
+# TODO: TBA
 
 ### Пример за запазване на масив от структури във файл.
   
 - запазване на масив от обекти, които не използват динамична памет
 
-```c++
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#pragma warning (disable: 4996)
-
-struct Student {
-	char name[30];
-	int age;
-	int fn;
-};
-
-void initStudent(Student& st, const char* name, int age, int fn) {
-	strcpy(st.name, name);
-	st.age = age;
-	st.fn = fn;
-}
-
-void saveToFile(const Student* students, size_t count, ofstream& file) {
-	file.write((const char*)students, count * sizeof(Student));
-}
-
-int main()
-{
-	Student* arr = new Student[4];
-	initStudent(arr[0], "ivan", 44, 1234);
-	initStudent(arr[1], "petur", 12, 765);
-	initStudent(arr[2], "alex", 15, 44);
-	initStudent(arr[3], "katerina", 19, 12134);
-
-	std::ofstream file("students.dat", std::ios::binary);
-
-	if (!file.is_open()) {
-		std::cout << "Error while opening the file!" << std::endl;
-		delete[] arr; //!
-		return -1;
-	}
-
-	saveToFile(arr, 4, file);
-
-	delete[] arr;
-}
-```
+# TODO: tba
 
 - четене на масив от обекти, които не използват динамична памет
 
-```c++
-#include <iostream>
-#include <fstream>
-#include <cstring>
-
-struct Student {
-	char name[30];
-	int age;
-	int fn;
-};
-
-size_t getFileSize(ifstream& f) {
-	size_t currentPos = f.tellg();
-	f.seekg(0, std::ios::end);
-	size_t size = f.tellg();
-
-	f.seekg(currentPos);
-	return size;
-}
-
-void readFromFile(Student*& ptr, size_t& studentsCount, ifstream& f) {
-	size_t sizeOfFile = getFileSize(f);
-	studentsCount = sizeOfFile / sizeof(Student);
-	ptr = new Student[studentsCount];
-	f.read((char*)ptr, sizeOfFile);
-}
-
-int main()
-{
-	Student* arr;
-	size_t count;
-	std::ifstream file("students.dat", std::ios::binary);
-
-	if (!file.is_open()) {
-		std::cout << "Error while opening the file!" << std::endl;
-		return -1;
-	}
-
-	readFromFile(arr, count, file);
-
-	for (int i = 0; i < count; i++) {
-		std::cout << "Name: " << arr[i].name << ", age: " << arr[i].age << ", fn: " << arr[i].fn << std::endl;
-	}
-
-	delete[] arr;
-}
-```
+  # TODO: tba
 
 ### Подравняване
 ```c++
 #include <iostream>
 #include <fstream>
 
+constexpr char FILE_NAME[] = "testObj.bat";
+
 struct Test {
  	char ch;
  	int a;
 };
 
-int main()
-{
-    std::ofstream f("output.dat", std::ios::binary);
+int main() {
+    std::ofstream f(FILE_NAME, std::ios::binary);
     
     if(!f.is_open()) {
         std::cout << "Error!" << std::endl;
