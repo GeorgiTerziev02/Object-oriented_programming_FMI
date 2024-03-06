@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
 
-constexpr char FILE_NAME[] = "test.bin";
-constexpr int BYTES_COUNT = 256;
+namespace Constants {
+    constexpr char FILE_NAME[] = "test.bin";
+    constexpr int BYTES_COUNT = 256;
+}
 
 struct FileData {
     unsigned char* buffer = nullptr;
@@ -25,9 +27,9 @@ size_t getFileSize(std::ifstream& in) {
 }
 
 FileData getFileContent(const char* fileName) {
-    std::ifstream in(FILE_NAME, std::ios::binary);
+    std::ifstream in(Constants::FILE_NAME, std::ios::binary);
     if (!in.is_open()) {
-        std::cout << "Cannot open file " << FILE_NAME << std::endl;
+        std::cout << "Cannot open file " << Constants::FILE_NAME << std::endl;
         return {};
     }
 
@@ -40,12 +42,12 @@ FileData getFileContent(const char* fileName) {
 }
 
 void printMissingBytes(const FileData& data) {
-    int counter[BYTES_COUNT] = { 0 };
+    int counter[Constants::BYTES_COUNT] = { 0 };
     for (size_t i = 0; i < data.fileSize; i++) {
         counter[data.buffer[i]]++;
     }
 
-    for (int i = 0; i < BYTES_COUNT; i++) {
+    for (int i = 0; i < Constants::BYTES_COUNT; i++) {
         if (counter[i] == 0) {
             std::cout << "Byte " << i << " is missing" << std::endl;
         }
@@ -53,8 +55,8 @@ void printMissingBytes(const FileData& data) {
 }
 
 int main() {
-    FileData data = getFileContent(FILE_NAME);
-    
+    FileData data = getFileContent(Constants::FILE_NAME);
+
     printMissingBytes(data);
 
     freeFileData(data);
