@@ -19,9 +19,9 @@ void badExample() {
 
 	std::cout << out.bad() << std::endl; // true
 	std::cout << out.good() << std::endl; // false
-	std::cin.clear(); // bad is irrecoverable
-	std::cout << out.bad() << std::endl; // true
-	std::cout << out.good() << std::endl; // false
+	out.clear();
+	std::cout << out.bad() << std::endl; // false
+	std::cout << out.good() << std::endl; // true
 }
 
 int main() {
