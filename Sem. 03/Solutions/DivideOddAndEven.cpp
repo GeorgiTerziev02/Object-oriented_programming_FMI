@@ -1,8 +1,11 @@
 #include <iostream>
 #include <fstream>
 
-namespace FileNames
-{
+namespace ErrorMessages {
+    constexpr char CANNOT_OPEN_FILE[] = "Cannot open file ";
+}
+
+namespace FileNames {
     constexpr char SOURCE_NAME[] = "test.bin";
     constexpr char ODD_NAME[] = "odd.bin";
     constexpr char EVEN_NAME[] = "even.bin";
@@ -56,7 +59,7 @@ void divide(const FileData& data, int*& evenArr, int*& oddArr, size_t& evenCount
     size_t oddIndex = 0;
     for (size_t i = 0; i < data.arrSize; i++) {
         if (data.buffer[i] & 1) {
-            evenArr[oddIndex++] = data.buffer[i];
+            oddArr[oddIndex++] = data.buffer[i];
         } else {
             evenArr[evenIndex++] = data.buffer[i];
         }
@@ -64,25 +67,26 @@ void divide(const FileData& data, int*& evenArr, int*& oddArr, size_t& evenCount
 }
 
 // TOOD: refactor this function - personally do not like the way it is written
+// Idea:
 // first check if we can open the file
 // if we can not open the file => no need to read from any of them
 void divideOddAndEven(const char* sourceName, const char* oddName, const char* evenName) {
     std::ifstream in(sourceName, std::ios::binary);
     if (!in.is_open()) {
-        std::cout << "Cannot open file " << sourceName << std::endl;
+        std::cout << ErrorMessages::CANNOT_OPEN_FILE << sourceName << std::endl;
         return;
     }
 
     std::ofstream odd(oddName, std::ios::binary);
     if (!odd.is_open()) {
-        std::cout << "Cannot open file " << oddName << std::endl;
+        std::cout << ErrorMessages::CANNOT_OPEN_FILE << oddName << std::endl;
         in.close();
         return;
     }
 
     std::ofstream even(evenName, std::ios::binary);
     if (!even.is_open()) {
-        std::cout << "Cannot open file " << evenName << std::endl;
+        std::cout << ErrorMessages::CANNOT_OPEN_FILE << evenName << std::endl;
         in.close();
         odd.close();
         return;

@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
 
-constexpr char FILE_NAME[] = "test.bin";
+namespace Constants {
+	constexpr char FILE_NAME[] = "test.bin";
+}
 
 void changeByteAtIndex(const char* fileName, size_t index, char newValue) {
 	// TODO: why does it work with _Nocreate???
-	std::ofstream out("test.bin", std::ios::binary | std::ios::_Nocreate);
+	std::ofstream out(fileName, std::ios::binary | std::ios::_Nocreate);
 	if (!out.is_open()) {
 		return;
 	}
@@ -17,5 +19,5 @@ void changeByteAtIndex(const char* fileName, size_t index, char newValue) {
 }
 
 int main() {
-	changeByteAtIndex(FILE_NAME, 3, 'M');
+	changeByteAtIndex(Constants::FILE_NAME, 3, 'M');
 }
