@@ -13,6 +13,7 @@ int main() {
             return -1;
         }
 		ofs.write((const char*)&n, sizeof(n));
+        ofs.close();
 	}
 	{
 		int n;
@@ -22,5 +23,6 @@ int main() {
         }
 		ifs.read((char*)&n, sizeof(n));
 		std::cout << n << std::endl;
+        ifs.close();
 	}
 }

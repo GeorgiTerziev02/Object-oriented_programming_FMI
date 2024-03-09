@@ -18,6 +18,7 @@ int main() {
             return -1;
         }
         ofs.write((const char*)&t, sizeof(t));
+        ofs.close();
     }
     {
         Test t;
@@ -27,5 +28,6 @@ int main() {
         }
         ifs.read((char*)&t, sizeof(t));
         std::cout << t.ch << " " << t.n << std::endl;
+        ifs.close();
     }
 }

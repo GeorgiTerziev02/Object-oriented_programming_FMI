@@ -18,4 +18,6 @@ int main() {
     }
 
     std::cout << getFileSize(in) << std::endl;
+
+    in.close();
 }

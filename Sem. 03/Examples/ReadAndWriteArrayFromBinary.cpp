@@ -19,11 +19,12 @@ int main() {
 		constexpr int SIZE = 5;
 		int arr[SIZE] = {1, 2, 3, 4, 5};
 
-		std::ofstream ifs(Constants::FILE_NAME, std::ios::binary);
+		std::ofstream ofs(Constants::FILE_NAME, std::ios::binary);
         if (!ifs.is_open()) {
             return -1;
         }
-		ifs.write((const char*)arr, SIZE * sizeof(int));
+		ofs.write((const char*)arr, SIZE * sizeof(int));
+        ofs.close();
 	}
     // if you know the size of the array
 	{
@@ -39,6 +40,7 @@ int main() {
 		for (int i = 0; i < SIZE; i++) {
 			std::cout << arr[i] << " ";
         }
+        ifs.close();
 	}
     // if you don't know the size of the array
     {
@@ -51,11 +53,11 @@ int main() {
         const int arraySize = fileSize / sizeof(int);
         int* arr = new int[arraySize];
         ifs.read((char*)arr, fileSize);
-        ifs.close();
 
 		for (int i = 0; i < arraySize; i++) {
 			std::cout << arr[i] << " ";
         }
         delete[] arr;
+        ifs.close();
     }
 }
