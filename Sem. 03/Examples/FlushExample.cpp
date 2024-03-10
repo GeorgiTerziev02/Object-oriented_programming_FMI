@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-constexpr char FILE_NAME[] = "FlushExample.cpp";
+constexpr char FILE_NAME[] = "FlushExample.bin";
 
 int main() {
     std::ofstream out(FILE_NAME, std::ios::binary);
