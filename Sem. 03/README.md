@@ -14,10 +14,12 @@
 #include <iostream>
 #include <fstream>
 
-constexpr char FILE_NAME[] = "file.dat";
+namespace Constants {
+	constexpr char FILE_NAME[] = "file.dat";
+};
 
 int main() {
-	std::ofstream out(FILE_NAME, std::ios::binary);
+	std::ofstream out(Constants::FILE_NAME, std::ios::binary);
 
 	int a = 155555;
 	out.write((const char*)&a, sizeof(a));
@@ -31,10 +33,12 @@ int main() {
 #include <iostream>
 #include <fstream>
 
-constexpr char FILE_NAME[] = "file.dat";
+namespace Constants {
+	constexpr char FILE_NAME[] = "file.dat";
+};
 
 int main() {
-	std::ifstream in(FILE_NAME, std::ios::binary);
+	std::ifstream in(Constants::FILE_NAME, std::ios::binary);
 
 	int a;
 	in.read((char*)&a, sizeof(int));
@@ -58,7 +62,9 @@ int main() {
 #include <iostream>
 #include <fstream>
 
-constexpr char FILE_NAME[] = "testObj.bat";
+namespace Constants {
+	constexpr char FILE_NAME[] = "testObj.bat";
+};
 
 struct Test {
 	bool b;
@@ -68,7 +74,7 @@ struct Test {
 int main() {
 	{
 		Test t = { true, 45 };
-		std::ofstream file(FILE_NAME, std::ios::binary);
+		std::ofstream file(Constants::FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			return -1;
@@ -79,7 +85,7 @@ int main() {
 
 	{
 		Test t;
-		std::ifstream file(FILE_NAME, std::ios::binary);
+		std::ifstream file(Constants::FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			return -1;
@@ -97,10 +103,14 @@ int main() {
 #include <cstring>
 #pragma warning (disable: 4996)
 
-constexpr char FILE_NAME[] = "testObj.bat";
+
+namespace Constants {
+	constexpr char FILE_NAME[] = "testObj.bat";
+	constexpr int NAME_SIZE = 25;
+};
 
 struct Student {
-	char name[25];
+	char name[Constants::NAME_SIZE];
 	int fn;
 	int age;
 };
@@ -112,7 +122,7 @@ int main() {
 		st.fn = 1234;
 		st.age = 33;
 
-		std::ofstream file(FILE_NAME, std::ios::binary);
+		std::ofstream file(Constants::FILE_NAME, std::ios::binary);
 
 		if (!file.is_open()) {
 			std::cout << "Error while writing to binary file!" << std::endl;
@@ -144,7 +154,10 @@ int main() {
 #include <fstream>
 #pragma warning (disable: 4996)
 
-constexpr char FILE_NAME[] = "students.dat";
+
+namespace Constants {
+	constexpr char FILE_NAME[] = "students.dat";
+};
 
 struct Student {
 	char* name;
@@ -212,7 +225,7 @@ int main() {
 		Student s1 = createStudent("Ivan", 1234, 2, 4);
 		Student s2 = createStudent("Petur", 5555, 5, 5.5);
 
-		std::ofstream f1(FILE_NAME, std::ios::binary);
+		std::ofstream f1(Constants::FILE_NAME, std::ios::binary);
 
 		if (!f1.is_open()) {
 			cout << "Error" << endl;
@@ -227,7 +240,7 @@ int main() {
 	}
 
 	{
-		std::ifstream f2(FILE_NAME, std::ios::binary);
+		std::ifstream f2(Constants::FILE_NAME, std::ios::binary);
 
 		if (!f2.is_open()) {
 			cout << "Error" << endl;
@@ -256,10 +269,14 @@ int main() {
 #include <cstring>
 #pragma warning (disable: 4996)
 
-constexpr char FILE_NAME[] = "students.dat";
+
+namespace Constants {
+	constexpr char FILE_NAME[] = "students.dat";
+	constexpr int NAME_SIZE[] = 30;
+};
 
 struct Student {
-	char name[30];
+	char name[Constants::NAME_SIZE];
 	int age;
 	int fn;
 };
@@ -281,7 +298,7 @@ int main() {
 	initStudent(arr[2], "alex", 15, 44);
 	initStudent(arr[3], "katerina", 19, 12134);
 
-	std::ofstream file(FILE_NAME, std::ios::binary);
+	std::ofstream file(Constants::FILE_NAME, std::ios::binary);
 
 	if (!file.is_open()) {
 		std::cout << "Error while opening the file!" << std::endl;
@@ -302,10 +319,13 @@ int main() {
 #include <fstream>
 #include <cstring>
 
-constexpr char FILE_NAME[] = "students.dat";
+namespace Constants {
+	constexpr char FILE_NAME[] = "students.dat";
+	constexpr int NAME_SIZE[] = 30;
+};
 
 struct Student {
-	char name[30];
+	char name[Constants::NAME_SIZE];
 	int age;
 	int fn;
 };
@@ -326,11 +346,10 @@ void readFromFile(Student*& ptr, size_t& studentsCount, ifstream& f) {
 	f.read((char*)ptr, sizeOfFile);
 }
 
-int main()
-{
+int main() {
 	Student* arr;
 	size_t count;
-	std::ifstream file(FILE_NAME, std::ios::binary);
+	std::ifstream file(Constants::FILE_NAME, std::ios::binary);
 
 	if (!file.is_open()) {
 		std::cout << "Error while opening the file!" << std::endl;
@@ -352,16 +371,17 @@ int main()
 #include <iostream>
 #include <fstream>
 
-constexpr FILE_NAME[] = "output.dat";
+namespace Constants {
+	constexpr FILE_NAME[] = "output.dat";
+};
 
 struct Test {
  	char ch;
  	int a;
 };
 
-int main()
-{
-    std::ofstream f(FILE_NAME, std::ios::binary);
+int main() {
+    std::ofstream f(Constants::FILE_NAME, std::ios::binary);
     
     if(!f.is_open()) {
         std::cout << "Error!" << std::endl;
