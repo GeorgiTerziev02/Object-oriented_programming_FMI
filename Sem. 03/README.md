@@ -144,6 +144,8 @@ int main() {
 #include <fstream>
 #pragma warning (disable: 4996)
 
+constexpr char FILE_NAME[] = "students.dat";
+
 struct Student {
 	char* name;
 	int fn;
@@ -205,13 +207,12 @@ void print(const Student& st) {
 	std::cout << st.name << " " << st.fn << " " << st.gradesCount << " " << st.averageGrade << std::endl;
 }
 
-int main()
-{
+int main() {
 	{
 		Student s1 = createStudent("Ivan", 1234, 2, 4);
 		Student s2 = createStudent("Petur", 5555, 5, 5.5);
 
-		std::ofstream f1("uni.dat", std::ios::binary);
+		std::ofstream f1(FILE_NAME, std::ios::binary);
 
 		if (!f1.is_open()) {
 			cout << "Error" << endl;
@@ -226,7 +227,7 @@ int main()
 	}
 
 	{
-		std::ifstream f2("uni.dat", std::ios::binary);
+		std::ifstream f2(FILE_NAME, std::ios::binary);
 
 		if (!f2.is_open()) {
 			cout << "Error" << endl;
@@ -255,6 +256,8 @@ int main()
 #include <cstring>
 #pragma warning (disable: 4996)
 
+constexpr char FILE_NAME[] = "students.dat";
+
 struct Student {
 	char name[30];
 	int age;
@@ -271,15 +274,14 @@ void saveToFile(const Student* students, size_t count, ofstream& file) {
 	file.write((const char*)students, count * sizeof(Student));
 }
 
-int main()
-{
+int main() {
 	Student* arr = new Student[4];
 	initStudent(arr[0], "ivan", 44, 1234);
 	initStudent(arr[1], "petur", 12, 765);
 	initStudent(arr[2], "alex", 15, 44);
 	initStudent(arr[3], "katerina", 19, 12134);
 
-	std::ofstream file("students.dat", std::ios::binary);
+	std::ofstream file(FILE_NAME, std::ios::binary);
 
 	if (!file.is_open()) {
 		std::cout << "Error while opening the file!" << std::endl;
@@ -299,6 +301,8 @@ int main()
 #include <iostream>
 #include <fstream>
 #include <cstring>
+
+constexpr char FILE_NAME[] = "students.dat";
 
 struct Student {
 	char name[30];
@@ -326,7 +330,7 @@ int main()
 {
 	Student* arr;
 	size_t count;
-	std::ifstream file("students.dat", std::ios::binary);
+	std::ifstream file(FILE_NAME, std::ios::binary);
 
 	if (!file.is_open()) {
 		std::cout << "Error while opening the file!" << std::endl;
@@ -348,6 +352,8 @@ int main()
 #include <iostream>
 #include <fstream>
 
+constexpr FILE_NAME[] = "output.dat";
+
 struct Test {
  	char ch;
  	int a;
@@ -355,7 +361,7 @@ struct Test {
 
 int main()
 {
-    std::ofstream f("output.dat", std::ios::binary);
+    std::ofstream f(FILE_NAME, std::ios::binary);
     
     if(!f.is_open()) {
         std::cout << "Error!" << std::endl;
