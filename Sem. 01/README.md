@@ -245,7 +245,7 @@ int main() {
 *	За да бъде минимална паметта, която ползва една структура, трябва да подредим нейните член-данни в нарастващ или намаляващ ред по големина на променливата
 *	sizeof на празна структура (без член-данни) е равна на 1
 
-❗ Ако искате да прочете с повече детайли, може да го направите [тук](https://github.com/IvanMakaveev/FMI-Extra/blob/main/Object%20Oriented%20Programming/StructuresPadding/README.md)
+❗ Ако искате да прочете повече детайли за подравняването, може да го направите [тук](https://github.com/IvanMakaveev/FMI-Extra/blob/main/Object%20Oriented%20Programming/StructuresPadding/README.md)
 
 ❗ Свалете **"Struct Layout"** extension-a на Visual studio, за да можете да видите визуализация на това как са подредени член-данните и тяхното подравняване в паметта за вашите структури.
 
