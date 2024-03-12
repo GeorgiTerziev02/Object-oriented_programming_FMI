@@ -7,8 +7,8 @@ namespace Constants {
 
 int getCharCountFromFile(std::ifstream& ifs, char ch) {
 	if (!ifs.is_open()) {
-        return -1;
-    }
+       		return -1;
+    	}
 
 	int count = 0;
 
@@ -16,11 +16,11 @@ int getCharCountFromFile(std::ifstream& ifs, char ch) {
 		char current = ifs.get();
 		if (ifs.eof()) {
 			break;
-        }
+        	}
 
 		if (current == ch) {
 			count++;
-        }
+        	}
 	}
 
 	return count;
@@ -31,7 +31,7 @@ int getLinesCount(const char* fileName) {
 
 	if (!myFile.is_open()) {
 		return -1;
-    }
+    	}
 
 	return getCharCountFromFile(myFile, '\n') + 1;
 }
