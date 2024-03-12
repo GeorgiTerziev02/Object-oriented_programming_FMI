@@ -160,9 +160,9 @@ namespace Constants {
 };
 
 struct Student {
-	char* name;
 	int fn;
 	int gradesCount;
+	char* name;
 	double averageGrade;
 };
 
