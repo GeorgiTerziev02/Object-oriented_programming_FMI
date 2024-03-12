@@ -6,6 +6,8 @@ namespace Constants {
 }
 
 void changeByteAtIndex(const char* fileName, size_t index, char newValue) {
+	// opening with std::ios::in | std::ios::ate to prevent truncating the file
+	// other solution opening with std::ios::_Nocreate
 	std::ofstream out(fileName, std::ios::binary | std::ios::in | std::ios::ate);
 	if (!out.is_open()) {
 		return;
