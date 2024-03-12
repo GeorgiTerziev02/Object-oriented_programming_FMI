@@ -6,8 +6,7 @@ namespace Constants {
 }
 
 void changeByteAtIndex(const char* fileName, size_t index, char newValue) {
-	// TODO: why does it work with _Nocreate???
-	std::ofstream out(fileName, std::ios::binary | std::ios::_Nocreate);
+	std::ofstream out(fileName, std::ios::binary | std::ios::in | std::ios::ate);
 	if (!out.is_open()) {
 		return;
 	}
