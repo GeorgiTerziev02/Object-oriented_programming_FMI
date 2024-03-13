@@ -23,8 +23,8 @@ void replaceCharacterInFile(const char* fileName, const char toReplace, const ch
 		if (current == toReplace) {
 			file.seekp(-1, std::ios::cur);
 			file.put(replacement);
-            file.flush();
-            // seekp also does a flush
+            		file.flush();
+            		// seekp also does a flush
 			//file.seekp(file.tellp());
 		}
 	}
