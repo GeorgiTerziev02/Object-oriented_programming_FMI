@@ -20,7 +20,7 @@ int main() {
 		int arr[SIZE] = {1, 2, 3, 4, 5};
 
 		std::ofstream ofs(Constants::FILE_NAME, std::ios::binary);
-        if (!ifs.is_open()) {
+        if (!ofs.is_open()) {
             return -1;
         }
 		ofs.write((const char*)arr, SIZE * sizeof(int));
