@@ -6,41 +6,41 @@ private:
 public:
 	Time() : hours(0), minutes(0), seconds(0) { }
 	Time(unsigned hours, unsigned minutes, unsigned seconds) {
-        setHours(hours);
-        setMinutes(minutes);
-        setSeconds(seconds);
-    }
+        	setHours(hours);
+        	setMinutes(minutes);
+        	setSeconds(seconds);
+    	}
 
 	unsigned getHours() const {
-        return hours;
-    }
+        	return hours;
+    	}
 	unsigned getMinutes() const {
-        return minutes;
-    }
+        	return minutes;
+    	}
 	unsigned getSeconds() const {
-        return seconds;
-    }
+        	return seconds;
+    	}
 
 	void setHours(unsigned newValue) {
-        if(newValue > 23) {
-            newValue = 0;
-        } 
-        hours = newValue;
-    }
+        	if(newValue > 23) {
+            		newValue = 0;
+        	} 
+        	hours = newValue;
+    	}
 	void setMinutes(unsigned newValue) {
-        if(newValue > 59) {
-            newValue = 0;
-        } 
-        minutes = newValue;
-    }
+        	if(newValue > 59) {
+            		newValue = 0;
+        	} 
+        	minutes = newValue;
+    	}
 	void setSeconds(unsigned newValue) {
-        if(newValue > 59) {
-            newValue = 0;
-        } 
-        seconds = newValue;
-    }
+        	if(newValue > 59) {
+            		newValue = 0;
+        	} 
+        	seconds = newValue;
+    	}
 
-    void addSecond() {
+    	void addSecond() {
 	    if (++seconds >= 60) {
 	    	++minutes;
 	    	seconds = 0;
