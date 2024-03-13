@@ -2,8 +2,7 @@
 
 class Interval {
 private:
-    int start;
-    int end;
+    int start, end;
 
 public:
     Interval() : Interval(0, 0) { }
