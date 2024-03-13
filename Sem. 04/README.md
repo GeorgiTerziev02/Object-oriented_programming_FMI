@@ -4,8 +4,7 @@
 Член-функциите са функции, които работят с член-данните на обекта от дадена структура.
 ```c++
 struct Point {
-	int x;
-	int y;
+	int x, y;
 };
 
 bool IsInFirstQuadrant(const Point& p) {
