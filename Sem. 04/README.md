@@ -167,8 +167,7 @@ struct B {
 	}
 };
 
-struct C
-{
+struct C {
 	C() {
 		std::cout << "Constructor(default) of C" << std::endl;
 	}
@@ -178,8 +177,7 @@ struct C
 	}
 };
 
-struct X
-{
+struct X {
 	A first;
 	B second;
 	C obejectsArray[3];
@@ -194,8 +192,7 @@ struct X
 
 };
 
-int main()
-{
+int main() {
 	X  obj; //Constructor of X
 } // Destructor of X
 ```
@@ -303,8 +300,7 @@ int main() {
   **Пример за работа с класа:**
  ```c++
 
-int main()
-{
+int main() {
      Interval t1(3,10); // [3, 10]
      Interval t2(4,14); // [4, 14]
      Interval t3; // [0, 0]
