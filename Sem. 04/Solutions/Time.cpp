@@ -67,10 +67,10 @@ public:
         }
     }
 
-    void Time::print() const {
+    void print() const {
 		std::cout
             << std::setw(2) << std::setfill('0') << getHours() << ":" 
-		    << std::setw(2) << std::setfill('0') << getMinutes() <<  ":" 
+	        << std::setw(2) << std::setfill('0') << getMinutes() <<  ":" 
 		    << std::setw(2) << std::setfill('0') << getSeconds() << std::endl;
     }
 };
