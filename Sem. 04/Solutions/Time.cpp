@@ -1,5 +1,11 @@
 #include <iostream>
 
+namespace TimeConstants {
+    const unsigned HOURS_IN_DAY = 24;
+    const unsigned MINUTES_IN_HOUR = 60;
+    const unsigned SECONDS_IN_MINUTE = 60;
+};
+
 class Time {
 private:
     unsigned hours, minutes, seconds;
@@ -26,36 +32,36 @@ public:
     }
 
     void setHours(unsigned newValue) {
-        if (newValue > 23) {
+        if (newValue >= TimeConstants::HOURS_IN_DAY) {
             newValue = 0;
         }
         hours = newValue;
     }
 
     void setMinutes(unsigned newValue) {
-        if (newValue > 59) {
+        if (newValue >= TimeConstants::MINUTES_IN_HOUR) {
             newValue = 0;
         }
         minutes = newValue;
     }
 
     void setSeconds(unsigned newValue) {
-        if (newValue > 59) {
+        if (newValue > TimeConstants::SECONDS_IN_MINUTE) {
             newValue = 0;
         }
         seconds = newValue;
     }
 
     void addSecond() {
-        if (++seconds >= 60) {
+        if (++seconds >= TimeConstants::SECONDS_IN_MINUTE) {
             ++minutes;
             seconds = 0;
         }
-        if (minutes >= 60) {
+        if (minutes >= TimeConstants::MINUTES_IN_HOUR) {
             ++hours;
             minutes = 0;
         }
-        if (hours >= 24) {
+        if (hours >= TimeConstants::HOURS_IN_DAY) {
             hours = 0;
         }
     }
