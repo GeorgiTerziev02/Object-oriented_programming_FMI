@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 namespace TimeConstants {
     const unsigned HOURS_IN_DAY = 24;
@@ -67,6 +68,9 @@ public:
     }
 
     void Time::print() const {
-        std::cout << hours << ":" << minutes << ":" << seconds << std::endl;
+		std::cout
+            << std::setw(2) << std::setfill('0') << getHours() << ":" 
+		    << std::setw(2) << std::setfill('0') << getMinutes() <<  ":" 
+		    << std::setw(2) << std::setfill('0') << getSeconds() << std::endl;
     }
 };
