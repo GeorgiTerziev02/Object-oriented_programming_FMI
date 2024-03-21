@@ -80,5 +80,7 @@ Interval Interval::intersect(const Interval& other) const {
 }
 
 bool Interval::isSubinterval(const Interval& other) const {
+    // other.start and other.end can be accessed because of friend Classes in c++
+    // currently we still don't have that knowledge so we use the getters!
     return start <= other.getStart() && other.getEnd() <= end;
 }
