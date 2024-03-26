@@ -1,8 +1,7 @@
 #pragma once
 
-
-class Student
-{
+class Student {
+private:
 	char* name = nullptr;
 	int* grades = nullptr;
 	size_t gradesCount = 0;

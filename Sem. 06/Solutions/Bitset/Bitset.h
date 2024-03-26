@@ -1,15 +1,14 @@
 #pragma once
 
-namespace 
-{
+namespace BitsetConstants {
 	constexpr size_t MAX_SIZE = 1024;
 	constexpr size_t BYTE_SIZE = 8;
 	constexpr size_t BUCKETS_COUNT = MAX_SIZE / BYTE_SIZE;
 }
 
-class Bitset
-{
-	unsigned char data[BUCKETS_COUNT] = { };
+class Bitset {
+private:
+	unsigned char data[BitsetConstants::BUCKETS_COUNT] = { };
 
 	unsigned getBucketIndex(unsigned number) const;
 	unsigned char getMask(unsigned number) const;
