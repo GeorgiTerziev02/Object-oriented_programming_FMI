@@ -1,6 +1,6 @@
 #pragma once
-#include "Time.h"
-#include "Date.h"
+#include "Time/Time.h"
+#include "Date/Date.h"
 
 namespace EventConstants {
     constexpr size_t MAX_NAME_LENGTH = 20;
