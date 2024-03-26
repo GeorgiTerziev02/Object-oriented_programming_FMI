@@ -31,7 +31,7 @@ const Time& Event::getEndTime() const {
 }
 
 void Event::setName(const char* str) {
-    if (str && strlen(str) > EventConstants::MAX_NAME_LENGTH) {
+    if (!str || strlen(str) > EventConstants::MAX_NAME_LENGTH) {
         return;
     }
     
