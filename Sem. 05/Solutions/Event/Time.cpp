@@ -1,126 +1,133 @@
 #include "Time.h"
 
-Time::Time(size_t hours, size_t mins, size_t seconds)
-{
+#include <iostream>
+#include <iomanip>
+
+// if the namespace has name => can be accessed from other .cpp
+namespace TimeConstants {
+    const unsigned HOURS_IN_DAY = 24;
+    const unsigned MINUTES_IN_HOUR = 60;
+    const unsigned SECONDS_IN_MINUTE = 60;
+    const unsigned SECONDS_IN_HOUR = 60 * 60;
+};
+
+Time::Time(unsigned seconds) {
+    setSeconds(seconds % 60);
+    seconds /= 60;
+    setMinutes(seconds % 60);
+    seconds /= 60;
+    setHours(seconds);
+}
+
+Time::Time() : hours(0), minutes(0), seconds(0) {}
+
+Time::Time(unsigned hours, unsigned minutes, unsigned seconds) {
     setHours(hours);
-    setMins(mins);
+    setMinutes(minutes);
     setSeconds(seconds);
 }
 
-Time::Time() : Time(0, 0, 0)
-{}
-
-Time::Time(size_t seconds)
-{
-    hours = seconds / 3600;
-    seconds %= 3600;
-
-    mins = seconds / 60;
-    seconds %= 60;
-
-    this->seconds = seconds;
-}
-
-
-size_t Time::getSeconds() const
-{
-    return seconds;
-}
-size_t Time::getMins() const
-{
-    return mins;
-}
-size_t Time::getHours() const
-{
+unsigned Time::getHours() const {
     return hours;
 }
 
-void Time::setSeconds(size_t seconds)
-{
-    if (seconds > 59)
-        seconds = 59;
-    this->seconds = seconds;
-}
-void Time::setMins(size_t mins)
-{
-    if (mins > 59)
-        mins = 59;
-    this->mins = mins;
-}
-void Time::setHours(size_t hours)
-{
-    if (hours > 23)
-        hours = 23;
-    this->hours = hours;
+unsigned Time::getMinutes() const {
+    return minutes;
 }
 
-void Time::tick()
-{
-    size_t seconds = convertToSeconds();
-    seconds++;
-    Time newObj(seconds);
-
-    *this = newObj;
+unsigned Time::getSeconds() const {
+    return seconds;
 }
 
-int Time::compare(const Time& other) const
-{
-    size_t mySeconds = convertToSeconds();
-    size_t otherSeconds = other.convertToSeconds();
+void Time::setHours(unsigned newValue) {
+    if (newValue >= TimeConstants::HOURS_IN_DAY) {
+        newValue = 0;
+    }
+    hours = newValue;
+}
 
-    if (mySeconds > otherSeconds)
-        return 1;
-    else if (mySeconds < otherSeconds)
-        return -1;
-    else
+void Time::setMinutes(unsigned newValue) {
+    if (newValue >= TimeConstants::MINUTES_IN_HOUR) {
+        newValue = 0;
+    }
+    minutes = newValue;
+}
+
+void Time::setSeconds(unsigned newValue) {
+    if (newValue > TimeConstants::SECONDS_IN_MINUTE) {
+        newValue = 0;
+    }
+    seconds = newValue;
+}
+
+void Time::addSecond() {
+    if (++seconds >= TimeConstants::SECONDS_IN_MINUTE) {
+        ++minutes;
+        seconds = 0;
+    }
+    if (minutes >= TimeConstants::MINUTES_IN_HOUR) {
+        ++hours;
+        minutes = 0;
+    }
+    if (hours >= TimeConstants::HOURS_IN_DAY) {
+        hours = 0;
+    }
+}
+
+unsigned Time::getTotalSeconds() const {
+    return
+        hours * TimeConstants::SECONDS_IN_HOUR +
+        minutes * TimeConstants::SECONDS_IN_MINUTE +
+        seconds;
+}
+
+void Time::print() const {
+    std::cout
+        << std::setw(2) << std::setfill('0') << getHours() << ":"
+        << std::setw(2) << std::setfill('0') << getMinutes() << ":"
+        << std::setw(2) << std::setfill('0') << getSeconds() << std::endl;
+}
+
+int Time::compare(const Time& other) const {
+    unsigned currentTotalSeconds = getTotalSeconds();
+    unsigned otherTotalSeconds = other.getTotalSeconds();
+    if (currentTotalSeconds == otherTotalSeconds) {
         return 0;
-}
-Time Time::getDiff(const Time& other) const
-{
-    size_t mySeconds = convertToSeconds();
-    size_t otherSeconds = other.convertToSeconds();
+    }
 
-    size_t diff;
-
-    if (mySeconds > otherSeconds)
-        diff = mySeconds - otherSeconds;
-    else
-        diff = otherSeconds - mySeconds;
-
-    return Time(diff);
+    // 1 - the current is later, -1 the current is earlier
+    return currentTotalSeconds > otherTotalSeconds ? 1 : -1;
 }
 
-Time Time::getToMidnight() const
-{
-    Time midnight(23, 59, 59);
-    Time diff = getDiff(midnight);
-    diff.tick();
-    return diff;
+int Time::compare2(const Time& other) const {
+    return getTotalSeconds() - other.getTotalSeconds();
 }
-bool Time::isDinnerTime() const
-{
+
+Time Time::getDifference(const Time& other) const {
+    unsigned currentSeconds = getTotalSeconds();
+    unsigned otherSeconds = other.getTotalSeconds();
+    unsigned difference = currentSeconds > otherSeconds 
+        ? currentSeconds - otherSeconds
+        : otherSeconds - currentSeconds;
+
+    return Time(difference);
+}
+
+Time Time::getTimeToMidnight() const {
+    Time leftTime = getDifference(Time(23, 59, 59));
+    leftTime.addSecond();
+
+    return leftTime;
+}
+
+bool Time::isDinnerTime() const {
     Time lowerBound(20, 30, 0);
     Time upperBound(22, 0, 0);
     return compare(lowerBound) >= 0 && compare(upperBound) <= 0;
 }
-bool Time::isPartyTime() const
-{
+
+bool Time::isPartyTime() const {
     Time lowerBound(23, 0, 0);
     Time upperBound(6, 0, 0);
     return compare(lowerBound) >= 0 || compare(upperBound) <= 0;
-}
-
-void Time::print(bool is12hoursclock) const
-{
-    if (hours < 10)
-        std::cout << 0;
-    std::cout << ((is12hoursclock && hours > 12) ? hours - 12 : hours) << ":";
-    if (mins < 10)
-        std::cout << 0;
-    std::cout << mins << ":";
-    if (seconds < 10)
-        std::cout << 0;
-    std::cout << seconds;
-    if (is12hoursclock)
-        std::cout << ((hours > 12) ? "PM" : "AM");
 }

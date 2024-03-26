@@ -1,5 +1,6 @@
 #include "Date.h"
 
+// Some date implementation from last year
 Date::Date(unsigned day, unsigned month, unsigned year)
 {
     setYear(year);

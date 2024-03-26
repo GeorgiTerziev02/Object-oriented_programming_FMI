@@ -2,13 +2,13 @@
 #include "Time.h"
 #include "Date.h"
 
-namespace {
-    constexpr size_t MAX_NAME = 20;
+namespace EventConstants {
+    constexpr size_t MAX_NAME_LENGTH = 20;
 }
 
-class Event
-{
-    char name[MAX_NAME + 1] = "Unknown";
+class Event {
+private:
+    char name[EventConstants::MAX_NAME_LENGTH + 1] = "Unknown";
     Date date;
     Time startTime;
     Time endTime;

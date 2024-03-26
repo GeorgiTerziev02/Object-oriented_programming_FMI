@@ -1,11 +1,13 @@
 #pragma once
-#include "Event.h"
+#include "Event/Event.h"
 
-constexpr int MAX_EVENT_SIZE = 30;
+namespace EventCollectionConstants {
+	constexpr int MAX_EVENT_SIZE = 30;
+}
 
-class EventCollection
-{
-	Event events[MAX_EVENT_SIZE];
+class EventCollection {
+private:
+	Event events[EventCollectionConstants::MAX_EVENT_SIZE];
 	size_t size = 0;
 
 	EventCollection eventsOnDate(const Date& date) const;
@@ -15,7 +17,7 @@ public:
 	bool addEvent(const Event& event);
 	bool removeEvent(const char* name);
 
-	const Event& getByName(const char* name);
+	const Event& getByName(const char* name) const;
 	EventCollection maxEvents(const Date& date) const;
 
 	void print() const;

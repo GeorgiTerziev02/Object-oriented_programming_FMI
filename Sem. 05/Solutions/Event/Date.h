@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 
-class Date
-{
+// Some date implementation from last year
+class Date {
     unsigned MAX_DAYS[12] =
     {
         31,28,31,30,31, 30, 31, 31, 30, 31, 30, 31

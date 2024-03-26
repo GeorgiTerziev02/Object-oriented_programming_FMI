@@ -17,35 +17,31 @@ Event::Event(const char* name, unsigned day, unsigned month, unsigned year,
     setName(name);
     validateTimes();
 }
-const char* Event::getName() const
-{
+const char* Event::getName() const {
     return name;
 }
-const Date& Event::getDate() const
-{
+const Date& Event::getDate() const {
     return date;
 }
-const Time& Event::getStartTime() const
-{
+const Time& Event::getStartTime() const {
     return startTime;
 }
-const Time& Event::getEndTime() const
-{
+const Time& Event::getEndTime() const {
     return endTime;
 }
 
-void Event::setName(const char* str)
-{
-    if (str != nullptr && strlen(str) > 20)
+void Event::setName(const char* str) {
+    if (str && strlen(str) > EventConstants::MAX_NAME_LENGTH) {
         return;
-    else
-        strcpy(name, str);
+    }
+    
+    strcpy(name, str);
 }
 
-void Event::validateTimes()
-{
-    if (startTime.compare(endTime) >= 1)
+void Event::validateTimes() {
+    if (startTime.compare(endTime) >= 1) {
         std::swap(startTime, endTime);
+    }
 }
 
 Event::Event() : Event("Unknown", 1, 1, 1, 0, 0, 0, 0, 0, 0) {}
