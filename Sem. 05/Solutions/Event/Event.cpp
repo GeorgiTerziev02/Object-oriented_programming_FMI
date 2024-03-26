@@ -37,6 +37,25 @@ void Event::setName(const char* str) {
     
     strcpy(name, str);
 }
+void Event::setDate(const Date& date) {
+    this->date = date;
+}
+
+void Event::setStartTime(const Time& startTime) {
+    if (startTime.compare(endTime) >= 1) {
+        return;
+    }
+
+    this->startTime = startTime;
+}
+
+void Event::setEndTime(const Time& endTime) {
+    if (this->startTime.compare(endTime) >= 1) {
+        return;
+    }
+
+    this->endTime = endTime;
+}
 
 void Event::validateTimes() {
     if (startTime.compare(endTime) >= 1) {

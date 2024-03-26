@@ -13,7 +13,6 @@ private:
     Time startTime;
     Time endTime;
 
-    void setName(const char* str);
     void validateTimes();
 public:
     Event();
@@ -24,7 +23,16 @@ public:
         unsigned endTimeHours, unsigned endTimeMins, unsigned endTimeSecs);
 
     const char* getName() const;
+    void setName(const char* str);
+
     const Date& getDate() const;
+    // Question: 
+    // if there is no validation is there need of setter and getter
+    void setDate(const Date& date);
+
     const Time& getStartTime() const;
+    void setStartTime(const Time& startTime);
+
     const Time& getEndTime() const;
+    void setEndTime(const Time& endTime);
 };
