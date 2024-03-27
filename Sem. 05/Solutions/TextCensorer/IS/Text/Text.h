@@ -1,5 +1,5 @@
 #pragma once
-#include "TextCensorer/TextCensorer.h"
+#include "../TextCensorer/TextCensorer.h"
 
 namespace TextConstants {
     constexpr int BUFF_SIZE = 30;
