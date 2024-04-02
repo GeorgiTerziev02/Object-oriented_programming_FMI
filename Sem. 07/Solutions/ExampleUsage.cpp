@@ -1,7 +1,6 @@
 #include <iostream>
 #include "MyString.h"
 
-
 int main() {
 	MyString s;
 	std::cin >> s;
