@@ -1,6 +1,8 @@
 #pragma once
-#include <iostream>
-#include <fstream>
+
+// TODO: can be refactored to accept a function pointer
+// then this class will be able to work with any function
+// that accepts size_t and return bool
 class PrimeIterator {
 private:
 	size_t _value;

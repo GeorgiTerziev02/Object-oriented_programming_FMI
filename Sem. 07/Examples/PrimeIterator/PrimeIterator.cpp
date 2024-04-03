@@ -1,4 +1,5 @@
 #include "PrimeIterator.h"
+#include <cmath>
 
 // Anonymous namespace is used to define constants, functions, classes, etc.
 // that are only visible in the current compilation unit.
@@ -19,34 +20,33 @@ namespace {
     		if (number % i == 0) {
     			return false;
     		}
-    	}
-
+        }
         return true;
     }
 }
 
 PrimeIterator& PrimeIterator::goToNext() {
-	//todo: todo validate edge cases => ULLONG_MAX
-	while (!isPrime(++_value)) {}
-	return *this;
+    //todo: todo validate edge cases => ULLONG_MAX
+    while (!isPrime(++_value)) {}
+    return *this;
 }
 	
 PrimeIterator& PrimeIterator::goToPrev() {
     //todo: todo validate edge cases => 0, 1
-	if (_value != 2) {
-		while (!isPrime(--_value)) {}
-	}
-	return *this;
-}
-
-PrimeIterator::PrimeIterator(size_t value) {
-	setValue(value);
+    if (_value != 2) {
+        while (!isPrime(--_value)) {}
+    }
+    return *this;
 }
 
 PrimeIterator::PrimeIterator() : PrimeIterator(2) { }
 
+PrimeIterator::PrimeIterator(size_t value) {
+    setValue(value);
+}
+
 size_t PrimeIterator::getValue() const {
-	return _value;
+    return _value;
 }
 
 void PrimeIterator::setValue(size_t value) {
@@ -54,23 +54,23 @@ void PrimeIterator::setValue(size_t value) {
 }
 
 PrimeIterator& PrimeIterator::operator++() {
-	return goToNext();
+    return goToNext();
 }
 
 PrimeIterator PrimeIterator::operator++(int) {
-	PrimeIterator oldCopy(*this);
-	goToNext();
-	return oldCopy;
+    PrimeIterator oldCopy(*this);
+    goToNext();
+    return oldCopy;
 }
 
 PrimeIterator& PrimeIterator::operator--() {
-	return goToPrev();
+    return goToPrev();
 }
 
 PrimeIterator PrimeIterator::operator--(int) {
-	PrimeIterator oldCopy(*this);
-	goToPrev();
-	return oldCopy;
+    PrimeIterator oldCopy(*this);
+    goToPrev();
+    return oldCopy;
 }
 
 unsigned PrimeIterator::operator*() const {
