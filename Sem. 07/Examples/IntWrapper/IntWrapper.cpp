@@ -22,6 +22,10 @@ IntWrapper IntWrapper::operator++(int) {
     return copy;
 }
 
+IntWrapper::operator bool() const {
+    return value != 0;
+}
+
 // No need to make it friend we can use the getter
 std::ostream &operator<<(std::ostream &out, const IntWrapper &integer) {
     return out << integer.getValue();

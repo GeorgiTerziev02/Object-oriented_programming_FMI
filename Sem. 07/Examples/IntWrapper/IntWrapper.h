@@ -17,6 +17,9 @@ public:
     // Postfix increment
 	IntWrapper operator++(int);
 
+	// Conversion operator
+	operator bool() const;
+
     // this is first declaration of operator<< as a friend function
     // you can place the friend stuff also in the protected, private => it doesn't matter
 	friend std::istream& operator>>(std::istream& in, IntWrapper& integer);
