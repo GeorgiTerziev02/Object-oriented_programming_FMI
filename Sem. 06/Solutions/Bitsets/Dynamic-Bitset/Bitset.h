@@ -4,6 +4,8 @@ namespace BitsetConstants {
 	constexpr size_t BYTE_SIZE = 8;
 }
 
+// moved these functions to a namespace because they are not
+// using anything from the bitset instance(not using this)
 namespace BitsetHelpers {
 	unsigned char getMask(unsigned int n);
 	unsigned int getBucketIndex(unsigned int n);
