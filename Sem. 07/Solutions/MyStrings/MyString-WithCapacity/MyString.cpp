@@ -30,8 +30,8 @@ void MyString::free() {
     length = capacity = 0;
 }
 
-void MyString::resize() {
-    capacity = (capacity + 1) * 2 - 1;
+void MyString::resize(size_t lengthToFit) {
+    capacity = length < 16 ? 16 : getNextPowerOfTwo(lengthToFit + 1) - 1;
 
     char* newData = new char[capacity + 1];
     strcpy(newData, data);
@@ -96,20 +96,16 @@ MyString& MyString::operator+=(const MyString& other) {
         return *this;
     }
 
-    capacity = getNextPowerOfTwo(length) - 1;
-    char* res = new char[capacity + 1];
-    strcpy(res, data);
-    strcat(res, other.data);
-
-    delete[] data;
-    data = res;
+    // resize with the new length
+    resize(length);
+    strcat(data, other.data);
 
     return *this;
 }
 
 MyString& MyString::operator+=(char ch) {
     if (length == capacity) {
-        resize();
+        resize(length + 1);
     }
     data[length++] = ch;
     return *this;

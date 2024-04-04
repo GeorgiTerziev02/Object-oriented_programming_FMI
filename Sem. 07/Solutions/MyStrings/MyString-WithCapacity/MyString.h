@@ -11,7 +11,7 @@ private:
     size_t length = 0;
     size_t capacity = 15;
 
-    void resize();
+    void resize(size_t lengthToFit);
 
     explicit MyString(size_t capacity);
 public:
