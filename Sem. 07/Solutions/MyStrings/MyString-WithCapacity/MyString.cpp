@@ -128,12 +128,13 @@ MyString::operator bool() const {
 }
 
 MyString operator+(const MyString& lhs, const MyString& rhs) {
-    size_t length = lhs.length + rhs.length;
-    size_t capacity = getNextPowerOfTwo(length) - 1;
+    size_t resultLength = lhs.length + rhs.length;
+    size_t capacity = getNextPowerOfTwo(resultLength) - 1;
 
     MyString res(capacity);
     strcpy(res.data, lhs.data);
     strcat(res.data, rhs.data);
+    res.length = resultLength;
 
     return res;
 }
