@@ -1,5 +1,14 @@
 #pragma once
 
+namespace BitsetConstants {
+	constexpr size_t BYTE_SIZE = 8;
+}
+
+namespace BitsetHelpers {
+	unsigned char getMask(unsigned int n);
+	unsigned int getBucketIndex(unsigned int n);
+}
+
 class Bitset {
 private:
 	unsigned char* data;

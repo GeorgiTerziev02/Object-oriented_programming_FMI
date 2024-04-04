@@ -1,21 +1,21 @@
 #include "Bitset.h"
 #include <iostream>
 
-namespace {
-	constexpr size_t BUCKET_SIZE = 8;
-
+namespace BitsetHelpers {
 	unsigned char getMask(unsigned int n) {
-		unsigned int shiftIndex = (n % BUCKET_SIZE);
+		unsigned int shiftIndex = (n % BitsetConstants::BYTE_SIZE);
 
 		unsigned char mask = 1;
-		mask <<= (BUCKET_SIZE - 1 - shiftIndex);
+		mask <<= (BitsetConstants::BYTE_SIZE - 1 - shiftIndex);
 		return mask;
 	}
 
 	unsigned int getBucketIndex(unsigned int n) {
-		return n / BUCKET_SIZE;
+		return n / BitsetConstants::BYTE_SIZE;
 	}
 }
+
+using namespace BitsetHelpers;
 
 void Bitset::copyFrom(const Bitset& other) {
 	maxNum = other.maxNum;
@@ -34,7 +34,7 @@ void Bitset::free() {
 
 Bitset::Bitset(unsigned int max) {
 	maxNum = max;
-	bucketsCount = max / BUCKET_SIZE + 1;
+	bucketsCount = max / BitsetConstants::BYTE_SIZE + 1;
 	data = new unsigned char[bucketsCount]{};
 }
 
