@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 
+namespace StringHelperFunctions {
+    unsigned int getNextPowerOfTwo(unsigned int n);
+}
+
 class MyString {
 private:
     char* data = nullptr;
@@ -32,7 +36,7 @@ public:
 
     friend MyString operator+(const MyString& lhs, const MyString& rhs);
     friend std::istream& operator>>(std::istream& is, MyString& str);
-    
+
 private:
     void copyFrom(const MyString& other);
     void free();
