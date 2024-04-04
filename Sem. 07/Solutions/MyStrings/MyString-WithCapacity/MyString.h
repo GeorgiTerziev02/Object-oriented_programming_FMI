@@ -1,14 +1,12 @@
 #pragma once
 #include <iostream>
 
-class MyString
-{
+class MyString {
+private:
     char* data = nullptr;
     size_t length = 0;
     size_t capacity = 15;
 
-    void copyFrom(const MyString& other);
-    void free();
     void resize();
 
     explicit MyString(size_t capacity);
@@ -29,10 +27,15 @@ public:
     char& operator[](size_t index);
     char operator[](size_t index) const;
 
+    // this is not in the standard
     operator bool() const;
 
     friend MyString operator+(const MyString& lhs, const MyString& rhs);
     friend std::istream& operator>>(std::istream& is, MyString& str);
+    
+private:
+    void copyFrom(const MyString& other);
+    void free();
 };
 
 std::ostream& operator<<(std::ostream& os, const MyString& str);

@@ -1,24 +1,36 @@
-#include "String.h"
+#include "MyString.h"
 #include <cstring>
 #pragma warning(disable:4996)
 
-void MyString::copyFrom(const MyString& other)
-{
+namespace StringHelperFunctions {
+    unsigned int getNextPowerOfTwo(unsigned int n) {
+        unsigned int step = 1;
+
+        while ((n >> step) > 0) {
+            n |= n >> step;
+            step *= 2;
+        }
+
+        return n + 1;
+    }
+}
+
+using namespace StringHelperFunctions;
+
+void MyString::copyFrom(const MyString& other) {
     length = other.length;
     capacity = other.capacity;
     data = new char[capacity + 1];
     strcpy(data, other.data);
 }
 
-void MyString::free()
-{
+void MyString::free() {
     delete[] data;
     data = nullptr;
     length = capacity = 0;
 }
 
-void MyString::resize()
-{
+void MyString::resize() {
     capacity = (capacity + 1) * 2 - 1;
 
     char* newData = new char[capacity + 1];
@@ -28,26 +40,18 @@ void MyString::resize()
     data = newData;
 }
 
-MyString::MyString(size_t cap)
-{
-    capacity = cap;
-    length = 0;
+MyString::MyString(size_t capacity) : capacity(capacity) {
     data = new char[capacity + 1];
 }
 
-MyString::MyString() : MyString("")
-{
-}
+MyString::MyString() : MyString("") { }
 
-MyString::MyString(const char* str)
-{
-    if (!str)
-    {
+MyString::MyString(const char* str) {
+    if (!str) {
         data = new char[capacity + 1];
         data[0] = '\0';
     }
-    else
-    {
+    else {
         length = strlen(str);
         capacity = std::max((int)getNextPowerOfTwo(length), 16) - 1;
         data = new char[capacity + 1];
@@ -55,13 +59,11 @@ MyString::MyString(const char* str)
     }
 }
 
-MyString::MyString(const MyString& other)
-{
+MyString::MyString(const MyString& other) {
     copyFrom(other);
 }
 
-MyString& MyString::operator=(const MyString& other)
-{
+MyString& MyString::operator=(const MyString& other) {
     if (this != &other) {
         free();
         copyFrom(other);
@@ -70,28 +72,23 @@ MyString& MyString::operator=(const MyString& other)
     return *this;
 }
 
-MyString::~MyString()
-{
+MyString::~MyString() {
     free();
 }
 
-size_t MyString::getLength() const
-{
+size_t MyString::getLength() const {
     return length;
 }
 
-size_t MyString::getCapacity() const
-{
+size_t MyString::getCapacity() const {
     return capacity;
 }
 
-const char* MyString::c_str() const
-{
+const char* MyString::c_str() const {
     return data;
 }
 
-MyString& MyString::operator+=(const MyString& other)
-{
+MyString& MyString::operator+=(const MyString& other) {
     length += other.length;
 
     if (length <= capacity) {
@@ -110,8 +107,7 @@ MyString& MyString::operator+=(const MyString& other)
     return *this;
 }
 
-MyString& MyString::operator+=(char ch)
-{
+MyString& MyString::operator+=(char ch) {
     if (length == capacity) {
         resize();
     }
@@ -119,35 +115,19 @@ MyString& MyString::operator+=(char ch)
     return *this;
 }
 
-char& MyString::operator[](size_t index)
-{
+char& MyString::operator[](size_t index) {
     return data[index];
 }
 
-char MyString::operator[](size_t index) const
-{
+char MyString::operator[](size_t index) const {
     return data[index];
 }
 
-MyString::operator bool() const
-{
+MyString::operator bool() const {
     return length == 0;
 }
 
-unsigned int getNextPowerOfTwo(unsigned int n)
-{
-    unsigned int step = 1;
-
-    while ((n >> step) > 0) {
-        n |= n >> step;
-        step *= 2;
-    }
-
-    return n + 1;
-}
-
-MyString operator+(const MyString& lhs, const MyString& rhs)
-{
+MyString operator+(const MyString& lhs, const MyString& rhs) {
     size_t length = lhs.length + rhs.length;
     size_t capacity = getNextPowerOfTwo(length) - 1;
 
@@ -158,8 +138,7 @@ MyString operator+(const MyString& lhs, const MyString& rhs)
     return res;
 }
 
-std::istream& operator>>(std::istream& is, MyString& str)
-{
+std::istream& operator>>(std::istream& is, MyString& str) {
     char buff[1024];
     is >> buff;
 
@@ -172,34 +151,25 @@ std::istream& operator>>(std::istream& is, MyString& str)
     return is;
 }
 
-std::ostream& operator<<(std::ostream& os, const MyString& str)
-{
-    os << str.c_str();
-    return os;
+std::ostream& operator<<(std::ostream& os, const MyString& str) {
+    return os << str.c_str();
 }
 
-bool operator<(const MyString& lhs, const MyString& rhs)
-{
+bool operator<(const MyString& lhs, const MyString& rhs) {
     return strcmp(lhs.c_str(), rhs.c_str()) < 0;
 }
-
-bool operator<=(const MyString& lhs, const MyString& rhs)
-{
+bool operator<=(const MyString& lhs, const MyString& rhs) {
     return strcmp(lhs.c_str(), rhs.c_str()) <= 0;
 }
-bool operator>=(const MyString& lhs, const MyString& rhs)
-{
+bool operator>=(const MyString& lhs, const MyString& rhs) {
     return strcmp(lhs.c_str(), rhs.c_str()) >= 0;
 }
-bool operator>(const MyString& lhs, const MyString& rhs)
-{
+bool operator>(const MyString& lhs, const MyString& rhs) {
     return strcmp(lhs.c_str(), rhs.c_str()) > 0;
 }
-bool operator==(const MyString& lhs, const MyString& rhs)
-{
+bool operator==(const MyString& lhs, const MyString& rhs) {
     return strcmp(lhs.c_str(), rhs.c_str()) == 0;
 }
-bool operator!=(const MyString& lhs, const MyString& rhs)
-{
+bool operator!=(const MyString& lhs, const MyString& rhs) {
     return strcmp(lhs.c_str(), rhs.c_str()) != 0;
 }
