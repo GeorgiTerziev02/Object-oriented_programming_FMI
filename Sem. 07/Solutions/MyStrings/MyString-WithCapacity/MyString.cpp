@@ -31,7 +31,7 @@ void MyString::free() {
 }
 
 void MyString::resize(size_t lengthToFit) {
-    capacity = length < 16 ? 16 : getNextPowerOfTwo(lengthToFit + 1) - 1;
+    capacity = length < 16 ? 15 : getNextPowerOfTwo(lengthToFit + 1) - 1;
 
     char* newData = new char[capacity + 1];
     strcpy(newData, data);
