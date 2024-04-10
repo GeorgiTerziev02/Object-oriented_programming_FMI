@@ -90,16 +90,13 @@ const char* MyString::c_str() const {
 
 MyString& MyString::operator+=(const MyString& other) {
     length += other.length;
-
-    if (length <= capacity) {
-        strcat(data, other.data);
-        return *this;
+    if (length >= capacity) {
+        // resize with the new length
+        resize(length);
     }
-
-    // resize with the new length
-    resize(length);
-    strcat(data, other.data);
-
+    
+    //use strncat instead of strcat, because strcat will not work for str += str (the term zero of str will be destroyed by the first char)
+    std::strncat(data, other.data, other.length);
     return *this;
 }
 
