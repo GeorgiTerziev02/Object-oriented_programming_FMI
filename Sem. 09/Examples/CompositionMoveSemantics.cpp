@@ -47,6 +47,7 @@ public:
 
 	Test& operator=(const Test& other) {
 		std::cout << "operator=(const Test& other)" << std::endl;
+		// if....
 		a = other.a;
 		return *this;
 	}
