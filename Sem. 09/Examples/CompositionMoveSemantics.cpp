@@ -36,11 +36,12 @@ public:
 	Test() {
 		std::cout << "Test()" << std::endl;
 	}
-
+	// Explicitly call the the copy constructor of a!
 	Test(const Test& other) : a(other.a) {
 		std::cout << "Test(const Test& other)" << std::endl;
 	}
 
+	// Explicitly call the the move constructor of a!
 	Test(Test&& other) noexcept : a(std::move(other.a)) {
 		std::cout << "Test(Test&& other)" << std::endl;
 	}
@@ -48,6 +49,7 @@ public:
 	Test& operator=(const Test& other) {
 		std::cout << "operator=(const Test& other)" << std::endl;
 		// if....
+		// Explicitly call the the copy assignment operator of a!
 		a = other.a;
 		return *this;
 	}
@@ -55,6 +57,7 @@ public:
 	Test& operator=(Test&& other) noexcept {
 		std::cout << "operator=(Test&& other)" << std::endl;
 		// if....
+		// Explicitly call the the move assignment operator of a!
 		a = std::move(other.a);
 		return *this;
 	}
