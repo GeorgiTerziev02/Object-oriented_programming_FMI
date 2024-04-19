@@ -59,7 +59,7 @@ int main() {
 }
 ```
 
-![A_ptr_ptr](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/assets/49128895/80815f99-e290-466a-9504-34ed1399205d)
+![image](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/assets/49128895/ef7e8577-7de6-4c52-b983-e22619362bd8)
 
 Note: стрелкичките, които не сочат към нищо, имат стойност nullptr
 
