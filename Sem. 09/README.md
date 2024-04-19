@@ -1,4 +1,4 @@
-![A_ptr_ptr](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/assets/49128895/e1db3c6e-7301-41e8-8c86-c6408ab40bd0)#  Масиви от указатели към обекти. Move семантики.
+# Масиви от указатели към обекти. Move семантики.
 
 ## Масиви от указатели към обекти
 #### Статичен масив от обекти
