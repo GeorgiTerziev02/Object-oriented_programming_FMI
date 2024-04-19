@@ -1,4 +1,4 @@
-<!-- Блиц тест 
+Блиц тест 
 
 За задачите може да се възползвате от следното изображение:
 ![exceptions](./img/exceptions.jfif)
@@ -81,7 +81,6 @@ class B {
 public:
 	B() {
 		std::cout << "Default constructor of B\n";
-		//throw "test";
 	}
 	B(A a) {
 		this->a = a;
@@ -136,7 +135,7 @@ int main() {
 	User user1("Ivan");
 	User user2(std::move(user1));
 ```
--->
+
 
 Задача 1. Трябва да разработите система за обработка на поръчки.
 
