@@ -1,4 +1,4 @@
-#  Масиви от указатели към обекти. Move семантики.
+![A_ptr_ptr](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/assets/49128895/e1db3c6e-7301-41e8-8c86-c6408ab40bd0)#  Масиви от указатели към обекти. Move семантики.
 
 ## Масиви от указатели към обекти
 #### Статичен масив от обекти
@@ -58,6 +58,10 @@ int main() {
 	delete[] arr;
 }
 ```
+
+![A_ptr_ptr](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/assets/49128895/80815f99-e290-466a-9504-34ed1399205d)
+
+Note: стрелкичките, които не сочат към нищо, имат стойност nullptr
 
 ## A** vs A*
 
