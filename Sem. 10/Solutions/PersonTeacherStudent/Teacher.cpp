@@ -2,10 +2,21 @@
 #include <cstring>
 #include <utility>
 
-Teacher::Teacher(const char* name, int age, const char* const* subjects, size_t subjectsCount)
+#pragma warning(disable : 4996)
+
+void Teacher::copySubjects(char** subjects, size_t subjectsCount) {
+	this->subjectsCount = subjectsCount;
+	this->subjects = new char* [subjectsCount];
+	for (size_t i = 0; i < subjectsCount; i++) {
+		this->subjects[i] = new char[strlen(subjects[i])];
+		strcpy(this->subjects[i], subjects[i]);
+	}
+}
+
+Teacher::Teacher(const char* name, int age, char** subjects, size_t subjectsCount)
 	: Person(name, age)
 {
-	// todo:
+	copySubjects(subjects, subjectsCount);
 }
 
 Teacher::Teacher(const Teacher& other) : Person(other) {
@@ -48,12 +59,7 @@ void Teacher::free() {
 }
 
 void Teacher::copyFrom(const Teacher& other) {
-	subjectsCount = other.subjectsCount;
-	subjects = new char* [subjectsCount];
-	for (size_t i = 0; i < subjectsCount; i++) {
-		subjects[i] = new char[strlen(other.subjects[i])];
-		strcpy(subjects[i], other.subjects[i]);
-	}
+	copySubjects(other.subjects, other.subjectsCount);
 }
 
 void Teacher::moveFrom(Teacher&& other) {

@@ -7,8 +7,9 @@ private:
 	char** subjects;
 	size_t subjectsCount;
 
+	void copySubjects(char** subjects, size_t subjectsCount);
 public:
-	Teacher(const char* name, int age, const char* const* subjects, size_t subjectsCount);
+	Teacher(const char* name, int age, char** subjects, size_t subjectsCount);
 
 	Teacher(const Teacher& other);
 	Teacher& operator=(const Teacher& other);

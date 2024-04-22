@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iostream>
 
+#pragma warning(disable : 4996)
 
 void Person::copyName(const char* name) {
     this->name = new char[strlen(name) + 1];
