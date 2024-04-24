@@ -15,10 +15,6 @@ class D : private C {
 	void test() { a; }
 };
 
-class E : public D {
-	// void test() { a; }
-};
-
 int main() {
 	A a;
 	a.a;

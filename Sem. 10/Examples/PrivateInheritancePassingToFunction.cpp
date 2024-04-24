@@ -11,4 +11,5 @@ int main() {
     Derived d;
     f(d); // Compilation error
     // Conversion from Derived to Base is inaccessible
+    // because of private inheritance
 }

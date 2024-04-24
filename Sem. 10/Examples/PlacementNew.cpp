@@ -1,8 +1,8 @@
 #include <iostream>
 
-int x = 0;
 // https://en.cppreference.com/w/cpp/language/new ctrl+f "placement new" for more info
 struct Test {
+    static int x;
 	int a;
 	
 	Test() {
@@ -16,8 +16,10 @@ struct Test {
 	}
 };
 
+int Test::x = 0;
+
 int main() {
-    const size_t capacity = 4;
+    constexpr size_t capacity = 4;
     // allocate memory for two Test objects in advance
     Test* ptr =(Test*) new char[capacity * sizeof(Test)];   
     // allocate the test object at the address of ptr[0]
