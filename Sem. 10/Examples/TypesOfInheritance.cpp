@@ -27,6 +27,14 @@ class ProtectedDerived : protected A {
 	}
 };
 
+class ProtectedOfProtectedDerived : protected ProtectedDerived {
+	void test2() {
+		// b and c inherited as protected members
+		b;
+		c;
+	}
+};
+
 class PublicDerived : public A {
 	void test() {
 		// private members are not accessible inside derived classes
