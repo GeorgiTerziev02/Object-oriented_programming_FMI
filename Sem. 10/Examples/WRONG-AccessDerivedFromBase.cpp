@@ -14,3 +14,8 @@ void get(C& c) {
 	++ptr;
 	std::cout << *ptr;
 }
+
+int main() {
+	D d;
+	get(d);
+}
