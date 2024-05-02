@@ -6,15 +6,15 @@
 class Base {
 public: 
   void f() const  {
-		std::cout << "A::f()\n";
-  }	
+    std::cout << "A::f()\n";
+  }
 };
 
 class Derived : public Base {
 public:
   void f() const {
-		std::cout << "B::f()\n";
-  }	
+    std::cout << "B::f()\n";
+  }
 };
 
 void func(const Base& obj) {
@@ -23,11 +23,11 @@ void func(const Base& obj) {
 
 int main() {
   Derived* bPtr = new Derived();
-	Base* aPtr = bPtr;
-	
+  Base* aPtr = bPtr;
+
   //Early binding - Compile time
-	func(*aPtr); // Base::f()
-	func(*bPtr); // Base::f()
+  func(*aPtr); // Base::f()
+  func(*bPtr); // Base::f()
 }
 ```
 
@@ -40,25 +40,25 @@ int main() {
 class Base {
 public:
   virtual void f() const {
-		std::cout << "A::f()\n";
-  }	
+    std::cout << "A::f()\n";
+  }
 };
 
 class Derived : public Base {
 public:
   void f() const override {
     std::cout << "B::f()\n";
-  }	
+  }
 };
 
 int main() {
-	Base* ptrs[2];
-	ptrs[0] = new Base(); //Base pointer to Base class object
-	ptrs[1] = new Derived(); //Base pointer to Derived class object
-	
+  Base* ptrs[2];
+  ptrs[0] = new Base(); //Base pointer to Base class object
+  ptrs[1] = new Derived(); //Base pointer to Derived class object
+
   //Dynamic/Late Binding - Runtime
-	ptrs[0]->f(); // Base::f()
-	ptrs[1]->f(); // Derived::f()
+  ptrs[0]->f(); // Base::f()
+  ptrs[1]->f(); // Derived::f()
 }
 ```
 
@@ -87,44 +87,44 @@ int main() {
 class Base {
 public:
   virtual void f() const {
-  	std::cout << "Base::f()\n";
+    std::cout << "Base::f()\n";
   }
 
   virtual void g() const {
-  	std::cout << "Base::g()\n";
+    std::cout << "Base::g()\n";
   }
 
   void nonVirtual() const {
-  	std::cout << "Base::nonVirtual()\n";
+    std::cout << "Base::nonVirtual()\n";
   }
 };
 
 class FirstDerived : public Base {
-public:	
+public:
   void f() const override {
-  	std::cout << "FirstDerived::f()\n";
+    std::cout << "FirstDerived::f()\n";
   }
 
   void g() const override {
-  	std::cout << "FirstDerived::g()\n";
+    std::cout << "FirstDerived::g()\n";
   }
 
   virtual void h() const {
-  	 std::cout << "FirstDerived::h()\n";
+    std::cout << "FirstDerived::h()\n";
   }
 };
 
 class SecondDrived : public FirstDerived {
 public:
   void f()const override {
-  	std::cout << "SecondDrived::f()\n";
+    std::cout << "SecondDrived::f()\n";
   }
 };
 
 class ThirdDerived : public SecondDrived {
-  public:
+public:
     void h() const override {
-  	  std::cout << "ThirdDerived::h()\n";
+        std::cout << "ThirdDerived::h()\n";
     }
 };
 ```
