@@ -12,22 +12,22 @@ public:
 
 class Derived : public Base {
 public:
-  void f() const {
-    std::cout << "B::f()\n";
-  }
+    void f() const {
+        std::cout << "B::f()\n";
+    }
 };
 
 void func(const Base& obj) {
     obj.f();
-}	
+}
 
 int main() {
-  Derived* bPtr = new Derived();
-  Base* aPtr = bPtr;
+    Derived* bPtr = new Derived();
+    Base* aPtr = bPtr;
 
-  //Early binding - Compile time
-  func(*aPtr); // Base::f()
-  func(*bPtr); // Base::f()
+    //Early binding - Compile time
+    func(*aPtr); // Base::f()
+    func(*bPtr); // Base::f()
 }
 ```
 
@@ -39,26 +39,26 @@ int main() {
 
 class Base {
 public:
-  virtual void f() const {
-    std::cout << "A::f()\n";
-  }
+    virtual void f() const {
+        std::cout << "A::f()\n";
+    }
 };
 
 class Derived : public Base {
 public:
-  void f() const override {
-    std::cout << "B::f()\n";
-  }
+    void f() const override {
+        std::cout << "B::f()\n";
+    }
 };
 
 int main() {
-  Base* ptrs[2];
-  ptrs[0] = new Base(); //Base pointer to Base class object
-  ptrs[1] = new Derived(); //Base pointer to Derived class object
+    Base* ptrs[2];
+    ptrs[0] = new Base(); //Base pointer to Base class object
+    ptrs[1] = new Derived(); //Base pointer to Derived class object
 
-  //Dynamic/Late Binding - Runtime
-  ptrs[0]->f(); // Base::f()
-  ptrs[1]->f(); // Derived::f()
+    //Dynamic/Late Binding - Runtime
+    ptrs[0]->f(); // Base::f()
+    ptrs[1]->f(); // Derived::f()
 }
 ```
 
@@ -86,39 +86,39 @@ int main() {
 
 class Base {
 public:
-  virtual void f() const {
-    std::cout << "Base::f()\n";
-  }
+    virtual void f() const {
+        std::cout << "Base::f()\n";
+    }
 
-  virtual void g() const {
-    std::cout << "Base::g()\n";
-  }
+    virtual void g() const {
+        std::cout << "Base::g()\n";
+    }
 
-  void nonVirtual() const {
-    std::cout << "Base::nonVirtual()\n";
-  }
+    void nonVirtual() const {
+        std::cout << "Base::nonVirtual()\n";
+    }
 };
 
 class FirstDerived : public Base {
 public:
-  void f() const override {
-    std::cout << "FirstDerived::f()\n";
-  }
+    void f() const override {
+        std::cout << "FirstDerived::f()\n";
+    }
 
-  void g() const override {
-    std::cout << "FirstDerived::g()\n";
-  }
+    void g() const override {
+        std::cout << "FirstDerived::g()\n";
+    }
 
-  virtual void h() const {
-    std::cout << "FirstDerived::h()\n";
-  }
+    virtual void h() const {
+        std::cout << "FirstDerived::h()\n";
+    }
 };
 
 class SecondDrived : public FirstDerived {
 public:
-  void f()const override {
-    std::cout << "SecondDrived::f()\n";
-  }
+    void f()const override {
+        std::cout << "SecondDrived::f()\n";
+    }
 };
 
 class ThirdDerived : public SecondDrived {
@@ -184,17 +184,17 @@ int main() {
 При всяко едно от горните извиквания се процедира така:
 
 ```c++
-  p->f(); 
+    p->f(); 
 
-  /*
-   * 1. p сочи към Base
-   * 2. f е виртуална функция
-   * 3. На базата на p намираме обекта
-   * 4. Намираме таблицата
-   * 5. Знаем индекса в таблицата
-   * 6. Извикваме съответната функция
-   * 7. В качеството на this подаваме съответния обект
-   */
+    /*
+     * 1. p сочи към Base
+     * 2. f е виртуална функция
+     * 3. На базата на p намираме обекта
+     * 4. Намираме таблицата
+     * 5. Знаем индекса в таблицата
+     * 6. Извикваме съответната функция
+     * 7. В качеството на this подаваме съответния обект
+     */
 
 ```
 
@@ -217,29 +217,29 @@ int main() {
 ```c++
 class Base {
 public:
-  Base() {
-     std::cout << "Base::Base()\n";
-  }
+    Base() {
+       std::cout << "Base::Base()\n";
+    }
 
-	~Base() {
-     std::cout << "Base::~Base()\n";
-  }
+    ~Base() {
+       std::cout << "Base::~Base()\n";
+    }
 };
 
 class Derived : public Base {
-public:	
-  Derived {
-    std::cout << "Derived::Derived()\n";
-  }
+public:
+    Derived {
+        std::cout << "Derived::Derived()\n";
+    }
 
-  ~Derived() {
-    std::cout << "Derived::~Derived()\n";
-  }
+    ~Derived() {
+        std::cout << "Derived::~Derived()\n";
+    }
 };
 
 int main() {
-	Base* ptr = new Derived();
-	delete ptr; //invokes the destructor of Base only, since ~Base() is not virtual
+    Base* ptr = new Derived();
+    delete ptr; //invokes the destructor of Base only, since ~Base() is not virtual
 }
 ```
 
@@ -257,29 +257,29 @@ Base::~Base()
 ```c++
 class Base {
 public:
-  Base() {
-     std::cout << "Base::Base()\n";
-  }
+    Base() {
+        std::cout << "Base::Base()\n";
+    }
 
-	virtual ~Base() {
-     std::cout << "Base::~Base()\n";
-  }
+    virtual ~Base() {
+        std::cout << "Base::~Base()\n";
+    }
 };
 
 class Derived : public Base {
-public:	
-  Derived {
-    std::cout << "Derived::Derived()\n";
-  }
+public:
+    Derived {
+        std::cout << "Derived::Derived()\n";
+    }
 
-  ~Derived() {
-    std::cout << "Derived::~Derived()\n";
-  }
+    ~Derived() {
+        std::cout << "Derived::~Derived()\n";
+    }
 };
 
 int main() {
-	Base* ptr = new Derived();
-	delete ptr; 
+    Base* ptr = new Derived();
+    delete ptr; 
 }
 ```
 
@@ -289,6 +289,7 @@ Derived::Derived()
 Derived::~Derived()
 Base::~Base()
 ```
+
 т.е. вече правилно се извикват съответните деструктори!
 
 ```c++
@@ -296,44 +297,44 @@ Base::~Base()
 
 class Animal {
 public:
-	virtual void sayHello() const {
-		std::cout << "Hello, I am a random animal\n";
-	}
+    virtual void sayHello() const {
+        std::cout << "Hello, I am a random animal\n";
+    }
 
-	virtual ~Animal() = default; //virtual destructor
+  virtual ~Animal() = default; //virtual destructor
 };
 
 class Dog : public Animal {
 public:
-	void sayHello() const override {
-	  std::cout << "Hello, I am a dog!\n";
-	}
+    void sayHello() const override {
+        std::cout << "Hello, I am a dog!\n";
+    }
 };
 
 class Cat : public Animal {
 public:
-	void sayHello() const override {
-	  std::cout << "Hello, I am a cat!\n";
-  }
+    void sayHello() const override {
+        std::cout << "Hello, I am a cat!\n";
+    }
 };
 
 class Mouse : public Animal {};
 
 int main() {
-	Animal** animals = new Animal*[3];
-
-	animals[0] = new Dog();
-	animals[1] = new Cat();
-	animals[2] = new Mouse();
-
-
-	//from Base-class pointer
-	animals[0]->sayHello(); // Hello, I am a dog!
-	animals[1]->sayHello(); // Hello, I am a cat!
-	animals[2]->sayHello(); // Hello, I am a random animal!
-
-  for(size_t i = 0; i < 3; ++i) delete animals[i];
-	delete[] animals;
+    Animal** animals = new Animal*[3];
+    
+    animals[0] = new Dog();
+    animals[1] = new Cat();
+    animals[2] = new Mouse();
+    
+    
+    //from Base-class pointer
+    animals[0]->sayHello(); // Hello, I am a dog!
+    animals[1]->sayHello(); // Hello, I am a cat!
+    animals[2]->sayHello(); // Hello, I am a random animal!
+    
+    for(size_t i = 0; i < 3; ++i) delete animals[i];
+    delete[] animals;
 }
 ```
 
@@ -349,53 +350,53 @@ int main() {
 
 class Animal {
 public:
-  virtual void sayHello() const = 0;
+    virtual void sayHello() const = 0;
   
-	virtual ~Animal() = default; 
+    virtual ~Animal() = default; 
 };
 
 class Dog : public Animal {
 public:
-	void sayHello() const override {
-	  std::cout << "Hello, I am a dog!\n";
-	}
+    void sayHello() const override {
+        std::cout << "Hello, I am a dog!\n";
+    }
 };
 
 class Cat : public Animal {
 public:
-	void sayHello() const override {
-		std::cout << "Hello, I am a cat!\n";
-	}
+	  void sayHello() const override {
+	  	  std::cout << "Hello, I am a cat!\n";
+	  }
 };
 
 class Mouse : public Animal {
 public:
-	void sayHello() const override {
-		std::cout << "Hello, I am a mouse!\n";
-	}
+	  void sayHello() const override {
+	  	  std::cout << "Hello, I am a mouse!\n";
+	  }
 };
 
 struct PrehistoricAnimal : public Animal
 {};
 
 int main() {
-	// Animal* pa1 = new Animal(); No! Animal is an abstract class!
-	// Animal* pa2 = new PrehistoricAnimal(); No! PrehistoricAnimal is also an abstract class!
+	  // Animal* pa1 = new Animal(); No! Animal is an abstract class!
+	  // Animal* pa2 = new PrehistoricAnimal(); No! PrehistoricAnimal is also an abstract class!
 
-	Animal** animals = new Animal*[3];
+	  Animal** animals = new Animal*[3];
 
-	animals[0] = new Dog();
-	animals[1] = new Cat();
-	animals[2] = new Mouse();
+	  animals[0] = new Dog();
+	  animals[1] = new Cat();
+	  animals[2] = new Mouse();
 
 
-	//from base-class pointer
-	animals[0]->sayHello(); // Hello, I am a dog!
-	animals[1]->sayHello(); // Hello, I am a cat!
-	animals[2]->sayHello(); // Hello, I am a mouse!
+	  //from base-class pointer
+	  animals[0]->sayHello(); // Hello, I am a dog!
+	  animals[1]->sayHello(); // Hello, I am a cat!
+	  animals[2]->sayHello(); // Hello, I am a mouse!
 
-	for(size_t i = 0; i < 3; ++i) delete animals[i];
-	delete[] animals;
+	  for(size_t i = 0; i < 3; ++i) delete animals[i];
+	  delete[] animals;
 }
 ```
 
@@ -411,9 +412,9 @@ public:
 // Initilization of derived class
 class Derived : public Base {
 public:
-  ~Derived() {
-      std::cout << "~Derived() is executed\n";
-  }
+    ~Derived() {
+        std::cout << "~Derived() is executed\n";
+    }
 };
 
 int main() {
@@ -439,15 +440,15 @@ public:
 };
 
 Base::~Base() { // Explicit destructor call
-  std::cout << "Pure virtual destructor is called\n";
+    std::cout << "Pure virtual destructor is called\n";
 }
 
 // Initilzation of derived class
 class Derived : public Base {
 public:
-  ~Derived() {
-    std::cout << "~Derived() is executed\n";
-  }
+    ~Derived() {
+        std::cout << "~Derived() is executed\n";
+    }
 };
 
 int main() {
@@ -477,30 +478,30 @@ int main() {
 
 class SuperClass {
 public:
-  SuperClass() {
-    std::cout << "SuperClass default constructor is called\n";
-  }
+    SuperClass() {
+        std::cout << "SuperClass default constructor is called\n";
+    }
 };
 
 class A : public SuperClass {
 public:
-  A() {
-    std::cout << "A default constructor is called\n";
-  }
+    A() {
+        std::cout << "A default constructor is called\n";
+    }
 };
 
 class B : public SuperClass {
 public:
-  B(){
-      std::cout << "B default constructor is called\n";
-  }
+    B() {
+        std::cout << "B default constructor is called\n";
+    }
 };
 
 class C : public A, public B {
 public:
-  C() {
-    std::cout << "C default constructor is called\n";
-  }
+    C() {
+        std::cout << "C default constructor is called\n";
+    }
 };
 
 int main() {
@@ -526,23 +527,23 @@ C default constructor is called
 
 class SuperClass {
 public:
-  SuperClass() {
-    std::cout << "SuperClass default constructor is called\n";
-  }
+    SuperClass() {
+        std::cout << "SuperClass default constructor is called\n";
+    }
 };
 
 class A : virtual public SuperClass {
 public:
-  A() {
-    std::cout << "A default constructor is called\n";
-  }
+    A() {
+        std::cout << "A default constructor is called\n";
+    }
 };
 
 class B : virtual public SuperClass {
 public:
-  B(){
-    std::cout << "B default constructor is called\n";
-  }
+    B() {
+        std::cout << "B default constructor is called\n";
+    }
 };
 
 class C : public A, public B {
