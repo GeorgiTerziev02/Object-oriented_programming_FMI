@@ -5,9 +5,9 @@
 
 class Base {
 public: 
-  void f() const  {
-    std::cout << "A::f()\n";
-  }
+    void f() const  {
+        std::cout << "A::f()\n";
+    }
 };
 
 class Derived : public Base {
