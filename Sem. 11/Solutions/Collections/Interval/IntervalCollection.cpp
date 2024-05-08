@@ -9,7 +9,7 @@ IntervalCollection::IntervalCollection(int start, int end) {
 	this->start = start;
 	this->end = end;
 
-	// TODO: fix
+	// TODO: memory leak here!!!!
 	data = new int[end - start + 1] {0};
 }
 
