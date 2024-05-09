@@ -68,7 +68,7 @@ void MyString::copyFrom(const MyString& other) {
 }
 
 char& MyString::operator[](size_t index) {
-	if (index < length) {
+	if (index >= length) {
 		throw std::out_of_range(INDEX_OUT_OF_RANGE_EXCEPTION_MESSAGE);
 	}
 
@@ -76,7 +76,7 @@ char& MyString::operator[](size_t index) {
 }
 
 char MyString::operator[](size_t index) const {
-	if (index < length) {
+	if (index >= length) {
 		throw std::out_of_range(INDEX_OUT_OF_RANGE_EXCEPTION_MESSAGE);
 	}
 
