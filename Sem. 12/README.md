@@ -158,13 +158,11 @@ void FruitStore::copyFrom(const FruitStore& other) {
 using namespace std;
 
 template <class T>
-T sum(const T& a, const T& b)
-{
+T sum(const T& a, const T& b) {
     return a + b;
 }
 
-int main()
-{
+int main() {
     int a = 4;
     int b = 9;
     cout << sum<int>(a, b) << endl;
@@ -178,13 +176,42 @@ int main()
 ```
 Компилаторът генерира т. нар. шаблонна функция, като замества параметрите на шаблона с типовете на съответните фактически параметри.
 
+#### Темплейтна специализация
+Различно поведение на темплейтния клас/функция за определени типове
+
+#### Необходима функция
+Функции, която е подаденият тип трябва да има.
+
+```c++
+
+struct Test {
+	void func() {}
+}
+
+template<typename T>
+void f1(Test& t) {
+	t.func();
+}
+
+template<typename T>
+void f2(T& t) {
+	t.func1();
+}
+
+int main() {
+	Test t;
+	f1(t); // ok
+	f2(t); // compile error
+}
+
+```
+
 **Задача 1:**
 Релизирайте структурата от данни опашка. Опашката трябва да работи с **произволни типове**. След като е добавен един елемент в края на опашката, той ще може да бъде извлечен (премахнат) единствено след като бъдат премахнати всички елементи преди него в реда, в който са добавени.
 
 **Пример**:
  ```c++
-int main()
-{
+int main() {
 	quene<int> q;
 	q.push(3);
 	q.push(5);
@@ -202,12 +229,38 @@ int main()
 	cout << q.isEmpty() << endl; //1	
 }
  ```
-  **Задача 2:**
+
+**Задача 2:**
+Релизирайте структурата от данни FixedLengthStack <br />
+
+**Пример**:
+ ```c++
+int main() {
+   FixedLengthStack<int, 5> st;
+
+   for(size_t i = 0; i < 5; ++i) { // if i < 6 it should throw an error
+        st.push(i);
+   }
+
+   Stack st1 = st;
+   Stack st2;
+   st2 = st1;
+   Stack st3 = std::move(st1);
+
+   while (!st2.empty()) {
+         std::cout << st2.pop() << ' ';
+   }
+   std::cout << std::endl;
+   return 0;
+}
+ ```
+
+
+**Задача 3:**
  Създайте **шаблонна** опашка с k приоритета. При взимане на елемент от опашката трябва да се връща най-отдавна добавения елемент от тези с най-висок приоритет.
  
   ```c++
-int main()
-{
+int main() {
 	kPriorityQueue<char> q(4); // 4 priorities - 0, 1, 2 и 3.
 	
 	q.push('A',0): //adds A with lowest priority: 0
