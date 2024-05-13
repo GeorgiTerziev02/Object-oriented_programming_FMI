@@ -200,9 +200,9 @@ void print(char* arr, size_t size) {
 
 int main() {
 	int arr1[] = { 1, 2 };
-	print(arr1, 2);
+	print<int>(arr1, 2);
 	char arr2[] = { 'a', 'b' };
-	print(arr2, 2);
+	print<char>(arr2, 2);
 }
 
 // This is not a specialization
@@ -234,8 +234,8 @@ void f2(T& t) {
 
 int main() {
 	Test t;
-	f1(t); // ok
-	f2(t); // compile error
+	f1<Test>(t); // ok
+	f2<Test>(t); // compile error
 }
 
 ```
