@@ -1,3 +1,4 @@
+#include <iostream>
 
 struct A {
 	A() {
@@ -22,11 +23,10 @@ struct C : public B {
 
 struct D : public C {
 	D() : A(5) {
-		std::cout << "3131";
+		std::cout << "D constructor";
 	}
 };
 
 int main1() {
 	D d;
-	return 0;
 }
