@@ -84,22 +84,36 @@ const T& Optional<T>::getValue() const {
 	return *value;
 }
 
+// not optimal
+// if the pointer is already allocated we don't
+// need to delete it, just use op=
+//template<typename T>
+//void Optional<T>::setValue(const T& newValue) {
+//	if (hasValue()) {
+//		clear();
+//	}
+//
+//	value = new T(newValue);
+//}
+
 template<typename T>
 void Optional<T>::setValue(const T& newValue) {
 	if (hasValue()) {
-		clear();
+		*value = newValue;
 	}
-
-	value = new T(newValue);
+	else {
+		value = new T(newValue);
+	}
 }
 
 template<typename T>
 void Optional<T>::setValue(T&& newValue) {
 	if (hasValue()) {
-		clear();
+		*value = std::move(newValue);
 	}
-
-	value = new T(std::move(newValue));
+	else {
+		value = new T(std::move(newValue));
+	}
 }
 
 template<typename T>
