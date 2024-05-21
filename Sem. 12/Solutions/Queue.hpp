@@ -10,7 +10,7 @@ private:
 
 	T* data;
 	size_t capacity = INITIAL_CAPACITY;
-	size_t size = RESIZE_COEF;
+	size_t size = 0;
 
 	size_t get = 0, put = 0;
 
