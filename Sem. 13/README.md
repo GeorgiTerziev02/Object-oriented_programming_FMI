@@ -1,82 +1,5 @@
 # Шаблони. Множествено наследяване. Виртуално наследяване. Виртуални таблици при множествено и виртуално наследяване. Диамантен проблем.
 
-## Малък бонус - Cpp Insights - See your source code with the eyes of a compiler.
-Линк към Cpp Insights [тук](https://cppinsights.io/)
-
-C++ Insights is a Clang-based tool that does a source-to-source transformation. The goal of C++ Insights is to make things visible that normally and intentionally happen behind the scenes. It's about the magic the compiler does for us to make things work.
-
-С този tool може сами да стигнете до извода защо на домашно 2 не успяхте да присвоите lambda function, която има capture clause. Досега стигахме по пътя на логиката, все пак lambda с capture clause, значи функцията да има някакъв свой state(набор от променливи), това не може да се държи в просто един function pointer.
-
-Пробвайте да компилирате следния код:
-``` c++
-#include <cstdio>
-#include <iostream>
-
-int main() {
-  [](){ std::cout << 1; };
-  
-  int y;
-  [y](){std::cout << y;};
-}
-```
-
-Ще получите резултат подобен на:
-```c++
-#include <cstdio>
-#include <iostream>
-
-int main()
-{
-  class __lambda_5_3
-  {
-    public: 
-    inline /*constexpr */ void operator()() const
-    {
-      std::cout.operator<<(1);
-    }
-    
-    using retType_5_3 = void (*)();
-    inline constexpr operator retType_5_3 () const noexcept
-    {
-      return __invoke;
-    };
-    
-    private: 
-    static inline /*constexpr */ void __invoke()
-    {
-      __lambda_5_3{}.operator()();
-    }
-    
-    
-  } __lambda_5_3{};
-  
-  int y;
-    
-  class __lambda_8_3
-  {
-    public: 
-    inline /*constexpr */ void operator()() const
-    {
-      std::cout.operator<<(y);
-    }
-    
-    private: 
-    int y;
-    
-    public:
-    __lambda_8_3(int & _y)
-    : y{_y}
-    {}
-    
-  } __lambda_8_3{y};
-  
-  return 0;
-}
-
-```
-
-Основната разлика е, че първата lambda-а има допълнителна член функция ```operator retType_5_3```, която се използва за cast-ване към ```refType_5_3```(подобно на operator bool), където ```using retType_5_3 = void (*)();```. Тоест това е кастване към function pointer.
-
 ## Шаблони
 Ресурсите за шаблони се намират в папката [Sem. 12](../Sem.%2012/)
 
@@ -187,3 +110,81 @@ A default constructor is called
 B default constructor is called
 C default constructor is called
 ```
+
+## Малък бонус - Cpp Insights - See your source code with the eyes of a compiler.
+Линк към Cpp Insights [тук](https://cppinsights.io/)
+
+C++ Insights is a Clang-based tool that does a source-to-source transformation. The goal of C++ Insights is to make things visible that normally and intentionally happen behind the scenes. It's about the magic the compiler does for us to make things work.
+
+С този tool може сами да стигнете до извода защо на домашно 2 не успяхте да присвоите lambda function, която има capture clause. Досега стигахме по пътя на логиката, все пак lambda с capture clause, значи функцията да има някакъв свой state(набор от променливи), това не може да се държи в просто един function pointer.
+
+Пробвайте да компилирате следния код:
+``` c++
+#include <cstdio>
+#include <iostream>
+
+int main() {
+  [](){ std::cout << 1; };
+  
+  int y;
+  [y](){std::cout << y;};
+}
+```
+
+Ще получите резултат подобен на:
+```c++
+#include <cstdio>
+#include <iostream>
+
+int main()
+{
+  class __lambda_5_3
+  {
+    public: 
+    inline /*constexpr */ void operator()() const
+    {
+      std::cout.operator<<(1);
+    }
+    
+    using retType_5_3 = void (*)();
+    inline constexpr operator retType_5_3 () const noexcept
+    {
+      return __invoke;
+    };
+    
+    private: 
+    static inline /*constexpr */ void __invoke()
+    {
+      __lambda_5_3{}.operator()();
+    }
+    
+    
+  } __lambda_5_3{};
+  
+  int y;
+    
+  class __lambda_8_3
+  {
+    public: 
+    inline /*constexpr */ void operator()() const
+    {
+      std::cout.operator<<(y);
+    }
+    
+    private: 
+    int y;
+    
+    public:
+    __lambda_8_3(int & _y)
+    : y{_y}
+    {}
+    
+  } __lambda_8_3{y};
+  
+  return 0;
+}
+
+```
+
+Основната разлика е, че първата lambda-а има допълнителна член функция ```operator retType_5_3```, която се използва за cast-ване към ```refType_5_3```(подобно на operator bool), където ```using retType_5_3 = void (*)();```. Тоест това е кастване към function pointer.
+
