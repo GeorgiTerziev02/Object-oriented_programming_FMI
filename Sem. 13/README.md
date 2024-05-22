@@ -1,6 +1,6 @@
 # Шаблони. Множествено наследяване. Виртуално наследяване. Виртуални таблици при множествено и виртуално наследяване. Диамантен проблем.
 
-## Cpp Insights - See your source code with the eyes of a compiler.
+## Малък бонус - Cpp Insights - See your source code with the eyes of a compiler.
 Линк към Cpp Insights [тук](https://cppinsights.io/)
 
 C++ Insights is a Clang-based tool that does a source-to-source transformation. The goal of C++ Insights is to make things visible that normally and intentionally happen behind the scenes. It's about the magic the compiler does for us to make things work.
