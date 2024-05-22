@@ -1,3 +1,0 @@
-- Sem11 set
-
-- queue only with two indexes or with size
