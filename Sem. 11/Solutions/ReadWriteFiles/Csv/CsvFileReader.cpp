@@ -16,7 +16,7 @@ void CSVFileReader::read(int*& arr, size_t& size) const {
 	delete[] arr;
 	arr = new int[size];
 	for (size_t i = 0; i < size; i++) {
-		in >> arr[i++];
+		in >> arr[i];
 		in.ignore();
 	}
 }
