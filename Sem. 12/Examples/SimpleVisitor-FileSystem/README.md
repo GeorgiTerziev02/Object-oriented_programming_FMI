@@ -48,6 +48,7 @@ public:
 ![image](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/assets/49128895/443cee93-02b2-416d-bfc8-655dcdf78a53)
 
 Ако някой ни подаде File 4. Принтираме File 4.
+
 Ако някой ни подаде Directory 1, принтираме Directory 1, Directory 3, File 4, Directory 4, File 5.
 Аналогично за останалите.
 
