@@ -63,7 +63,8 @@ public:
 		std::cout << d->getName();
 		// then iterate through the children and start printing their names
 		for (size_t i = 0; i < d->size; i++) {
-			d->children[i]->accept(this); // each children migth be directory or file! so we pass the visitor
+			// each children migth be directory or file! so we pass the visitor to check the child
+			d->children[i]->accept(this); 
 		}
 	}
 };
