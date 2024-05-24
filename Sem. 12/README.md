@@ -171,6 +171,42 @@ void FruitStore::copyFrom(const FruitStore& other) {
 - Накратко какво е design pattern - шаблон (това не е парче код, което copy-paste и да тръгне магически), по който се решават често срещани проблеми в обектно-ориентирания свят. В нашия случай не знаем какво седи зад двата поинтъра, но искаме да изпълним действие в зависимост какво седи отзад, без да нарушаваме абстракция - Visitor design patter.
 - [Visitor explained - Refactoring Guru](https://refactoring.guru/design-patterns/visitor)
 
+В нашата ситуация искаме да постигнем
+
+```c++
+Shape* s1 = generateRandomShape(), Shape* s2 = generateRandomShape();
+s1.intersectWith(s2);
+```
+
+Решение е в базовия клас да се добавят следниет функции:
+
+```c++
+virtual bool intersectsWith(const Shape* other) const = 0;
+
+virtual bool intersectsWithTriangle(const Triangle* other) const = 0;
+virtual bool intersectsWithRect(const Rectangle* other) const = 0;
+virtual bool intersectsWithCircle(const Circle* other) const = 0;
+```
+
+Последните 3 са конкретните имплементации на това как нашата фигура(съответно някой от наследниците) дали се пресича с всички останали. Всяка фигура трябва да даде тяхна имплементация.
+
+В нашият случай с s1 и s2 и от двете страни седят базови поинтъри(абстракции) и не знаем към какво сочат, а искаме да достигнем до конкретна intersectWithX функция, която да даде резултат (т.е. да свалим абстракциите от двете страни и да достигнем да конкретика и от двете страни, за да знаем коя е функцията.
+
+На първо място на s1 и s2 извикваме intersect, понеже тя е pure virtual ние ще идем до **конкретна** имплементация в наследник. Достигайки там, ние вече ще знаем в кой клас се намираме (благодарение на this pointer).
+
+Нека за примера приемем, че ```s1 е Circle``` и при ```s1.intersectWith(s2)``` достигаме до intersectWith на Circle
+```c++
+bool Circle::intersectsWith(const Shape* other) const {
+	return other->intersectsWithCircle(this);
+}
+```
+
+В тази функция ние знаем, че this е ```Circle* const```. Вече знаем, че s1 е кръг, но нямаме идея какво е s2 (в scope-a на функцията това е ```const Shape* other``` параметъра). Следователно извикваме функцията за сечение с кръг на s2. От там отново ще достигнем до конкретна имплементация на ```intersectsWithCircle``` на някой от наследниците, която ще държи логиката за това дали се пресича кръг със съответния наследник на Shape.
+Т.е. В тази функция ще знаем и s2 кой от трите наследни е.
+
+Извод:
+При всяко извикване на virtual функция на Base* ние стигаме до **конкретна** имплементация на наследник(т.е. "разкриваме" така да кажем какво седи отзад). В нашата задача и от двете страни седеше абстракция, съответно ни трябваше извикване на две virtual функции, за да достигнем до контретиката.
+
 Демо код (по-скоро псевдо код) за по-прости версии на Visitor [Person visiting building](./Examples/SimpleVisitor-Buildings), [File system iterator visiting a file system node](.//Examples/SimpleVisitor-FileSystem)
 
 Демо код за ситуацията с Фигурите [тук](./Solutions/ShapeCollection)
