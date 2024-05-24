@@ -168,7 +168,7 @@ void FruitStore::copyFrom(const FruitStore& other) {
 Директно да разберем към какво сочи всеки Shape* с 3 if проверки и dynamic_cast. Сами можем да предположим, че това не е правилното решение.
 
 **Вариант 2: Visitor design pattern.**
-- Накратко design pattern - шаблон (това не е парче код, което copy-paste и да тръгне магически), по който се решават често срещани проблеми в обектно-ориентирания свят. В нашия случай не знаем какво седи зад двата поинтъра, но искаме да изпълним действие в зависимост какво седи отзад, без да нарушаваме абстракция - Visitor design patter.
+- Накратко какво е design pattern - шаблон (това не е парче код, което copy-paste и да тръгне магически), по който се решават често срещани проблеми в обектно-ориентирания свят. В нашия случай не знаем какво седи зад двата поинтъра, но искаме да изпълним действие в зависимост какво седи отзад, без да нарушаваме абстракция - Visitor design patter.
 - [Visitor explained - Refactoring Guru](https://refactoring.guru/design-patterns/visitor)
 
 Демо код (по-скоро псевдо код) за по-прости версии на Visitor [Person visiting building](./Examples/SimpleVisitor-Buildings), [File system iterator visiting a file system node](.//Examples/SimpleVisitor-FileSystem)
