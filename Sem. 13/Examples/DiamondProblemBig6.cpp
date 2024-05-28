@@ -129,7 +129,8 @@ public:
 
 	D& operator=(const D& other) {
 		if (this != &other) {
-			A::operator=(other);
+			// A::operator=(other);
+			// Unfortunatelly there is no way to escape from calling A::op= two times
 			B::operator=(other);
 			C::operator=(other);
 			std::cout << "operator=(const D& other)" << std::endl;
