@@ -20,5 +20,5 @@ Design patterns са стандартни решения на често сре�
 Техните категории са три - Behavioral, Creational и Structural
 
 Полезни линкове:
-- [Refactoring Guru](https://refactoring.guru/design-patterns)
+- [Refactoring Guru](https://refactoring.guru/design-patterns) - обяснени на достъпен език с доста примери
 
