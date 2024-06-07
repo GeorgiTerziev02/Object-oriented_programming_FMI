@@ -16,8 +16,28 @@ void CommandExecutor::add(VectorCommand* c) {
     toExecute.push(c);
 }
 
-void CommandExecutor::execute();
+void CommandExecutor::execute() {
+    if (toExecute.empty()) {
+        return;
+    }
+    VectorCommand* c = toExecute.peek();
+    c->execute();
+    executed.pushBack(c);
+    toExecute.pop();
+}
 
-void CommandExecutor::executeAll();
+void CommandExecutor::executeAll() {
+    while (!toExecute.empty()) {
+        execute();
+    }
+}
 
-void CommandExecutor::();
+void CommandExecutor::undo() {
+    if (executed.empty()) {
+        return;
+    }
+    VectorCommand* c = executed.peek();
+    c->undo();
+    executed.popBack();
+    delete c;
+}
