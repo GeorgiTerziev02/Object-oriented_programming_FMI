@@ -1,5 +1,7 @@
 # Type casting. SOLID принципи. Въведение в Design Patterns.
 
+Със следващите линкове може да достъпите съответните материали:
+
 ### [Type Casting](./Type%20Casting)
 
 ### [SOLID Principles](./SOLID%20Principles)
