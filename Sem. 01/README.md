@@ -248,7 +248,7 @@ int main() {
 
 ❗ Ако искате да прочете повече детайли за подравняването, може да го направите [тук](https://github.com/IvanMakaveev/FMI-Extra/blob/main/Object%20Oriented%20Programming/StructuresPadding/README.md)
 
-❗ Свалете **"Struct Layout"** extension-a на Visual studio, за да можете да видите визуализация на това как са подредени член-данните и тяхното подравняване в паметта за вашите структури.
+❗ Свалете [**"Struct Layout"**](https://marketplace.visualstudio.com/items?itemName=RamonViladomat.StructLayout) extension-a на Visual studio, за да можете да видите визуализация на това как са подредени член-данните и тяхното подравняване в паметта за вашите структури.
 
 ```c++
 struct Example1 {
