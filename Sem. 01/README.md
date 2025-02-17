@@ -9,6 +9,7 @@
 - [Енумерации](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001#%D0%B5%D0%BD%D1%83%D0%BC%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-enums)
 - [Namespaces](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#namespaces)
 - [Задачи](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8)
+- [Материали за преговор](./#%D0%B1%D0%BE%D0%BD%D1%83%D1%81-%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8-%D0%B7%D0%B0-%D0%BF%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D1%80)
 
 ##  **Преговор. Указатели, референции, динамична памет.**
 <img style="object-fit:contain;" align="right" width="450" height="600" src="https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png">
