@@ -464,3 +464,8 @@ namespace Q {
 **Задача 2:** Резлизирайте структура Rational, която е за работа с рационални числа. <br />
 Имплементирайте функции за събиране, изваждане, умножение и деление. <br />
 Имплементирайте функция, която приема истанция(обект) от новия тип и връща дали е валидно рационално число, както и функция, която връща дали е цяло число. <br />
+
+## **Бонус материали за преговор**
+- [Как работи double](https://fabiensanglard.net/floating_point_visually_explained/?fbclid=IwAR1lwXOIifhzJmXkx49eniqaHE1iI7-MB6ofwR5mHgFOOO_NJWn-WxXbQBk)
+- [Функции от по-висок ред и ламбда функции](https://github.com/GeorgiTerziev02/Introduction_to_programming_FMI/tree/main/Sem.%2015)
+- [Алгоритми за търсене и Сортиране](https://github.com/GeorgiTerziev02/Introduction_to_programming_FMI/tree/main/Sem.%2013)
