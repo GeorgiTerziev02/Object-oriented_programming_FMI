@@ -25,6 +25,6 @@ struct S3 {
     // 2 bits: value of b2
     // 6 bits: unused
     unsigned char b1 : 3;
-    unsigned char :0; // start a new byte !!!
+    unsigned char :0; // start a new byte !!! == the remaining bits of the current byte are blocked out as unused
     unsigned char b2 : 2;
 };
