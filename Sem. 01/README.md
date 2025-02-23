@@ -287,7 +287,7 @@ std::cout << sizeof(ex3) << std::endl; // 24
 
 ## [**Битови полета**](https://en.cppreference.com/w/cpp/language/bit_field)
 Чрез битовите полета можем да дефинираме колко точно бита да заема член-данна на даден клас.
-Повече за тях и достъпни примери може да видите в официалната документация на c++ [тук](https://en.cppreference.com/w/cpp/language/bit_field)
+Повече за тях и достъпни примери може да видите в официалната документация на c++ [тук](https://en.cppreference.com/w/cpp/language/bit_field), както и в [BitFields.cpp](./Examples/BitFields.cpp).
 
 ## [**Обединения**](https://en.cppreference.com/w/cpp/language/union)
 Обединенията е специален вид структура, чиито член-данни(дори и от различен тип) споделят една и съща памет. <br />
