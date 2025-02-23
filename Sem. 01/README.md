@@ -5,7 +5,7 @@
 - [Структури](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8)
 - [Представяне в паметта и подравняване](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D1%8F%D0%BD%D0%B5-%D0%B2-%D0%BF%D0%B0%D0%BC%D0%B5%D1%82%D1%82%D0%B0-%D0%B8-%D0%BF%D0%BE%D0%B4%D1%80%D0%B0%D0%B2%D0%BD%D1%8F%D0%B2%D0%B0%D0%BD%D0%B5)
 - [Little-endian and Big-endian](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#little-endian-and-big-endian)
-- [Битови полета]()
+- [Битови полета](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001#%D0%B1%D0%B8%D1%82%D0%BE%D0%B2%D0%B8-%D0%BF%D0%BE%D0%BB%D0%B5%D1%82%D0%B0)
 - [Обединения](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F)
 - [Енумерации](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001#%D0%B5%D0%BD%D1%83%D0%BC%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-enums)
 - [Namespaces](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#namespaces)
@@ -285,7 +285,7 @@ std::cout << sizeof(ex3) << std::endl; // 24
 
 ![image](https://github.com/GeorgiTerziev02/OOP-Private/assets/49128895/5b511751-b8b7-48c1-967d-6b2477f822d4)
 
-## Битови полета
+## [**Битови полета**](https://en.cppreference.com/w/cpp/language/bit_field)
 Чрез битовите полета можем да дефинираме колко точно бита да заема член-данна на даден клас.
 Повече за тях и достъпни примери може да видите в официалната документация на c++ [тук](https://en.cppreference.com/w/cpp/language/bit_field)
 
