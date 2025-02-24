@@ -7,7 +7,7 @@ struct S1 {
 };
 
 struct S2 {
-    // will usually occupy 2 bytes:
+    // will occupy 2 bytes:
     unsigned char b1 : 3; // 1st 3 bits (in 1st byte) are b1
     unsigned char : 2; // next 2 bits (in 1st byte) are blocked out as unused
     unsigned char b2 : 6; // 6 bits for b2 - doesn't fit into the 1st byte => starts a 2nd
@@ -19,7 +19,7 @@ struct S2 {
 //                b1 u  a   b2  b3
 
 struct S3 {
-    // will usually occupy 2 bytes:
+    // will occupy 2 bytes:
     // 3 bits: value of b1
     // 5 bits: unused
     // 2 bits: value of b2
