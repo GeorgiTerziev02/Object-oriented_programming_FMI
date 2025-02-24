@@ -5,10 +5,12 @@
 - [Структури](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8)
 - [Представяне в паметта и подравняване](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D1%8F%D0%BD%D0%B5-%D0%B2-%D0%BF%D0%B0%D0%BC%D0%B5%D1%82%D1%82%D0%B0-%D0%B8-%D0%BF%D0%BE%D0%B4%D1%80%D0%B0%D0%B2%D0%BD%D1%8F%D0%B2%D0%B0%D0%BD%D0%B5)
 - [Little-endian and Big-endian](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#little-endian-and-big-endian)
+- [Битови полета](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001#%D0%B1%D0%B8%D1%82%D0%BE%D0%B2%D0%B8-%D0%BF%D0%BE%D0%BB%D0%B5%D1%82%D0%B0)
 - [Обединения](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F)
 - [Енумерации](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/tree/main/Sem.%2001#%D0%B5%D0%BD%D1%83%D0%BC%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-enums)
 - [Namespaces](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#namespaces)
 - [Задачи](https://github.com/GeorgiTerziev02/Object-oriented_programming_FMI/blob/main/Sem.%2001/README.md#%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8)
+- [Материали за преговор](./#%D0%B1%D0%BE%D0%BD%D1%83%D1%81-%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8-%D0%B7%D0%B0-%D0%BF%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D1%80)
 
 ##  **Преговор. Указатели, референции, динамична памет.**
 <img style="object-fit:contain;" align="right" width="450" height="600" src="https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png">
@@ -247,7 +249,7 @@ int main() {
 
 ❗ Ако искате да прочете повече детайли за подравняването, може да го направите [тук](https://github.com/IvanMakaveev/FMI-Extra/blob/main/Object%20Oriented%20Programming/StructuresPadding/README.md)
 
-❗ Свалете **"Struct Layout"** extension-a на Visual studio, за да можете да видите визуализация на това как са подредени член-данните и тяхното подравняване в паметта за вашите структури.
+❗ Свалете [**"Struct Layout"**](https://marketplace.visualstudio.com/items?itemName=RamonViladomat.StructLayout) extension-a на Visual studio, за да можете да видите визуализация на това как са подредени член-данните и тяхното подравняване в паметта за вашите структури.
 
 ```c++
 struct Example1 {
@@ -283,6 +285,11 @@ std::cout << sizeof(ex3) << std::endl; // 24
 
 ![image](https://github.com/GeorgiTerziev02/OOP-Private/assets/49128895/5b511751-b8b7-48c1-967d-6b2477f822d4)
 
+## [**Битови полета**](https://en.cppreference.com/w/cpp/language/bit_field)
+Чрез битовите полета можем да дефинираме колко точно бита да заема член-данна на даден клас.
+Повече за тях и достъпни примери може да видите в официалната документация на c++ [тук](https://en.cppreference.com/w/cpp/language/bit_field), както и в [BitFields.cpp](./Examples/BitFields.cpp).
+
+Изпробвайте extension-а **Struct Layout** върху структура с bit field.
 
 ## [**Обединения**](https://en.cppreference.com/w/cpp/language/union)
 Обединенията е специален вид структура, чиито член-данни(дори и от различен тип) споделят една и съща памет. <br />
@@ -464,3 +471,8 @@ namespace Q {
 **Задача 2:** Резлизирайте структура Rational, която е за работа с рационални числа. <br />
 Имплементирайте функции за събиране, изваждане, умножение и деление. <br />
 Имплементирайте функция, която приема истанция(обект) от новия тип и връща дали е валидно рационално число, както и функция, която връща дали е цяло число. <br />
+
+## **Бонус материали за преговор**
+- [Как работи double](https://fabiensanglard.net/floating_point_visually_explained/?fbclid=IwAR1lwXOIifhzJmXkx49eniqaHE1iI7-MB6ofwR5mHgFOOO_NJWn-WxXbQBk)
+- [Функции от по-висок ред и ламбда функции](https://github.com/GeorgiTerziev02/Introduction_to_programming_FMI/tree/main/Sem.%2015)
+- [Алгоритми за търсене и Сортиране](https://github.com/GeorgiTerziev02/Introduction_to_programming_FMI/tree/main/Sem.%2013)
