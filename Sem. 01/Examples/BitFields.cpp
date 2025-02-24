@@ -14,9 +14,9 @@ struct S2 {
     unsigned char b3 : 2; // 2 bits for b3 - next (and final) bits in the 2nd byte
 };
 // s2 comment
-// looks like --- 1110000011110111
-// breakdown is:  └┬┘├┘└┬┘└─┬──┘└┤
-//                b1 u  a   b2  b3
+// looks like --- 1110011110111
+// breakdown is:  └┬┘├┘└─┬──┘└┤
+//                b1 u   b2  b3
 
 struct S3 {
     // will occupy 2 bytes:
