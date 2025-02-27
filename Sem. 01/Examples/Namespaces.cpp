@@ -3,11 +3,17 @@ namespace Constants {
     const double PI = 3.14159;
     const double E = 2.71828;
 }
+
+void f() {
+    std::cout << "::f()" << std::endl;
+}
+
 namespace {
     void f1() {
         std::cout << "f1()" << std::endl;
     }
 }
+
 namespace A {
     void f() {
         std::cout << "A::f()" << std::endl;
@@ -16,12 +22,9 @@ namespace A {
 
 namespace B {
     void f() {
+        // using ::f() you can access the global f function from here
         std::cout << "B::f()" << std::endl;
     }
-}
-
-void f() {
-    std::cout << "::f()" << std::endl;
 }
 
 // easy to confuse with the std::sqrt
