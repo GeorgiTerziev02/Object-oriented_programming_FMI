@@ -179,6 +179,30 @@ int main() {
 
  <img style="width: 700px;" src="img/stream-flags.png" />  
 
+## [Stringstream](https://en.cppreference.com/w/cpp/io/basic_stringstream)
+Поток, чиито буфер, е подаден стринг.
+
+Удобен в ситуации на форматиране и парсване на string
+
+```c++
+#include <iostream>
+#include <sstream>
+
+void split(const char* str, char delim) {
+	std::stringstream ss(str);
+
+	while(!ss.eof()) {
+		std::string substr;
+		std::getline(ss, substr, delim);
+		std::cout << substr << std::endl;
+	}
+}
+
+int main() {
+	const char* str = "Hello,World,!";
+	split(str, ',');
+}
+```
 
  ##  Задачи
  
