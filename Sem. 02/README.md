@@ -117,10 +117,6 @@ int main() {
 
 	file << a << " " << b << " " << a + b << std::endl; // write into the output file stream
 	
-	if(!file.eof()) { //check if the file has ended
-		std::cout << "The file contains more data after the two integers!" << std::endl;
-	}
-
 	file.close();
 }
  ```
