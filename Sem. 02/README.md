@@ -188,13 +188,15 @@ int main() {
 #include <iostream>
 #include <sstream>
 
+const int BUFFER_SIZE = 1024;
+
 void split(const char* str, char delim) {
 	std::stringstream ss(str);
 
 	while(!ss.eof()) {
-		std::string substr;
-		std::getline(ss, substr, delim);
-		std::cout << substr << std::endl;
+		char buffer[BUFFER_SIZE];
+		ss.getline(buffer, BUFFER_SIZE, delim);
+		std::cout << buffer << std::endl;
 	}
 }
 
