@@ -1,8 +1,10 @@
 #include <fstream>
 
+const char FILE_NAME = "test.txt";
+
 int main() {
 
-    std::ofstream outfile("test.txt");
+    std::ofstream outfile(FILE_NAME);
 
     for (int n = 0; n < 100; ++n)
     {
