@@ -62,7 +62,7 @@ void printStudent(const Student& student) {
 	std::cout << "Read Student:\n";
 	std::cout << "Name: " << student.firstName << " " << student.lastName << "\n";
 	std::cout << "Faculty Number: " << student.facultyNumber << "\n";
-	std::cout << "Uspeh: " << student.averageGrade << "\n";
+	std::cout << "Average Grade: " << student.averageGrade << "\n";
 }
 
 int main() {
