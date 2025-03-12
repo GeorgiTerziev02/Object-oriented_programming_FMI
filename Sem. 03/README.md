@@ -1,8 +1,3 @@
-Анкета за обратна връзка:
-
-https://docs.google.com/forms/d/e/1FAIpQLSc-iHNZygySraPArc4VTDiX1AmofyZutXJuJ79bVV8VWNE_ZA/viewform?usp=dialog
-
-
 # Файлове (част 2). Двоични файлове.
 
 ## Двоични файлове.
