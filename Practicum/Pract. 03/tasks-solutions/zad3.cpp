@@ -68,19 +68,20 @@ void printStudent(const Student& student) {
 int main() {
     Student student1 = { 5.8, 12345, HairColor::RED, "John", "Doe" };
 
-    // Save to file
+    // should be a function - Save to file
     std::ofstream outFile("students.txt");
     if (!outFile.is_open()) {
-        std::cerr << "Error opening file for writing.\n";
+        std::cout << "Error opening file for writing.\n";
         return 1;
     }
     saveStudentToFile(student1, outFile);
     outFile.close();
+	// end of func
 
-    // Read from file
+    // should be a function - Read from file
     std::ifstream inFile("students.txt");
     if (!inFile.is_open()) {
-        std::cerr << "Error opening file for reading.\n";
+        std::cout << "Error opening file for reading.\n";
         return 1;
     }
 
@@ -90,5 +91,5 @@ int main() {
 
     inFile.close();
 
-    return 0;
+	// end of func
 }
