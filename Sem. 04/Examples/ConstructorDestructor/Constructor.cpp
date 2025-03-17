@@ -2,7 +2,7 @@ struct Test {
     int a;
 
     // initializing data member a with the value of the parameter a
-    // using the initializer list
+    // using the member initializer list
     Test(int a) : a(a) {
         // at this point, this->a has the value of the parameter a
     }
