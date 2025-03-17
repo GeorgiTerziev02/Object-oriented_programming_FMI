@@ -9,7 +9,14 @@ private:
 public:
 	Student(int grade, const char* name);
 
-	// TODO: grade setters
+	// delete generated functions by the compiler
+	Student(const Student& other) = delete;
+	Student& operator=(const Student& other) = delete;
+
+	~Student();
+
 	const char* getName() const;
 	void setName(const char* newName);
+
+	// TODO: grade get and set
 };

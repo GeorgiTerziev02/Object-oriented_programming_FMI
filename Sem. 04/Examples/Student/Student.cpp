@@ -24,3 +24,7 @@ void Student::setName(const char* newName) {
 	delete[] name;
 	copyName(newName);
 }
+
+Student::~Student() {
+	delete[] name;
+}
