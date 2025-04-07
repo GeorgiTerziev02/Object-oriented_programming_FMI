@@ -84,15 +84,15 @@ struct Person
 		setAge(age);
 	}
 
-	Person(const Person& other) : age(other.age) {	
-		copyDynamic(other); // копираме
+	Person(const Person& other) : age(other.age) { // копираме в initializer list нединамичната памет
+		copyDynamic(other); // копираме динамична памет
 	}
 
 	Person& operator=(const Person& other) {
 		if (this != &other) {
-			freeDynamic(); //трием
-			age = other.age;
-			copyDynamic(other); //копираме
+			freeDynamic(); //трием динамична памет
+			age = other.age; // копираме нединамичната памет
+			copyDynamic(other); //копираме динамична памет
 		}
 		return *this;
 	}
