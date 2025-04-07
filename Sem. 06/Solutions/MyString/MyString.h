@@ -7,7 +7,6 @@ private:
 
 	MyString(size_t length);
 public:
-	MyString(double d);
 	MyString();
 	explicit MyString(const char* str);
 	MyString(const MyString& other);
