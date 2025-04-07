@@ -9,7 +9,7 @@
 * [**insert**](https://cplusplus.com/reference/vector/vector/insert/) - добавя елемент на даден индекс във вектора
 * [**erase**](https://cplusplus.com/reference/vector/vector/erase/) - изтрива елемент на даден индекс във вектора
 * [**clear**](https://cplusplus.com/reference/vector/vector/clear/) - изчиства данните във вектора
-* [**operator[]**](https://cplusplus.com/reference/vector/vector/operator[]/) - позволява индексация на елементите във вектора (работи в константно и неконстантно)
+* [**at**](https://cplusplus.com/reference/vector/vector/operator[]/) - позволява индексация на елементите във вектора (работи в константно и неконстантно)
 * [**empty**](https://cplusplus.com/reference/vector/vector/empty/) - връща дали векторът е празен
 * [**size**](https://cplusplus.com/reference/vector/vector/size/) - връща броя на елементите във вектора
 
