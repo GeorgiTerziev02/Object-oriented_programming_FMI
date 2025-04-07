@@ -1,23 +1,27 @@
 #pragma once
-#include <iostream>
 
 class MyString {
 private:
-	char* str = nullptr;
-	size_t length = 0;
+	char* str;
+	size_t length;
 
 	MyString(size_t length);
 public:
+	MyString(double d);
 	MyString();
-	MyString(const char* str);
+	explicit MyString(const char* str);
 	MyString(const MyString& other);
 	MyString& operator=(const MyString& other);
 	~MyString();
 
-	const char* c_str() const;
 	size_t getLength() const;
-    
+	const char* c_str() const;
+
+	char& at(size_t index);
+	char at(size_t index) const;
+
 private:
-	void copyFrom(const MyString& other);
-	void free();
+	void copyDynamic(const MyString& other);
+	void freeDynamic();
 };
+
