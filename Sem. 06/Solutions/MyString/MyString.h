@@ -7,9 +7,8 @@ private:
 
 	MyString(size_t length);
 public:
-	MyString(double d);
 	MyString();
-	explicit MyString(const char* str);
+	MyString(const char* str);
 	MyString(const MyString& other);
 	MyString& operator=(const MyString& other);
 	~MyString();
@@ -19,7 +18,7 @@ public:
 
 	char& at(size_t index);
 	char at(size_t index) const;
-
+	// const char& at(size_t index) const; alternative
 private:
 	void copyDynamic(const MyString& other);
 	void freeDynamic();
