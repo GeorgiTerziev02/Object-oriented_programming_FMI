@@ -117,7 +117,7 @@ char MyString::operator[](size_t index) const {
 }
 
 MyString::operator bool() const {
-    return length == 0;
+    return length != 0;
 }
 
 MyString operator+(const MyString& lhs, const MyString& rhs) {
