@@ -2,78 +2,84 @@
 #include <cstring>
 #pragma warning(disable:4996)
 
-namespace StringHelperFunctions {
-    unsigned int getNextPowerOfTwo(unsigned int n) {
-        unsigned int step = 1;
+// StringHelperFunctions
+namespace {
+	unsigned int getNextPowerOfTwo(unsigned int n) {
+		unsigned int step = 1;
 
-        while ((n >> step) > 0) {
-            n |= n >> step;
-            step *= 2;
-        }
+		while ((n >> step) > 0) {
+			n |= n >> step;
+			step *= 2;
+		}
 
-        return n + 1;
-    }
+		return n + 1;
+	}
+
+    const char* INVALID_INDEX = "Invalid index";
 }
 
-using namespace StringHelperFunctions;
+// namespace ErrorMessages {
+//     const char* const INVALID_INDEX = "Invalid index";
+// }
 
-void MyString::copyFrom(const MyString& other) {
-    length = other.length;
-    capacity = other.capacity;
-    data = new char[capacity + 1];
-    strcpy(data, other.data);
+void MyString::validateIndex(size_t index) const {
+	if (index >= length) {
+		throw std::out_of_range(INVALID_INDEX);
+	}
 }
 
-void MyString::free() {
-    delete[] data;
-    data = nullptr;
-    length = capacity = 0;
+void MyString::copyDynamic(const MyString& other) {
+	data = new char[other.capacity + 1];
+	strcpy(data, other.data);
+}
+
+void MyString::freeDynamic() {
+	delete[] data;
 }
 
 void MyString::resize(size_t lengthToFit) {
-    capacity = length < 16 ? 15 : getNextPowerOfTwo(lengthToFit + 1) - 1;
+	capacity = getNextPowerOfTwo(lengthToFit) - 1;
 
-    char* newData = new char[capacity + 1];
-    strcpy(newData, data);
-    delete[] data;
-
-    data = newData;
+	char* newData = new char[capacity + 1];
+	strcpy(newData, data);
+	delete[] data;
+	data = newData;
 }
 
-MyString::MyString(size_t capacity) : capacity(capacity) {
+MyString::MyString(size_t capacity) : capacity(capacity), length(0) {
     data = new char[capacity + 1];
 }
 
 MyString::MyString() : MyString("") { }
 
 MyString::MyString(const char* str) {
-    if (!str) {
-        data = new char[capacity + 1];
-        data[0] = '\0';
-    }
-    else {
-        length = strlen(str);
-        capacity = std::max((int)getNextPowerOfTwo(length), 16) - 1;
-        data = new char[capacity + 1];
-        strcpy(data, str);
-    }
+	if (!str) {
+		throw std::invalid_argument("str is nullptr");
+	}
+
+	length = strlen(str);
+	capacity = getNextPowerOfTwo(length) - 1;
+	this->data = new char[capacity + 1];
+	strcpy(this->data, str);
 }
 
-MyString::MyString(const MyString& other) {
-    copyFrom(other);
+MyString::MyString(const MyString& other) : length(other.length), capacity(other.capacity) {
+    copyDynamic(other);
 }
 
 MyString& MyString::operator=(const MyString& other) {
     if (this != &other) {
-        free();
-        copyFrom(other);
+		freeDynamic();
+		length = other.length;
+		capacity = other.capacity;
+		copyDynamic(other);
     }
 
     return *this;
 }
 
 MyString::~MyString() {
-    free();
+	freeDynamic();
 }
 
 size_t MyString::getLength() const {
@@ -88,16 +94,38 @@ const char* MyString::c_str() const {
     return data;
 }
 
+char& MyString::at(size_t index) {
+	validateIndex(index);
+	return data[index];
+}
+
+char MyString::at(size_t index) const {
+	validateIndex(index);
+	return data[index];
+}
+
+char& MyString::operator[](size_t index) {
+	validateIndex(index);
+	return data[index];
+}
+
+char MyString::operator[](size_t index) const {
+	validateIndex(index);
+	return data[index];
+}
+
 MyString& MyString::operator+=(const MyString& other) {
-    length += other.length;
-    if (length >= capacity) {
-        // resize with the new length
-        resize(length);
-    }
-    
-    //use strncat instead of strcat, because strcat will not work for str += str (the term zero of str will be destroyed by the first char)
-    std::strncat(data, other.data, other.length);
-    return *this;
+	if (capacity <= length + other.length) {
+		resize(length + other.length);
+	}
+
+    //use strncat instead of strcat, because strcat will not work for str += str
+    // the term zero will be destroyed while copying the rightside, but the end of the
+    // right side is that exact zero => strcat won't know when to stop
+	strncat(data, other.data, other.length);
+	length = length + other.length;
+
+	return *this;
 }
 
 MyString& MyString::operator+=(char ch) {
@@ -106,14 +134,6 @@ MyString& MyString::operator+=(char ch) {
     }
     data[length++] = ch;
     return *this;
-}
-
-char& MyString::operator[](size_t index) {
-    return data[index];
-}
-
-char MyString::operator[](size_t index) const {
-    return data[index];
 }
 
 MyString::operator bool() const {
@@ -129,26 +149,28 @@ MyString::operator bool() const {
 // 	return result;
 // }
 
+// more optimal => creating a new string with the needed capacity
+// using the private capacity constructor
 MyString operator+(const MyString& lhs, const MyString& rhs) {
     size_t resultLength = lhs.length + rhs.length;
     size_t capacity = getNextPowerOfTwo(resultLength) - 1;
 
-    MyString res(capacity);
-    strcpy(res.data, lhs.data);
-    strcat(res.data, rhs.data);
-    res.length = resultLength;
+    MyString result(capacity);
+    strcpy(result.data, lhs.data);
+    strcat(result.data, rhs.data);
+    result.length = resultLength;
 
-    return res;
+    return result;
 }
 
 std::istream& operator>>(std::istream& is, MyString& str) {
     char buff[1024];
     is >> buff;
 
+    // the string might had previously allocated data
     delete[] str.data;
     str.length = strlen(buff);
-    str.capacity = std::max((int)getNextPowerOfTwo(str.length), 16) - 1;
-    str.data = new char[str.capacity + 1];
+    str.resize(str.length);
     strcpy(str.data, buff);
 
     return is;
