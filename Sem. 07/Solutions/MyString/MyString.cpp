@@ -126,6 +126,7 @@ MyString& MyString::operator+=(const MyString& other) {
     // the term zero will be destroyed while copying the rightside, but the end of the
     // right side is that exact zero => strcat won't know when to stop
     strncat(data, other.data, other.length);
+    // this should be updated last because of str += str
     length = length + other.length;
 
     return *this;
