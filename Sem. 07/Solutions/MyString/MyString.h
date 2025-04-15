@@ -7,7 +7,7 @@ private:
     size_t length;
     size_t capacity;
 
-	void validateIndex(size_t index) const;
+    void validateIndex(size_t index) const;
     void resize(size_t lengthToFit);
 
     explicit MyString(size_t capacity);
@@ -22,8 +22,8 @@ public:
     size_t getCapacity() const;
     const char* c_str() const;
 
-	char& at(size_t index);
-	char at(size_t index) const;
+    char& at(size_t index);
+    char at(size_t index) const;
     // const char& at(size_t index) const; alternative
     char& operator[](size_t index);
     char operator[](size_t index) const;
@@ -38,8 +38,8 @@ public:
     friend std::istream& operator>>(std::istream& is, MyString& str);
 
 private:
-	void copyDynamic(const MyString& other);
-	void freeDynamic();
+    void copyDynamic(const MyString& other);
+    void freeDynamic();
 };
 
 std::ostream& operator<<(std::ostream& os, const MyString& str);
