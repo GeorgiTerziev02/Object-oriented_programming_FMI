@@ -15,7 +15,10 @@ namespace {
 		return n + 1;
 	}
 
-    const char* INVALID_INDEX = "Invalid index";
+	namespace ErrorMessages {
+		const char* INVALID_INDEX = "Invalid index";
+		const char* NULL_STRING = "String is nullptr";
+	}
 }
 
 // namespace ErrorMessages {
@@ -24,7 +27,7 @@ namespace {
 
 void MyString::validateIndex(size_t index) const {
 	if (index >= length) {
-		throw std::out_of_range(INVALID_INDEX);
+		throw std::out_of_range(ErrorMessages::INVALID_INDEX);
 	}
 }
 
@@ -54,7 +57,7 @@ MyString::MyString() : MyString("") { }
 
 MyString::MyString(const char* str) {
 	if (!str) {
-		throw std::invalid_argument("str is nullptr");
+		throw std::invalid_argument(ErrorMessages::NULL_STRING);
 	}
 
 	length = strlen(str);
