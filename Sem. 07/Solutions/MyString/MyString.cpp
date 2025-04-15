@@ -174,7 +174,7 @@ std::istream& operator>>(std::istream& is, MyString& str) {
     delete[] str.data;
     str.length = strlen(buff);
     str.capacity = getNextPowerOfTwo(str.length) - 1;
-    this->data = new char[str.capacity + 1];
+    str.data = new char[str.capacity + 1];
     strcpy(str.data, buff);
 
     return is;
