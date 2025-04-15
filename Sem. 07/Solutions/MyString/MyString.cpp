@@ -120,6 +120,15 @@ MyString::operator bool() const {
     return length != 0;
 }
 
+// Not optimal because we allocate memory twice
+// 1. copy constructor
+// 2. += deletes the allocated from the copy constructor and allocates new memory
+// MyString operator+(const MyString& lhs, const MyString& rhs) {
+// 	MyString result(lhs);
+// 	result += rhs;
+// 	return result;
+// }
+
 MyString operator+(const MyString& lhs, const MyString& rhs) {
     size_t resultLength = lhs.length + rhs.length;
     size_t capacity = getNextPowerOfTwo(resultLength) - 1;

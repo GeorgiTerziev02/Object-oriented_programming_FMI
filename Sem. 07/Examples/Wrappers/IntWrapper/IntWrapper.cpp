@@ -11,6 +11,17 @@ IntWrapper& IntWrapper::operator=(int newValue) {
     return *this;
 }
 
+
+IntWrapper& IntWrapper::operator+=(int other) {
+    this->value += other;
+    return *this;
+}
+
+IntWrapper& IntWrapper::operator+=(IntWrapper& other) {
+    this->value += other.value;
+    return *this;
+}
+
 IntWrapper& IntWrapper::operator++() {
     value += 1;
     return *this;
@@ -32,5 +43,10 @@ std::ostream &operator<<(std::ostream &out, const IntWrapper &integer) {
 }
 
 std::istream &operator>>(std::istream &in, IntWrapper &integer) {
+    // as it is defined as a friend we can directly access the private member
     return in >> integer.value;
+}
+
+IntWrapper operator+(const IntWrapper& lhs, const IntWrapper& rhs) {
+    return IntWrapper(lhs.getValue() + rhs.getValue());
 }
