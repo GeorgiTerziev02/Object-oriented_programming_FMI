@@ -50,7 +50,7 @@ public:
 
 class B : public A {
 	//some code
-}
+};
 
 int main() {
 	B obj;
