@@ -102,6 +102,7 @@ void ShapeCollection::move(ShapeCollection&& other) {
 	other.capacity = 0;
 }
 
+// not exception safe
 void ShapeCollection::copyFrom(const ShapeCollection& other) {
 	size = other.size;
 	capacity = other.capacity;
@@ -111,6 +112,42 @@ void ShapeCollection::copyFrom(const ShapeCollection& other) {
 		shapes[i] = other.shapes[i]->clone();
 	}
 }
+
+//Shape** ShapeCollection::exceptionSafeCopyData(const ShapeCollection& other) {
+//	size_t copiedUntil = 0;
+//	Shape** tempData;
+//	try {
+//		
+//		tempData = new Shape * [other.capacity];
+//		for (size_t i = 0; i < other.size; i++) {
+//			tempData[i] = other.data[i]->clone();
+//			copiedUntil++;
+//		}
+//	}
+//	catch (const std::exception& e)
+//	{
+//		for (size_t i = 0; i < copiedUntil; i++) {
+//			delete tempData[i];
+//		}
+//		delete[] tempData;
+//		throw e;
+//	}
+//
+//	return tempData;
+//}
+
+// exception safe op=
+// ShapeCollection& ShapeCollection::operator=(const ShapeCollection& other) {
+//	if (this != &other) {
+//		Shape** temp = exceptionSafeCopyData(other);
+//		freeDynamic();
+//		data = temp;
+//		size = other.size;
+//		capacity = other.capacity;
+//	}
+//
+//	return *this;
+//}
 
 void ShapeCollection::free() {
 	for (size_t i = 0; i < size; i++) {
