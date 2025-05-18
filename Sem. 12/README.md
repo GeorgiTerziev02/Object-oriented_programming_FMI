@@ -211,6 +211,8 @@ bool Circle::intersectsWith(const Shape* other) const {
 
 Демо код за ситуацията с Фигурите [тук](./Solutions/ShapeCollection)
 
+Демо код от камък, ножица, хартия [тук](./Solutions/RockPaperScissors/main.cpp)
+
 ## Шаблони
 Функция/клас, която работи не с променливи от някакъв дефиниран тип, а с абстрактни променливи, се нарича шаблонна функция/клас
 ```c++
