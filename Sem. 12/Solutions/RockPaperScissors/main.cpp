@@ -35,6 +35,7 @@ struct Rock : Move {
 
 struct Paper : Move {
 	int fight(const Move* other) const override {
+		// minus is needed for correct results
 		return -other->fightPaper(this);
 	}
 
@@ -51,6 +52,7 @@ struct Paper : Move {
 
 struct Scissors : Move {
 	int fight(const Move* other) const override {
+		// minus is needed for correct results
 		return -other->fightScissors(this);
 	}
 
@@ -67,6 +69,9 @@ struct Scissors : Move {
 
 
 int main() {
+	// this could be a whole array of moves...
+	// what if I want to fight the first and the seventh index
+	// => we need the visitor
 	Move* a = new Rock();
 	Move* b = new Scissors();
 
