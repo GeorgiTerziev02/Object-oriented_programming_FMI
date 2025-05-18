@@ -284,11 +284,13 @@ struct Test {
 	void func() {}
 }
 
+// requires member function named func with zero args
 template<typename T>
 void f1(Test& t) {
 	t.func();
 }
 
+// requires member function named func1 with zero args
 template<typename T>
 void f2(T& t) {
 	t.func1();
