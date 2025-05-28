@@ -25,7 +25,7 @@ void printVtable(T* t, size_t size) {
 
 	for (size_t i = 0; i < size; i++) {
 		std::cout << vt[i] << std::endl;
-
+		// invoke the function
 		vt[i]();
 	}
 	std::cout << std::endl;
