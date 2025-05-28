@@ -2,13 +2,19 @@
 #include <optional>
 
 struct A {
-	virtual void f() {}
+	virtual void f() {
+		std::cout << "A::f()" << std::endl;
+	}
 };
 struct B {
-	virtual void g() {}
+	virtual void g() {
+		std::cout << "B::g()" << std::endl;
+	}
 };
 struct C : A, B {
-	virtual void h() {}
+	virtual void h() {
+		std::cout << "C::h()" << std::endl;
+	}
 };
 
 template<typename T>
@@ -19,6 +25,8 @@ void printVtable(T* t, size_t size) {
 
 	for (size_t i = 0; i < size; i++) {
 		std::cout << vt[i] << std::endl;
+
+		vt[i]();
 	}
 	std::cout << std::endl;
 }
