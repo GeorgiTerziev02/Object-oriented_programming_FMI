@@ -32,15 +32,18 @@ void printVtable(T* t, size_t size) {
 }
 
 int main() {
+	std::cout << "Print object of type A vtable" << std::endl;
 	A* aTableTest = new A();
 	printVtable(aTableTest, 1);
-
-	C* cTableTest = new C();
-	printVtable(cTableTest, 2);
-
+	std::cout << "Print object of type B vtable" << std::endl;
 	B* bTableTest = new B();
 	printVtable(bTableTest, 1);
 
+	std::cout << "Print object of type C vtable coming from inheriting A" << std::endl;
+	C* cTableTest = new C();
+	printVtable(cTableTest, 2);
+
+	std::cout << "Print object of type C vtable coming from inheriting B" << std::endl;
 	B* bTableFromCTest = (C*)cTableTest;
 	printVtable(bTableFromCTest, 1);
 }
