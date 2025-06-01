@@ -207,7 +207,7 @@ bool Circle::intersectsWith(const Shape* other) const {
 Извод:
 При всяко извикване на virtual функция на Base* ние стигаме до **конкретна** имплементация на наследник(т.е. "разкриваме" така да кажем какво седи отзад). В нашата задача и от двете страни седеше абстракция, съответно ни трябваше извикване на две virtual функции, за да достигнем до контретиката.
 
-Демо код (по-скоро псевдо код) за по-прости версии на Visitor [Person visiting building](./Examples/SimpleVisitor-Buildings), [File system iterator visiting a file system node](.//Examples/SimpleVisitor-FileSystem)
+Демо код (по-скоро псевдо код) за по-прости версии на Visitor [Person visiting building](./Solutions/SimpleVisitor-Buildings), [File system iterator visiting a file system node](./Solutions/SimpleVisitor-FileSystem)
 
 Демо код за ситуацията с Фигурите [тук](./Solutions/ShapeCollection)
 
