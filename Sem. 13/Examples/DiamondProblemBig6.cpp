@@ -131,9 +131,21 @@ public:
 		if (this != &other) {
 			// A::operator=(other);
 			// Unfortunatelly there is no "good practice" way to escape from calling A::op= two times
+			// Invoking B and C op= will both call the A::operator=
 			B::operator=(other);
 			C::operator=(other);
 			std::cout << "operator=(const D& other)" << std::endl;
+			
+			// One way to escape it:
+			// Create free and copyFrom functions in B and C
+			// These two functions should be responsible only for free/copying data related to the class they are defined in.
+			// This means that B::free should only clear B resources and should not invoke anything from A. Similarly for the other.
+			// then here you can invoke these functions in the following order
+			// A::operator=
+			// B::free();
+			// B::copy(other);
+			// C::free();
+			// C::copy(other);
 		}
 		return *this;
 	}
