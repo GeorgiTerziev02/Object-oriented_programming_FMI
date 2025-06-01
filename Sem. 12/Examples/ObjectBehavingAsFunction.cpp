@@ -1,24 +1,24 @@
 #include <iostream>
 
-void print() {
-    std::cout << "hello";
+template<typename T>
+void invoke(T& obj) {
+	obj();
 }
 
-struct Test {
-    int a;
-    void operator()() {
-        std::cout << a;
-    }
-};
-template<typename T>
-void f(T t) {
-    t();
+void printHello() {
+	std::cout << "Hello from some func" << std::endl;
 }
+
+struct ObjAsFunc {
+	int a;
+	void operator()() const {
+		std::cout << "Hello from obj " << a << std::endl;
+	}
+};
 
 int main() {
-    f(print);
-
-    Test t;
-    t.a = 5;
-    f(t);
+	invoke(printHello);
+	ObjAsFunc oaf;
+	oaf.a = 5;
+	invoke(oaf);
 }
