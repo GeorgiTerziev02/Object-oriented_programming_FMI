@@ -34,23 +34,20 @@ class Test {};
 
 int main() {
 	Base* b = new Derived1();
-	Derived2* d = static_cast<Derived2*>(b); // possible
+	Derived2* d = static_cast<Derived2*>(b); // possible even though behind the scenes is Dervided1
 	// Test* t = static_cast<Test*>(b); // compile time error
 	std::cout << d->a; // undefined
 }
 ```
-Ще се комплира без проблем.
-- взехме адреса на d1 и експлицитно го преобразувахме към Base.
-- взехме адреса на d1 и използвахме static_cast, за да го преобразувахме към Base.
 
-Както знаем, static_cast извършва строга проверка на типа:
+Както знаем, static_cast извършва строга проверка на типа по време на компилация:
 ```c++
-    class Base {};
-    class Derived : private Base {}; // Inherited private/protected not public
+class Base {};
+class Derived : private Base {}; // Inherited private/protected not public
 
-    Derived d1;
-    Base* b1 = (Base*)(&d1); // allowed
-    Base* b2 = static_cast<Base*>(&d1);
+Derived d1;
+Base* b1 = (Base*)(&d1); // allowed
+Base* b2 = static_cast<Base*>(&d1);
 ```
 Дори и ако наследяваме protected, кодът няма да се компилира.(само при public, като при горния пример няма да има проблем).
 ```
@@ -58,10 +55,10 @@ int main() {
 ```
 
 To and from void pointer:
-```
-	int i = 10;
-	void* v = static_cast<void*>(&i);
-	int* ip = static_cast<int*>(v);
+```c++
+int i = 10;
+void* v = static_cast<void*>(&i);
+int* ip = static_cast<int*>(v);
 ```
 
 ## Dynamic cast
