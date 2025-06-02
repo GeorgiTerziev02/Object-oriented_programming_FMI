@@ -308,3 +308,7 @@ int main() {
     new_a->fun_a(); // 2 in class A
 }
 ```
+
+## (T) - C-style cast
+
+При използване на C-style cast компилаторът почва да пробва горните cast-ове в определен ред. Повече можете да прочетете - [тук](https://en.cppreference.com/w/cpp/language/explicit_cast.html)
