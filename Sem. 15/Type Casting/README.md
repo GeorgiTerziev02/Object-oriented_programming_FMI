@@ -78,16 +78,20 @@ class Base {
 public:
 	virtual ~Base() = default; // removing virtual here will result in compile time error that dynamic_cast needs a polymorphic type
 };
-class Derived1 : public Base {};
-class Derived2 : public Base { public: int a; };
+class Derived1 : public Base { public: int a = 5; };
+class Derived2 : public Base { public: int a = 5; };
 
 // some random class
 class Test {};
 
 int main() {
 	Base* b = new Derived1();
-	Derived2* d = dynamic_cast<Derived2*>(b); // sets nullptr
-	std::cout << d->a; // error deref of nullptr
+
+	Derived1* d1 = dynamic_cast<Derived1*>(b); // sets Derived d1 pointer
+	std::cout << d1->a; // 5
+
+	Derived2* d2 = dynamic_cast<Derived2*>(b); // sets nullptr
+	std::cout << d2->a; // error deref of nullptr
 }
 ```
 
