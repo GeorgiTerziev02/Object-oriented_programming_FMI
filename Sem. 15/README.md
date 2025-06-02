@@ -9,6 +9,12 @@
 ### [Design Patterns](./Design%20Patterns)
 
 
+### Бонус полезни връзки
+
+- https://refactoring.guru/
+- https://sourcemaking.com/
+
+
 ## Задачи
 
 **Задача 1: Пример от конспект SingletonFactory**
