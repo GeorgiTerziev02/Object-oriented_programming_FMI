@@ -159,7 +159,7 @@ int main() {
     }
 ```
 
-Модифициране на променлива, която е първочално декларирана като const - **Undefined behaviour**
+Модифициране на променлива, която е първочално декларирана като const - **Undefined behaviour** (compiler dependant)
 ```c++
     #include <iostream>
 
@@ -170,14 +170,11 @@ int main() {
     
     int main() {
         const int VAL = 10;
-        
         const int *ptr = &VAL;
         
         fun(const_cast<int*>(ptr));
         
         std::cout << VAL;
-
-        return 0;
     }
 ```
 
@@ -192,14 +189,10 @@ Modify a non-const:
     
     int main() {
         int val = 10;
-
         const int *ptr = &val;
         
         fun(const_cast<int*>(ptr));
-        
         std::cout << val;
-
-        return 0;
     }
 ```
 
@@ -322,9 +315,5 @@ Type of cast is not the same as original object:
         A* new_a = reinterpret_cast<A*>(x);
     
         new_a->fun_a();
-
-        return 0;
     }
 ```
-
-
