@@ -14,6 +14,6 @@ public:
 
 	void add(VectorCommand* c);
 	void execute();
-    void executeAll();
+	void executeAll();
 	void undo();
 };
