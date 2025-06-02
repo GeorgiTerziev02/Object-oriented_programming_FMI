@@ -197,11 +197,11 @@ Modify a non-const:
 ```
 
 Type of cast is not the same as original object:
-```
-    int a1 = 40;
-    const int* b1 = &a1;
-    char* c1 = const_cast <char*>(b1); // compiler error
-    *c1 = 'A';
+```c++
+int a1 = 40;
+const int* b1 = &a1;
+char* c1 = const_cast <char*>(b1); // compiler error
+*c1 = 'A';
 ```
 
 ```
