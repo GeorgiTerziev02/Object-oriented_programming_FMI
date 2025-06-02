@@ -87,106 +87,23 @@ class Test {};
 int main() {
 	Base* b = new Derived1();
 
+	// correct downcast
 	Derived1* d1 = dynamic_cast<Derived1*>(b); // sets Derived d1 pointer
-	std::cout << d1->a; // 5
+	std::cout << d1->a << std::endl; // 5
 
-	Derived2* d2 = dynamic_cast<Derived2*>(b); // sets nullptr
+	// correct upcast
+	Base* b2 = dynamic_cast<Base*>(b);
+
+	std::cout << (b == b2) << std::endl; // 1
+
+	// wrong downcast
+	Derived2* d2 = dynamic_cast<Derived2*>(b2); // sets nullptr
 	std::cout << d2->a; // error deref of nullptr
 }
 ```
 
 Ако премахнем virtual методите от базовия клас, ще получим компилационна грешка, че dynamic_cast се нуждае от полиморфен тип.
 
-### Dynamic_cast - with virtual function example:
-```c++
-    // Dynamic casting and it returns a value of type: new_type
-    #include <iostream>
-
-    // Base Class declaration
-    class Base {
-    public:
-        virtual void print() {
-            std::cout << "Base\n";
-        }
-    };
-    
-    // Derived1 class declaration
-    class Derived1 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived1\n";
-        }
-    };
-    
-    // Derived2 class declaration
-    class Derived2 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived2\n";
-        }
-    };
-    
-    int main() {
-        Derived1 d1;
-    
-        // Base class pointer holding Derived1 Class object
-        Base* bp = dynamic_cast<Base*>(&d1);
-    
-        // Dynamic_casting
-        Derived1* dp1 = dynamic_cast<Derived1*>(bp);
-        if (dp1 == nullptr) {
-            std::cout << "null\n";
-        } else {
-            std::cout << "not null\n";
-        }
-    }
-```
-
-### Dynamic_cast - if it fails - returns a nullptr
-```c++
-    // If the cast fails and new_type is a pointer type,
-    // it returns a null pointer of that type
-    #include <iostream>
-    
-    // Base class declaration
-    class Base {
-    public:
-        virtual void print() {
-            std::cout << "Base\n";
-        }
-    };
-    
-    // Derived1 class declaration
-    class Derived1 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived1\n";
-        }
-    };
-    
-    // Derived2 class declaration
-    class Derived2 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived2\n";
-        }
-    };
-    
-    int main() {
-        Derived1 d1;
-        Base* bp = dynamic_cast<Base*>(&d1);
-    
-        // Dynamic Casting
-        Derived2* dp2 = dynamic_cast<Derived2*>(bp);
-        if (dp2 == nullptr) {
-            std::cout << "null\n";
-        } else {
-            std::cout << "not null\n";
-        }
-    
-        return 0;
-    }
-```
 
 ### Handle cast fail - std::bad_cast
 ```c++
