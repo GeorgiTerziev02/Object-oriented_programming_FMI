@@ -228,7 +228,8 @@ char* c1 = const_cast <char*>(b1); // compiler error
 
     // Creating structure myStruct
     struct myStruct {
-        int x, int y;
+        int x;
+	int y;
         char c;
         bool b;
     };
