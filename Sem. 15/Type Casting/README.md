@@ -10,9 +10,10 @@
 
 ## Static cast
 - Default cast-a за implicit conversions
-- Използва се за преобразуването на примитивни типове
+- Използва се за преобразуването на примитивни типове и 
 - Може да е implicit или explicit
-- Compile time
+- Compile time проверява типовете между които преобразува
+- Опасен за използване при downcasting
 
 ```c++
     float f = 3.5;
@@ -21,12 +22,22 @@
 ```
 
 ```c++
-    class Base {};
-    class Derived : public Base {};
+class Base {
+public:
+	virtual ~Base() = default;
+};
+class Derived1 : public Base {};
+class Derived2 : public Base { public: int a; };
 
-    Derived d1;
-    Base* b1 = (Base*)(&d1);
-    Base* b2 = static_cast<Base*>(&d1);
+// some random class
+class Test {};
+
+int main() {
+	Base* b = new Derived1();
+	Derived2* d = static_cast<Derived2*>(b); // possible
+	// Test* t = static_cast<Test*>(b); // compile time error
+	std::cout << d->a; // undefined
+}
 ```
 Ще се комплира без проблем.
 - взехме адреса на d1 и експлицитно го преобразувахме към Base.
