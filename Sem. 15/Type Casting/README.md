@@ -65,10 +65,31 @@ int* ip = static_cast<int*>(v);
 - използва се при полиморфизъм
 - при cast-ване към Derived(наследник) клас.
 - нужна е поне една виртуална функция.
+- Проверява типовете runtime, в случай, че не може да преобразува - връща nullptr
 
 | Downcasting  | Upcasting |
 |  :---: |  :---: |
 | Casting a base class pointer (or reference) to a derived class pointer (or reference) is known as downcasting.| Casting a derived class pointer (or reference) to a base class pointer (or reference) is known as upcasting.  |
+
+Същия пример от преди малко:
+```c++
+#include <iostream>
+class Base {
+public:
+	virtual ~Base() = default;
+};
+class Derived1 : public Base {};
+class Derived2 : public Base { public: int a; };
+
+// some random class
+class Test {};
+
+int main() {
+	Base* b = new Derived1();
+	Derived2* d = dynamic_cast<Derived2*>(b); // sets nullptr
+	std::cout << d->a; // error deref of nullptr
+}
+```
 
 ### Dynamic_cast - no virtual function example:
 ```c++
