@@ -76,7 +76,7 @@ int* ip = static_cast<int*>(v);
 #include <iostream>
 class Base {
 public:
-	virtual ~Base() = default;
+	virtual ~Base() = default; // removing virtual here will result in compile time error that dynamic_cast needs a polymorphic type
 };
 class Derived1 : public Base {};
 class Derived2 : public Base { public: int a; };
