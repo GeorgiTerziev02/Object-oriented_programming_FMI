@@ -16,15 +16,15 @@ struct Factory {
 public:
 	static VectorCommand* create(IntVector& v, size_t commandNumber) {
 		if (commandNumber == 1) {
-            size_t from, to;
-            std::cin >> from >> to;
-            return new SwapCommand(v, from, to);
+			size_t from, to;
+			std::cin >> from >> to;
+			return new SwapCommand(v, from, to);
 		}
-		else if(commandNumber == 2) {
-            return new SortCommand(v);
+		else if (commandNumber == 2) {
+			return new SortCommand(v);
 		}
 
-        throw std::invalid_argument("Invalid command number");
+		throw std::invalid_argument("Invalid command number");
 	}
 };
 
