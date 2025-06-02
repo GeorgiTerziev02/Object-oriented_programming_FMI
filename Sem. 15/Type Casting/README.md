@@ -71,7 +71,7 @@ int* ip = static_cast<int*>(v);
 |  :---: |  :---: |
 | Casting a base class pointer (or reference) to a derived class pointer (or reference) is known as downcasting.| Casting a derived class pointer (or reference) to a base class pointer (or reference) is known as upcasting.  |
 
-Същия пример от преди малко:
+Същия пример от преди малко, но вече и Derived1 има член-данна a:
 ```c++
 #include <iostream>
 class Base {
