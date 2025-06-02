@@ -212,16 +212,6 @@ char* c1 = const_cast <char*>(b1); // compiler error
 Използва се за преобразуването на pointer oт даден тип към pointer oт друг тип, дори когато типовете несъвпадат.
 Не проверява дали 2-та типа са еднакви.
 
-- reinterpret bit patterns(битови модели)
-- it can typecast any pointer to any other data type.
-- It is used when we want to work with bits.
-
-```
-Е.g:
-   Превръщане на поток от необработени данни в действителни данни;
-   Съхраняване на данни в ниските битове на подравнен указател;
-```
-
 ### Basic example:
 ```c++
     int* p = new int(65);
@@ -238,8 +228,7 @@ char* c1 = const_cast <char*>(b1); // compiler error
 
     // Creating structure myStruct
     struct myStruct {
-        int x;
-        int y;
+        int x, int y;
         char c;
         bool b;
     };
