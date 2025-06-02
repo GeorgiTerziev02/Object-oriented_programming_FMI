@@ -91,51 +91,7 @@ int main() {
 }
 ```
 
-### Dynamic_cast - no virtual function example:
-```c++
-// no virtual function used in the Base class
-    #include <iostream>
-    
-    // Base class declaration
-    class Base {
-    public:
-        void print() {
-            std::cout << "Base\n";
-        }
-    };
-    
-    // Derived Class 1 declaration
-    class Derived1 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived1\n";
-        }
-    };
-    
-    // Derived class 2 declaration
-    class Derived2 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived2\n";
-        }
-    };
-    
-    int main() {
-        Derived1 d1;
-    
-        // Base class pointer hold Derived1 class object
-        Base* bp = dynamic_cast<Base*>(&d1);
-    
-        // Dynamic casting
-        Derived1* dp1 = dynamic_cast<Derived1*>(bp);
-        if (dp1 == nullptr)
-            cout << "null" << endl;
-        else
-            cout << "not null" << endl;
-    
-        return 0;
-    }
-```
+Ако премахнем virtual методите от базовия клас, ще получим компилационна грешка, че dynamic_cast се нуждае от полиморфен тип.
 
 ### Dynamic_cast - with virtual function example:
 ```c++
