@@ -62,10 +62,9 @@ int* ip = static_cast<int*>(v);
 ```
 
 ## Dynamic cast
-- използва се при полиморфизъм
-- при cast-ване към Derived(наследник) клас.
+- използва се при полиморфизъм при cast-ване към Derived(наследник) клас.
 - нужна е поне една виртуална функция.
-- Проверява типовете runtime, в случай, че не може да преобразува - връща nullptr
+- Проверява типовете runtime, в случай, че не може да преобразува (при upcast/downcast) - връща nullptr
 
 | Downcasting  | Upcasting |
 |  :---: |  :---: |
@@ -99,61 +98,19 @@ int main() {
 	// wrong downcast
 	Derived2* d2 = dynamic_cast<Derived2*>(b2); // sets nullptr
 	std::cout << d2->a; // error deref of nullptr
+
+	// bad_cast example
+	//try
+	//{
+	//	Derived2& d2 = dynamic_cast<Derived2&>(*d1);
+	//}
+	//catch (std::exception& e) {
+	//	std::cout << e.what() << std::endl;
+	//}
 }
 ```
 
 Ако премахнем virtual методите от базовия клас, ще получим компилационна грешка, че dynamic_cast се нуждае от полиморфен тип.
-
-
-### Handle cast fail - std::bad_cast
-```c++
-    #include <exception>
-    #include <iostream>
-
-    // Base class declaration
-    class Base {
-    public:
-        virtual void print() {
-            std::cout << "Base\n";
-        }
-    };
-    
-    // Derived1 class
-    class Derived1 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived1\n";
-        }
-    };
-    
-    // Derived2 class
-    class Derived2 : public Base {
-    public:
-        void print() {
-            std::cout << "Derived2\n";
-        }
-    };
-    
-    int main() {
-        Derived1 d1;
-        Base* bp = dynamic_cast<Base*>(&d1);
-    
-        // Type casting
-        Derived1* dp1 = dynamic_cast<Derived1*>(bp);
-        if (dp1 == nullptr) {
-            std::cout << "null\n";
-        } else {
-            std::cout << "not null\n";
-        }
-    
-        // Exception handling block
-        try {
-            Derived2& r1 = dynamic_cast<Derived2&>(d1);
-        } catch (std::exception& e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
-```
 
 ## Const cast
 - използва се за добавяне/премахване на const към променлива
