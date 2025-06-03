@@ -159,7 +159,7 @@ int main() {
     }
 ```
 
-Модифициране на променлива, която е първочално декларирана като const - **Undefined behaviour** (compiler dependant)
+Модифициране на константна променлива, която е първочално декларирана като const - **Undefined behaviour** (compiler dependant)
 ```c++
     #include <iostream>
 
