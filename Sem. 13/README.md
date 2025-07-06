@@ -64,6 +64,14 @@ C default constructor is called
 
 Когато използваме keyword: virtual при наследяване, конструкторът по подразбиране на прародителя се извиква по подразбиране, дори ако родителските класове извикват изрично конструктор с параметри. Тоест всеки наследник на клас, който наследява друг като virtual, трябва да избере кой конструктор се вика на прародителя(виртуално наследения клас). В случая C, трябва експлицитно да каже кой конструктор на SuperClass да се извика. <br />
 
+и другото свойство на виртуално наследяване:
+
+```
+https://en.cppreference.com/w/cpp/language/derived_class.html
+
+For each distinct base class that is specified virtual, the most derived object contains only one base class subobject of that type, even if the class appears many times in the inheritance hierarchy (as long as it is inherited virtual every time).
+```
+
 В следния пример "Детето" определя кой конструктор на "Дядото" да се извика, понеже Dad е наследил Grandpa виртуално т.е. всеки надолу вече ще решава сам за себе си кой конструктор на Grandpa да се извика.
 
 ```c++
